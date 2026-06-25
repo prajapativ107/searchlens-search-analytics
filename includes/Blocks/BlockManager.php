@@ -28,8 +28,6 @@ final class BlockManager {
 	 * @return void
 	 */
 	public function register_blocks(): void {
-		error_log( 'SEARCH BLOCK REGISTER_BLOCKS FIRED' );
-
 		register_block_type(
 			SEARCH_ANALYTICS_INSIGHTS_PATH . 'blocks/search-widget'
 		);

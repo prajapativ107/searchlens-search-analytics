@@ -405,6 +405,7 @@ final class Dashboard {
 		$this->render_tabbed_page(
 			'tools',
 			function () {
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$message = isset( $_GET['sai_message'] ) ? sanitize_key( $_GET['sai_message'] ) : '';
 				?>
 			<div class="sai-tools-wrapper">

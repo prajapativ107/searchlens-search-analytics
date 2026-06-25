@@ -42,6 +42,7 @@ final class SearchRepository {
 		}
 
 		$format   = array( '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d' );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		$inserted = $wpdb->insert( Constants::table_name(), $data, $format );
 
 		if ( false === $inserted ) {
@@ -62,8 +63,12 @@ final class SearchRepository {
 		global $wpdb;
 
 		$where    = $this->build_where_clause( $filters );
-		$sql      = 'SELECT COUNT(*) AS total_searches, COUNT(DISTINCT search_term_hash) AS unique_searches, SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) AS no_result_searches FROM ' . Constants::table_name() . " {$where['clause']}";
+		$table    = esc_sql( Constants::table_name() );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql      = "SELECT COUNT(*) AS total_searches, COUNT(DISTINCT search_term_hash) AS unique_searches, SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) AS no_result_searches FROM {$table} {$where['clause']}";
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$prepared = $where['params'] ? $wpdb->prepare( $sql, $where['params'] ) : $sql;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$row      = $wpdb->get_row( $prepared, ARRAY_A );
 
 		return array(
@@ -89,19 +94,29 @@ final class SearchRepository {
 		$per_page = max( 1, min( 100, absint( $per_page ) ) );
 		$offset   = ( $page - 1 ) * $per_page;
 		$where    = $this->build_where_clause( $filters );
-		$table    = Constants::table_name();
+		$table    = esc_sql( Constants::table_name() );
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$grouped_sql = "SELECT search_term, user_id, COUNT(*) AS search_count, MAX(searched_at) AS last_searched, MAX(id) AS latest_id FROM {$table} {$where['clause']} GROUP BY search_term, user_id";
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$list_sql    = "SELECT grouped.search_term, grouped.user_id, grouped.search_count, grouped.last_searched, latest.result_count FROM ( {$grouped_sql} ) AS grouped INNER JOIN {$table} AS latest ON latest.id = grouped.latest_id ORDER BY grouped.last_searched DESC, grouped.search_term ASC, grouped.user_id ASC LIMIT %d OFFSET %d";
 
 		$params   = $where['params'];
 		$params[] = $per_page;
 		$params[] = $offset;
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$prepared = $wpdb->prepare( $list_sql, $params );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$results  = $wpdb->get_results( $prepared, ARRAY_A );
 
 		$count_sql = "SELECT COUNT(*) FROM ( {$grouped_sql} ) AS grouped_count";
-		$total     = $where['params'] ? (int) $wpdb->get_var( $wpdb->prepare( $count_sql, $where['params'] ) ) : (int) $wpdb->get_var( $count_sql );
+		if ( $where['params'] ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+			$total = (int) $wpdb->get_var( $wpdb->prepare( $count_sql, $where['params'] ) );
+		} else {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+			$total = (int) $wpdb->get_var( $count_sql );
+		}
 
 		return array(
 			'items' => is_array( $results ) ? $results : array(),
@@ -122,10 +137,13 @@ final class SearchRepository {
 
 		$limit = max( 1, min( 100, absint( $limit ) ) );
 		$where = $this->build_where_clause( $filters );
-		$sql   = 'SELECT id, search_term, searched_at, source, matched_post_types, result_count, user_id, session_id FROM ' . Constants::table_name() . " {$where['clause']} ORDER BY searched_at DESC, id DESC LIMIT %d";
+		$table = esc_sql( Constants::table_name() );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql   = "SELECT id, search_term, searched_at, source, matched_post_types, result_count, user_id, session_id FROM {$table} {$where['clause']} ORDER BY searched_at DESC, id DESC LIMIT %d";
 
 		$params   = $where['params'];
 		$params[] = $limit;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$rows     = $wpdb->get_results( $wpdb->prepare( $sql, $params ), ARRAY_A );
 
 		return is_array( $rows ) ? $rows : array();
@@ -142,9 +160,13 @@ final class SearchRepository {
 		global $wpdb;
 
 		$where    = $this->build_where_clause( $filters );
-		$sql      = 'SELECT DATE(searched_at) AS search_date, COUNT(*) AS search_count FROM ' . Constants::table_name() . " {$where['clause']} GROUP BY DATE(searched_at) ORDER BY search_date ASC";
+		$table    = esc_sql( Constants::table_name() );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql      = "SELECT DATE(searched_at) AS search_date, COUNT(*) AS search_count FROM {$table} {$where['clause']} GROUP BY DATE(searched_at) ORDER BY search_date ASC";
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$prepared = $where['params'] ? $wpdb->prepare( $sql, $where['params'] ) : $sql;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $prepared, ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
@@ -163,9 +185,13 @@ final class SearchRepository {
 
 		$where    = $this->build_where_clause( $filters );
 		$limit    = max( 1, absint( $limit ) );
-		$sql      = 'SELECT search_term, COUNT(*) AS search_count FROM ' . Constants::table_name() . " {$where['clause']} GROUP BY search_term ORDER BY search_count DESC, search_term ASC LIMIT {$limit}";
+		$table    = esc_sql( Constants::table_name() );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql      = "SELECT search_term, COUNT(*) AS search_count FROM {$table} {$where['clause']} GROUP BY search_term ORDER BY search_count DESC, search_term ASC LIMIT {$limit}";
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$prepared = $where['params'] ? $wpdb->prepare( $sql, $where['params'] ) : $sql;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $prepared, ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
@@ -187,12 +213,16 @@ final class SearchRepository {
 		$per_page = max( 1, min( 100, absint( $per_page ) ) );
 		$offset   = ( $page - 1 ) * $per_page;
 		$where    = $this->build_where_clause( $filters );
+		$table    = esc_sql( Constants::table_name() );
 
-		$sql      = 'SELECT id, search_term, searched_at, source, matched_post_types, result_count, user_id, session_id, blog_id FROM ' . Constants::table_name() . " {$where['clause']} ORDER BY searched_at DESC, id DESC LIMIT %d OFFSET %d";
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql      = "SELECT id, search_term, searched_at, source, matched_post_types, result_count, user_id, session_id, blog_id FROM {$table} {$where['clause']} ORDER BY searched_at DESC, id DESC LIMIT %d OFFSET %d";
 		$params   = $where['params'];
 		$params[] = $per_page;
 		$params[] = $offset;
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$prepared = $wpdb->prepare( $sql, $params );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$results  = $wpdb->get_results( $prepared, ARRAY_A );
 
 		return array(
@@ -212,12 +242,16 @@ final class SearchRepository {
 		global $wpdb;
 
 		$where = $this->build_where_clause( $filters );
-		$sql   = 'SELECT COUNT(*) FROM ' . Constants::table_name() . " {$where['clause']}";
+		$table = esc_sql( Constants::table_name() );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql   = "SELECT COUNT(*) FROM {$table} {$where['clause']}";
 
 		if ( $where['params'] ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 			return (int) $wpdb->get_var( $wpdb->prepare( $sql, $where['params'] ) );
 		}
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		return (int) $wpdb->get_var( $sql );
 	}
 
@@ -296,9 +330,11 @@ final class SearchRepository {
 	 */
 	public function clear_all(): bool {
 		global $wpdb;
-		$table  = Constants::table_name();
+		$table  = esc_sql( Constants::table_name() );
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$result = $wpdb->query( "TRUNCATE TABLE {$table}" );
 		if ( false === $result ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$result = $wpdb->query( "DELETE FROM {$table}" );
 		}
 		return false !== $result;

@@ -64,22 +64,10 @@ final class Plugin {
 	 * @return void
 	 */
 	private function register_hooks(): void {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( $this, 'boot_modules' ), 5 );
 	}
 
-	/**
-	 * Load translations.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain(
-			'search-analytics-insights',
-			false,
-			dirname( plugin_basename( SEARCH_ANALYTICS_INSIGHTS_FILE ) ) . '/languages'
-		);
-	}
+
 
 	/**
 	 * Get the service container.
@@ -261,6 +249,7 @@ final class Plugin {
 			$this->container->get( Assets::class )->register_hooks();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		do_action( 'search_analytics_insights_container_ready', $this->container );
 	}
 

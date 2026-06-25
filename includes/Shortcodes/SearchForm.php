@@ -82,7 +82,22 @@ final class SearchForm {
 					</button>
 				<?php elseif ( $is_ajax_enabled ) : ?>
 					<span class="search-analytics-insights-input-icon">
-						<?php echo SearchWidget::get_icon_markup(); ?>
+						<?php
+						$allowed_tags = array(
+							'svg'  => array(
+								'class'       => true,
+								'aria-hidden' => true,
+								'focusable'   => true,
+								'viewbox'     => true,
+								'xmlns'       => true,
+							),
+							'path' => array(
+								'd'    => true,
+								'fill' => true,
+							),
+						);
+						echo wp_kses( SearchWidget::get_icon_markup(), $allowed_tags );
+						?>
 					</span>
 				<?php endif; ?>
 			</div>

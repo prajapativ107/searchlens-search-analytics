@@ -1,10 +1,10 @@
 === Search Analytics & Insights ===
 Contributors: Vivek Prajapati
-Tags: search, analytics, insights, dashboard, shortcode, statistics, tracking, popular searches, trending searches
+Tags: search, analytics, insights, dashboard, statistics
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,10 +55,10 @@ Yes. The search form shortcode uses standard WordPress search behavior and shoul
 
 == Changelog ==
 
-= 1.0.0 =
+= 0.5.0 =
 * Initial Release
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 0.5.0 =
 Initial release of Search Analytics & Insights.

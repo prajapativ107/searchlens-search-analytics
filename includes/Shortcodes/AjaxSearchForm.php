@@ -88,7 +88,7 @@ final class AjaxSearchForm {
 			data-show-post-type-label="<?php echo esc_attr( $this->settings->get_show_post_type_label() ? '1' : '0' ); ?>"
 			data-loading-text="<?php echo esc_attr__( 'Searching...', 'search-analytics-insights' ); ?>"
 			data-empty-text="<?php echo esc_attr( $this->settings->get_no_results_message() ); ?>"
-			data-min-chars-text="<?php echo esc_attr( sprintf( __( 'Type at least %d characters to search.', 'search-analytics-insights' ), (int) $settings['minimum_characters'] ) ); ?>"
+			data-min-chars-text="<?php echo esc_attr( sprintf( /* translators: %d: minimum characters count */ __( 'Type at least %d characters to search.', 'search-analytics-insights' ), (int) $settings['minimum_characters'] ) ); ?>"
 			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
 		>
 			<form class="search-analytics-insights-ajax-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" novalidate>
@@ -113,7 +113,22 @@ final class AjaxSearchForm {
 						</button>
 					<?php else : ?>
 						<span class="search-analytics-insights-input-icon">
-							<?php echo SearchWidget::get_icon_markup(); ?>
+							<?php
+							$allowed_tags = array(
+								'svg'  => array(
+									'class'       => true,
+									'aria-hidden' => true,
+									'focusable'   => true,
+									'viewbox'     => true,
+									'xmlns'       => true,
+								),
+								'path' => array(
+									'd'    => true,
+									'fill' => true,
+								),
+							);
+							echo wp_kses( SearchWidget::get_icon_markup(), $allowed_tags );
+							?>
 						</span>
 					<?php endif; ?>
 				</div>

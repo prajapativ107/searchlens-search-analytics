@@ -125,7 +125,8 @@ final class Menu {
 		}
 
 		// Verify Nonce
-		if ( ! isset( $_POST['sai_tools_nonce'] ) || ! wp_verify_nonce( $_POST['sai_tools_nonce'], 'sai_tools_action' ) ) {
+		$nonce = isset( $_POST['sai_tools_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['sai_tools_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'sai_tools_action' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'search-analytics-insights' ) );
 		}
 
@@ -178,14 +179,10 @@ final class Menu {
 		$offset = 0;
 
 		while ( true ) {
-			$rows = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT id, search_term, searched_at, source, matched_post_types, result_count, user_id, session_id FROM {$table} ORDER BY id ASC LIMIT %d OFFSET %d",
-					$limit,
-					$offset
-				),
-				ARRAY_A
-			);
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$query = "SELECT id, search_term, searched_at, source, matched_post_types, result_count, user_id, session_id FROM {$table} ORDER BY id ASC LIMIT %d OFFSET %d";
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+			$rows  = $wpdb->get_results( $wpdb->prepare( $query, $limit, $offset ), ARRAY_A );
 
 			if ( empty( $rows ) ) {
 				break;
@@ -211,6 +208,7 @@ final class Menu {
 			$wpdb->flush();
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose( $output );
 		exit;
 	}

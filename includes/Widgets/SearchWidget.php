@@ -82,7 +82,7 @@ final class SearchWidget extends \WP_Widget {
 			true
 		);
 
-		echo isset( $args['before_widget'] ) ? (string) $args['before_widget'] : '';
+		echo isset( $args['before_widget'] ) ? wp_kses_post( (string) $args['before_widget'] ) : '';
 		?>
 		<div
 			class="search-analytics-insights-search-widget search-analytics-insights-search-widget--<?php echo esc_attr( $open_mode ); ?>"
@@ -108,7 +108,22 @@ final class SearchWidget extends \WP_Widget {
 				style="--search-analytics-insights-search-icon-size: <?php echo esc_attr( (string) $instance['icon_size'] ); ?>px;"
 			>
 				<span class="search-analytics-insights-search-toggle-icon" aria-hidden="true">
-					<?php echo $this->get_icon_markup(); ?>
+					<?php
+					$allowed_tags = array(
+						'svg'  => array(
+							'class'       => true,
+							'aria-hidden' => true,
+							'focusable'   => true,
+							'viewbox'     => true,
+							'xmlns'       => true,
+						),
+						'path' => array(
+							'd'    => true,
+							'fill' => true,
+						),
+					);
+					echo wp_kses( $this->get_icon_markup(), $allowed_tags );
+					?>
 				</span>
 				<?php if ( $show_label ) : ?>
 					<span class="search-analytics-insights-search-toggle-label"><?php echo esc_html__( 'Search', 'search-analytics-insights' ); ?></span>
@@ -123,12 +138,14 @@ final class SearchWidget extends \WP_Widget {
 						<h2 class="search-analytics-insights-search-title"><?php echo esc_html( (string) $instance['title'] ); ?></h2>
 					<?php endif; ?>
 					<?php
-					echo $search_form->render(
+					$rendered_form = $search_form->render(
 						array(
 							'show_button' => $settings->get_show_button(),
 							'form_style'  => $settings->get_form_style(),
 						)
 					);
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo $rendered_form;
 					?>
 					<?php if ( $ajax_enabled ) : ?>
 						<div class="search-analytics-insights-search-status" aria-live="polite" aria-atomic="true"></div>
@@ -140,7 +157,7 @@ final class SearchWidget extends \WP_Widget {
 			</div>
 		</div>
 		<?php
-		echo isset( $args['after_widget'] ) ? (string) $args['after_widget'] : '';
+		echo isset( $args['after_widget'] ) ? wp_kses_post( (string) $args['after_widget'] ) : '';
 	}
 
 	/**
