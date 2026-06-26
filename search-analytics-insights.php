@@ -1,12 +1,13 @@
 <?php
 /**
  * Plugin Name: Search Analytics & Insights
- * Plugin URI: https://wordpress.org/plugins/
+ * Plugin URI: https://github.com/prajapativ107/search-analytics-insights
  * Description: Track WordPress site searches and provide analytics for administrators.
  * Version: 1.0.0
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author: Vivek Prajapati
+ * Author URI: https://github.com/prajapativ107
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: search-analytics-insights
