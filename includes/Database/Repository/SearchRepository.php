@@ -448,7 +448,7 @@ final class SearchRepository {
 		if ( ! empty( $filters['username'] ) ) {
 			$username = sanitize_text_field( $filters['username'] );
 			$table    = Constants::table_name();
-			if ( 'visiter' === strtolower( $username ) ) {
+			if ( 'guest' === strtolower( $username ) ) {
 				$clauses[] = "({$table}.user_id IS NULL OR {$table}.user_id = 0)";
 			} else {
 				$user_query = new \WP_User_Query(

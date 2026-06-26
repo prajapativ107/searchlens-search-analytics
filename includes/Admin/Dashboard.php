@@ -383,7 +383,7 @@ final class Dashboard {
 				<?php $this->render_summary_card( __( 'No Result Searches', 'search-analytics-insights' ), (int) $summary['no_result_searches'] ); ?>
 			</div>
 
-			<div class="search-analytics-insights-grid">
+			<div class="search-analytics-insights-summary">
 				<div class="search-analytics-insights-panel">
 					<h2><?php esc_html_e( 'Searches per day', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
@@ -455,7 +455,9 @@ final class Dashboard {
 						</tbody>
 					</table>
 				</div>
+			</div>
 
+			<div class="search-analytics-insights-summary">
 				<div class="search-analytics-insights-panel">
 					<h2><?php esc_html_e( 'Top Pages Where Users Search', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
@@ -915,7 +917,7 @@ final class Dashboard {
 			return $display_name;
 		}
 
-		return ! empty( $record['user_login'] ) ? (string) $record['user_login'] : __( 'visiter', 'search-analytics-insights' );
+		return ! empty( $record['user_login'] ) ? (string) $record['user_login'] : __( 'Guest', 'search-analytics-insights' );
 	}
 
 	/**

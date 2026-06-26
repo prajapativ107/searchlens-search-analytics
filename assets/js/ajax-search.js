@@ -4,7 +4,7 @@
 	const states = new WeakMap();
 
 	function getState(wrapper) {
-		if ( ! states.has( wrapper )) {
+		if (!states.has(wrapper)) {
 			states.set(
 				wrapper,
 				{
@@ -15,32 +15,32 @@
 			);
 		}
 
-		return states.get( wrapper );
+		return states.get(wrapper);
 	}
 
 	function getStrings(wrapper) {
 		return {
-			loading: wrapper.getAttribute( 'data-loading-text' ) || 'Searching...',
-			empty: wrapper.getAttribute( 'data-empty-text' ) || 'No results found.',
-			minimum: wrapper.getAttribute( 'data-min-chars-text' ) || 'Type at least 2 characters to search.',
-			error: wrapper.getAttribute( 'data-error-text' ) || 'Unable to search right now.',
+			loading: wrapper.getAttribute('data-loading-text') || 'Searching...',
+			empty: wrapper.getAttribute('data-empty-text') || 'No results found.',
+			minimum: wrapper.getAttribute('data-min-chars-text') || 'Type at least 2 characters to search.',
+			error: wrapper.getAttribute('data-error-text') || 'Unable to search right now.',
 		};
 	}
 
 	function setStatus(wrapper, message, isLoading) {
-		const status = wrapper.querySelector( '.search-analytics-insights-ajax-search-status' );
+		const status = wrapper.querySelector('.search-analytics-insights-ajax-search-status');
 
-		if ( ! status) {
+		if (!status) {
 			return;
 		}
 
 		status.textContent = message;
-		status.classList.toggle( 'is-loading', Boolean( isLoading ) );
+		status.classList.toggle('is-loading', Boolean(isLoading));
 		status.style.display = isLoading || message ? 'block' : 'none';
 	}
 
 	function setResultsVisibility(wrapper, isVisible) {
-		const resultsWrap = wrapper.querySelector( '.search-analytics-insights-ajax-search-results-wrap' );
+		const resultsWrap = wrapper.querySelector('.search-analytics-insights-ajax-search-results-wrap');
 
 		if (resultsWrap) {
 			resultsWrap.style.display = isVisible ? 'block' : 'none';
@@ -48,105 +48,105 @@
 	}
 
 	function hideResultsUI(wrapper) {
-		setStatus( wrapper, '', false );
-		setResultsVisibility( wrapper, false );
+		setStatus(wrapper, '', false);
+		setResultsVisibility(wrapper, false);
 	}
 
 	function clearResults(wrapper) {
-		const results = wrapper.querySelector( '.search-analytics-insights-ajax-search-results' );
-		const input   = wrapper.querySelector( '.search-analytics-insights-ajax-search-input' );
+		const results = wrapper.querySelector('.search-analytics-insights-ajax-search-results');
+		const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
 
 		if (results) {
 			results.innerHTML = '';
 		}
 
 		if (input) {
-			input.setAttribute( 'aria-expanded', 'false' );
-			input.removeAttribute( 'aria-activedescendant' );
+			input.setAttribute('aria-expanded', 'false');
+			input.removeAttribute('aria-activedescendant');
 		}
 
-		getState( wrapper ).activeIndex = -1;
+		getState(wrapper).activeIndex = -1;
 	}
 
 	function renderResults(wrapper, items) {
-		const results            = wrapper.querySelector( '.search-analytics-insights-ajax-search-results' );
-		const input              = wrapper.querySelector( '.search-analytics-insights-ajax-search-input' );
-		const showFeaturedImages = '1' === wrapper.getAttribute( 'data-show-featured-images' );
-		const showPostTypeLabel  = '1' === wrapper.getAttribute( 'data-show-post-type-label' );
-		const state              = getState( wrapper );
+		const results = wrapper.querySelector('.search-analytics-insights-ajax-search-results');
+		const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
+		const showFeaturedImages = '1' === wrapper.getAttribute('data-show-featured-images');
+		const showPostTypeLabel = '1' === wrapper.getAttribute('data-show-post-type-label');
+		const state = getState(wrapper);
 
-		if ( ! results || ! input) {
+		if (!results || !input) {
 			return;
 		}
 
 		results.innerHTML = '';
 		state.activeIndex = -1;
 
-		if ( ! items.length) {
-			input.setAttribute( 'aria-expanded', 'false' );
-			clearResults( wrapper );
-			setResultsVisibility( wrapper, false );
+		if (!items.length) {
+			input.setAttribute('aria-expanded', 'false');
+			clearResults(wrapper);
+			setResultsVisibility(wrapper, false);
 			return;
 		}
 
 		items.forEach(
 			function (item, index) {
-				const li        = document.createElement( 'li' );
-				const link      = document.createElement( 'a' );
-				const imageWrap = document.createElement( 'span' );
-				const title     = document.createElement( 'span' );
-				const meta      = document.createElement( 'span' );
+				const li = document.createElement('li');
+				const link = document.createElement('a');
+				const imageWrap = document.createElement('span');
+				const title = document.createElement('span');
+				const meta = document.createElement('span');
 
 				li.className = 'search-analytics-insights-ajax-search-result';
-				li.setAttribute( 'role', 'option' );
+				li.setAttribute('role', 'option');
 				li.id = 'search-analytics-insights-ajax-search-option-' + index;
 
 				link.className = 'search-analytics-insights-ajax-search-link';
-				link.href      = item.url || '#';
-				link.tabIndex  = -1;
+				link.href = item.url || '#';
+				link.tabIndex = -1;
 
 				imageWrap.className = 'search-analytics-insights-ajax-search-image-wrap';
 
 				if (showFeaturedImages && item.featured_image) {
-					const image     = document.createElement( 'img' );
+					const image = document.createElement('img');
 					image.className = 'search-analytics-insights-ajax-search-image';
-					image.src       = item.featured_image;
-					image.alt       = '';
-					image.loading   = 'lazy';
-					image.decoding  = 'async';
-					image.setAttribute( 'aria-hidden', 'true' );
-					imageWrap.appendChild( image );
-					link.classList.add( 'has-featured-image' );
+					image.src = item.featured_image;
+					image.alt = '';
+					image.loading = 'lazy';
+					image.decoding = 'async';
+					image.setAttribute('aria-hidden', 'true');
+					imageWrap.appendChild(image);
+					link.classList.add('has-featured-image');
 				}
 
-				title.className   = 'search-analytics-insights-ajax-search-title';
+				title.className = 'search-analytics-insights-ajax-search-title';
 				title.textContent = item.title || '';
 
 				if (imageWrap.childNodes.length) {
-					link.appendChild( imageWrap );
+					link.appendChild(imageWrap);
 				}
-				link.appendChild( title );
+				link.appendChild(title);
 
 				if (showPostTypeLabel && item.post_type_label) {
-					meta.className   = 'search-analytics-insights-ajax-search-meta';
+					meta.className = 'search-analytics-insights-ajax-search-meta';
 					meta.textContent = item.post_type_label;
-					link.appendChild( meta );
+					link.appendChild(meta);
 				}
 
-				li.appendChild( link );
-				results.appendChild( li );
+				li.appendChild(link);
+				results.appendChild(li);
 			}
 		);
 
-		input.setAttribute( 'aria-expanded', 'true' );
-		setResultsVisibility( wrapper, true );
+		input.setAttribute('aria-expanded', 'true');
+		setResultsVisibility(wrapper, true);
 	}
 
 	function updateActiveItem(wrapper, direction) {
-		const state = getState( wrapper );
-		const items = wrapper.querySelectorAll( '.search-analytics-insights-ajax-search-result' );
+		const state = getState(wrapper);
+		const items = wrapper.querySelectorAll('.search-analytics-insights-ajax-search-result');
 
-		if ( ! items.length) {
+		if (!items.length) {
 			return;
 		}
 
@@ -162,15 +162,15 @@
 
 		items.forEach(
 			function (item, index) {
-				const link = item.querySelector( 'a' );
-				item.classList.toggle( 'is-active', index === state.activeIndex );
+				const link = item.querySelector('a');
+				item.classList.toggle('is-active', index === state.activeIndex);
 
 				if (index === state.activeIndex && link) {
-					link.focus( { preventScroll: true } );
-					const input = wrapper.querySelector( '.search-analytics-insights-ajax-search-input' );
+					link.focus({ preventScroll: true });
+					const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
 
 					if (input) {
-						input.setAttribute( 'aria-activedescendant', item.id );
+						input.setAttribute('aria-activedescendant', item.id);
 					}
 				}
 			}
@@ -178,14 +178,14 @@
 	}
 
 	function fetchResults(wrapper, term) {
-		const state   = getState( wrapper );
-		const ajaxUrl = wrapper.getAttribute( 'data-ajax-url' );
-		const nonce   = wrapper.getAttribute( 'data-nonce' );
-		const action  = wrapper.getAttribute( 'data-action' );
-		const limit   = wrapper.getAttribute( 'data-limit' ) || '10';
-		const strings = getStrings( wrapper );
+		const state = getState(wrapper);
+		const ajaxUrl = wrapper.getAttribute('data-ajax-url');
+		const nonce = wrapper.getAttribute('data-nonce');
+		const action = wrapper.getAttribute('data-action');
+		const limit = wrapper.getAttribute('data-limit') || '10';
+		const strings = getStrings(wrapper);
 
-		if ( ! ajaxUrl || ! nonce || ! action) {
+		if (!ajaxUrl || !nonce || !action) {
 			return;
 		}
 
@@ -194,21 +194,22 @@
 		}
 
 		state.controller = new AbortController();
-		setStatus( wrapper, strings.loading, true );
+		setStatus(wrapper, strings.loading, true);
 
 		const params = new URLSearchParams();
-		params.append( 'action', action );
-		params.append( 'nonce', nonce );
-		params.append( 'term', term );
-		params.append( 'limit', limit );
+		params.append('action', action);
+		params.append('nonce', nonce);
+		params.append('term', term);
+		params.append('limit', limit);
 
-		const getPageType = window.SearchAnalyticsInsights && window.SearchAnalyticsInsights.getPageType 
-			? window.SearchAnalyticsInsights.getPageType 
-			: function() { return 'Other'; };
-		params.append( 'page_title', document.title );
-		params.append( 'page_url', window.location.href );
-		params.append( 'referrer', document.referrer );
-		params.append( 'page_type', getPageType() );
+		const pageTitle = window.sai_data && window.sai_data.page_title ? window.sai_data.page_title : document.title;
+		const pageUrl   = window.sai_data && window.sai_data.page_url ? window.sai_data.page_url : window.location.href;
+		const pageType  = window.sai_data && window.sai_data.page_type ? window.sai_data.page_type : (window.SearchAnalyticsInsights && window.SearchAnalyticsInsights.getPageType ? window.SearchAnalyticsInsights.getPageType() : 'Other');
+
+		params.append('page_title', pageTitle);
+		params.append('page_url', pageUrl);
+		params.append('referrer', document.referrer);
+		params.append('page_type', pageType);
 
 		fetch(
 			ajaxUrl,
@@ -229,23 +230,23 @@
 			)
 			.then(
 				function (data) {
-					if ( ! data || ! data.success) {
-						clearResults( wrapper );
-						setStatus( wrapper, data && data.data && data.data.message ? data.data.message : strings.error, false );
-						setResultsVisibility( wrapper, false );
+					if (!data || !data.success) {
+						clearResults(wrapper);
+						setStatus(wrapper, data && data.data && data.data.message ? data.data.message : strings.error, false);
+						setResultsVisibility(wrapper, false);
 						return;
 					}
 
-					const items = data.data && Array.isArray( data.data.items ) ? data.data.items : [];
-					if ( ! items.length) {
-						clearResults( wrapper );
-						setResultsVisibility( wrapper, false );
-						setStatus( wrapper, strings.empty, false );
+					const items = data.data && Array.isArray(data.data.items) ? data.data.items : [];
+					if (!items.length) {
+						clearResults(wrapper);
+						setResultsVisibility(wrapper, false);
+						setStatus(wrapper, strings.empty, false);
 						return;
 					}
 
-					renderResults( wrapper, items );
-					setStatus( wrapper, '', false );
+					renderResults(wrapper, items);
+					setStatus(wrapper, '', false);
 				}
 			)
 			.catch(
@@ -254,79 +255,79 @@
 						return;
 					}
 
-					clearResults( wrapper );
-					setStatus( wrapper, strings.error, false );
-					setResultsVisibility( wrapper, false );
+					clearResults(wrapper);
+					setStatus(wrapper, strings.error, false);
+					setResultsVisibility(wrapper, false);
 				}
 			)
 			.finally(
 				function () {
 					state.controller = null;
-					const input      = wrapper.querySelector( '.search-analytics-insights-ajax-search-input' );
+					const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
 
 					if (input) {
-						input.removeAttribute( 'aria-busy' );
+						input.removeAttribute('aria-busy');
 					}
 				}
 			);
 	}
 
 	function handleInput(wrapper, event) {
-		const input    = event.target;
-		const term     = input.value.trim();
-		const state    = getState( wrapper );
-		const minChars = parseInt( wrapper.getAttribute( 'data-min-chars' ) || '2', 10 );
-		const debounce = parseInt( wrapper.getAttribute( 'data-debounce' ) || '300', 10 );
-		const strings  = getStrings( wrapper );
+		const input = event.target;
+		const term = input.value.trim();
+		const state = getState(wrapper);
+		const minChars = parseInt(wrapper.getAttribute('data-min-chars') || '2', 10);
+		const debounce = parseInt(wrapper.getAttribute('data-debounce') || '300', 10);
+		const strings = getStrings(wrapper);
 
 		if (state.timer) {
-			window.clearTimeout( state.timer );
+			window.clearTimeout(state.timer);
 		}
 
 		if (term.length < minChars) {
-			clearResults( wrapper );
-			hideResultsUI( wrapper );
+			clearResults(wrapper);
+			hideResultsUI(wrapper);
 			return;
 		}
 
-		input.setAttribute( 'aria-busy', 'true' );
+		input.setAttribute('aria-busy', 'true');
 		state.timer = window.setTimeout(
 			function () {
-				fetchResults( wrapper, term );
+				fetchResults(wrapper, term);
 			},
 			debounce
 		);
 	}
 
 	function initWrapper(wrapper) {
-		const input = wrapper.querySelector( '.search-analytics-insights-ajax-search-input' );
-		const form  = wrapper.querySelector( '.search-analytics-insights-ajax-search-form' );
+		const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
+		const form = wrapper.querySelector('.search-analytics-insights-ajax-search-form');
 
-		if ( ! input || ! form) {
+		if (!input || !form) {
 			return;
 		}
 
-		hideResultsUI( wrapper );
+		hideResultsUI(wrapper);
 
-		input.addEventListener( 'input', handleInput.bind( null, wrapper ) );
+		input.addEventListener('input', handleInput.bind(null, wrapper));
 		input.addEventListener(
 			'keydown',
 			function (event) {
 				if ('ArrowDown' === event.key) {
 					event.preventDefault();
-					updateActiveItem( wrapper, 1 );
+					updateActiveItem(wrapper, 1);
 					return;
 				}
 
 				if ('ArrowUp' === event.key) {
 					event.preventDefault();
-					updateActiveItem( wrapper, -1 );
+					updateActiveItem(wrapper, -1);
 					return;
 				}
 
 				if ('Escape' === event.key) {
-					clearResults( wrapper );
-					hideResultsUI( wrapper );
+					clearResults(wrapper);
+					hideResultsUI(wrapper);
 				}
 			}
 		);
@@ -336,28 +337,28 @@
 			function (event) {
 				event.preventDefault();
 
-				const state        = getState( wrapper );
-				const items        = wrapper.querySelectorAll( '.search-analytics-insights-ajax-search-result' );
+				const state = getState(wrapper);
+				const items = wrapper.querySelectorAll('.search-analytics-insights-ajax-search-result');
 				const activeResult = state.activeIndex >= 0 ? items[state.activeIndex] : null;
-				const link         = activeResult ? activeResult.querySelector( 'a' ) : null;
+				const link = activeResult ? activeResult.querySelector('a') : null;
 
 				if (link && link.href) {
 					window.location.href = link.href;
 					return;
 				}
 
-				input.dispatchEvent( new Event( 'input', { bubbles: true } ) );
+				input.dispatchEvent(new Event('input', { bubbles: true }));
 			}
 		);
 
 		wrapper.addEventListener(
 			'click',
 			function (event) {
-				const link = event.target.closest( '.search-analytics-insights-ajax-search-link' );
+				const link = event.target.closest('.search-analytics-insights-ajax-search-link');
 
 				if (link) {
-					clearResults( wrapper );
-					hideResultsUI( wrapper );
+					clearResults(wrapper);
+					hideResultsUI(wrapper);
 				}
 			}
 		);
@@ -365,20 +366,20 @@
 		document.addEventListener(
 			'click',
 			function (event) {
-				if ( ! wrapper.contains( event.target )) {
-					clearResults( wrapper );
-					hideResultsUI( wrapper );
+				if (!wrapper.contains(event.target)) {
+					clearResults(wrapper);
+					hideResultsUI(wrapper);
 				}
 			}
 		);
 	}
 
 	function init() {
-		document.querySelectorAll( '.search-analytics-insights-ajax-search' ).forEach( initWrapper );
+		document.querySelectorAll('.search-analytics-insights-ajax-search').forEach(initWrapper);
 	}
 
 	if ('loading' === document.readyState) {
-		document.addEventListener( 'DOMContentLoaded', init );
+		document.addEventListener('DOMContentLoaded', init);
 		return;
 	}
 

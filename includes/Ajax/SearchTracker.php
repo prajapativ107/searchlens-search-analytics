@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * Records AJAX search events in the analytics table.
  */
 final class SearchTracker {
+
 	private SearchRepository $repository;
 
 	/**
@@ -30,8 +31,8 @@ final class SearchTracker {
 	/**
 	 * Store an AJAX search event.
 	 *
-	 * @param string             $search_term Search term.
-	 * @param int                $result_count Result count.
+	 * @param string             $search_term        Search term.
+	 * @param int                $result_count       Result count.
 	 * @param array<int, string> $matched_post_types Matched post type slugs.
 	 *
 	 * @return int|false
@@ -53,6 +54,10 @@ final class SearchTracker {
 			return false;
 		}
 
+		$raw_title  = $page_data['page_title'] ?? '';
+		$page_url   = $page_data['page_url'] ?? '';
+		$page_title = \SearchAnalyticsInsights\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
+
 		return $this->repository->insert(
 			array(
 				'search_term'        => $search_term,
@@ -63,10 +68,10 @@ final class SearchTracker {
 				'user_id'            => get_current_user_id() ? absint( get_current_user_id() ) : null,
 				'session_id'         => $this->get_session_id(),
 				'blog_id'            => get_current_blog_id(),
-				'page_title'         => $page_data['page_title'] ?? '',
-				'page_url'           => $page_data['page_url'] ?? '',
-				'referrer'           => $page_data['referrer'] ?? '',
-				'page_type'          => $page_data['page_type'] ?? '',
+				'page_title'         => sanitize_text_field( $page_title ),
+				'page_url'           => esc_url_raw( $page_url ),
+				'referrer'           => esc_url_raw( $page_data['referrer'] ?? '' ),
+				'page_type'          => sanitize_text_field( $page_data['page_type'] ?? '' ),
 			)
 		);
 	}

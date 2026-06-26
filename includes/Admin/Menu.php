@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * Registers the plugin admin menu.
  */
 final class Menu {
+
 	private Dashboard $dashboard;
 
 	/**
@@ -159,7 +160,7 @@ final class Menu {
 		}
 
 		// Write the UTF-8 BOM to ensure spreadsheet applications display special characters correctly.
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
 		fwrite( $output, "\xEF\xBB\xBF" );
 
 		// CSV Column headers.
@@ -185,9 +186,9 @@ final class Menu {
 		$offset = 0;
 
 		while ( true ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$query = "SELECT {$table}.id, {$table}.search_term, {$table}.searched_at, {$table}.source, {$table}.matched_post_types, {$table}.result_count, {$table}.page_title, {$table}.page_url, {$table}.referrer, {$table}.page_type, u.display_name, u.user_login FROM {$table} LEFT JOIN {$wpdb->users} AS u ON {$table}.user_id = u.ID ORDER BY {$table}.id ASC LIMIT %d OFFSET %d";
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			$rows = $wpdb->get_results( $wpdb->prepare( $query, $limit, $offset ), ARRAY_A );
 
 			if ( empty( $rows ) ) {
@@ -195,32 +196,7 @@ final class Menu {
 			}
 
 			foreach ( $rows as $row ) {
-				$post_id    = url_to_postid( $row['page_url'] );
-				$page_title = '';
-				if ( $post_id ) {
-					global $wp_query;
-					$original_id                 = isset( $wp_query->queried_object_id ) ? $wp_query->queried_object_id : null;
-					$wp_query->queried_object_id = $post_id;
-					$page_title                  = get_the_title( get_queried_object_id() );
-					if ( is_null( $original_id ) ) {
-						unset( $wp_query->queried_object_id );
-					} else {
-						$wp_query->queried_object_id = $original_id;
-					}
-				}
-
-				if ( empty( $page_title ) ) {
-					if ( home_url( '/' ) === user_trailingslashit( $row['page_url'] ) || home_url( '/' ) === $row['page_url'] || '/' === $row['page_url'] ) {
-						$page_title = __( 'Home', 'search-analytics-insights' );
-					} else {
-						// Clean the stored title just in case it doesn't have a post ID but has a title in the DB.
-						$site_name = get_bloginfo( 'name' );
-						$raw_title = $row['page_title'];
-						if ( ! empty( $raw_title ) ) {
-							$page_title = str_replace( array( " » {$site_name}", " - {$site_name}" ), '', $raw_title );
-						}
-					}
-				}
+				$page_title = \SearchAnalyticsInsights\Helpers\PageHelper::resolve_page_title( $row['page_url'], $row['page_title'] );
 
 				$csv_row = array(
 					$row['id'],
@@ -243,7 +219,7 @@ final class Menu {
 			$wpdb->flush();
 		}
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose( $output );
 		exit;
 	}
@@ -284,7 +260,7 @@ final class Menu {
 			return $display_name;
 		}
 
-		return ! empty( $record['user_login'] ) ? (string) $record['user_login'] : __( 'visiter', 'search-analytics-insights' );
+		return ! empty( $record['user_login'] ) ? (string) $record['user_login'] : __( 'Guest', 'search-analytics-insights' );
 	}
 
 	/**

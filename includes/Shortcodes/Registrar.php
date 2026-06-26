@@ -88,7 +88,7 @@ final class Registrar {
 	 *
 	 * Forward to the single search form renderer for backward compatibility.
 	 *
-	 * @deprecated 0.6.0 Use [search_insights_form] instead.
+	 * @deprecated 1.0.0 Use [search_insights_form] instead.
 	 *
 	 * @param array<string, mixed> $attributes Shortcode attributes.
 	 *

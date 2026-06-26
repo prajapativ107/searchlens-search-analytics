@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * Central plugin constants and shared keys.
  */
 final class Constants {
-	public const VERSION                      = '0.6.0';
+	public const VERSION                      = '1.0.0';
 	public const TEXT_DOMAIN                  = 'search-analytics-insights';
 	public const OPTION_SCHEMA_VERSION        = 'search_analytics_insights_schema_version';
 	public const OPTION_PLUGIN_VERSION        = 'search_analytics_insights_plugin_version';

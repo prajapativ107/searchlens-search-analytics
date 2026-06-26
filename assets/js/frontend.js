@@ -48,10 +48,10 @@
 		const sInput = form.querySelector('input[name="s"]');
 		if (sInput && form.method.toLowerCase() === 'get') {
 			const pageData = {
-				'sai_page_title': document.title,
-				'sai_page_url': window.location.href,
+				'sai_page_title': window.sai_data && window.sai_data.page_title ? window.sai_data.page_title : document.title,
+				'sai_page_url': window.sai_data && window.sai_data.page_url ? window.sai_data.page_url : window.location.href,
 				'sai_referrer': document.referrer,
-				'sai_page_type': getPageType()
+				'sai_page_type': window.sai_data && window.sai_data.page_type ? window.sai_data.page_type : getPageType()
 			};
 			for (const key in pageData) {
 				let input = form.querySelector('input[name="' + key + '"]');

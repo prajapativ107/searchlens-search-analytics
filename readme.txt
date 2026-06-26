@@ -1,72 +1,141 @@
 === Search Analytics & Insights ===
-Contributors: Vivek Prajapati
-Tags: search, analytics, insights, dashboard, statistics
+Contributors: vivekprajapati
+Tags: search, analytics, ajax search, search tracking, dashboard, insights
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 0.6.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Search Analytics & Insights tracks WordPress site searches and gives administrators a clear view of what visitors are searching for.
+Track WordPress searches with powerful analytics, AJAX search support, widgets, Gutenberg blocks, and exportable reports.
 
 == Description ==
 
-Search Analytics & Insights helps you understand search behavior on your WordPress site without collecting raw IP addresses or other unnecessary personal data.
+Search Analytics & Insights is a lightweight and privacy-friendly WordPress plugin that helps website owners understand what visitors are searching for.
 
-The plugin provides:
+Track search activity across your website, identify popular searches, discover searches with no results, and gain valuable insights through an intuitive analytics dashboard.
 
-* Search tracking for every WordPress search query.
-* Top searches to show the most frequently searched terms.
-* No result searches to help identify missing content.
-* An analytics dashboard in wp-admin with search summaries and filters.
-* A [search_insights_popular] shortcode for displaying popular search terms.
-* A [search_insights_trending] shortcode for showing trending searches from the last 7 days.
+Everything is stored locally in your WordPress database. No external analytics services or third-party tracking platforms are required.
 
-It stores search term data, result counts, timestamps, optional logged-in user IDs, and anonymous session identifiers for analytics purposes.
+= Key Features =
+
+* Track native WordPress searches.
+* Track AJAX searches.
+* Powerful analytics dashboard.
+* Total searches overview.
+* Unique searches overview.
+* No-result search tracking.
+* Recent search activity.
+* Top searched keywords.
+* Track search result count.
+* Track page title where the search was performed.
+* Track page URL.
+* Track page type.
+* Track referrer.
+* Advanced search filters.
+* Filter by search term.
+* Filter by page title.
+* Filter by page type.
+* Filter by date range.
+* Export analytics as CSV.
+* Configurable searchable post types.
+* Configurable AJAX search settings.
+* AJAX Search Widget.
+* Gutenberg Search Widget Block.
+* Search shortcode support.
+* Responsive admin interface.
+* Lightweight and privacy-friendly.
+* No external APIs.
+* WordPress Coding Standards compliant.
 
 == Installation ==
 
 1. Upload the `search-analytics-insights` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Visit the Search Analytics menu in the WordPress admin area.
-4. Add shortcodes to pages, posts, or widgets as needed.
+2. Activate the plugin through the **Plugins** menu in WordPress.
+3. Open **Search Analytics** from the WordPress admin menu.
+4. Configure your preferred search settings.
+5. Add the search widget, Gutenberg block, or shortcode wherever required.
 
 == Frequently Asked Questions ==
 
-= Does this track personal information? =
+= Does the plugin support AJAX search? =
 
-The plugin is designed to be privacy-friendly and does not collect raw IP addresses. It may store a logged-in user ID when available and an anonymous session identifier for analytics grouping.
+Yes. The plugin supports AJAX search tracking and analytics.
+
+= Does it work with Custom Post Types? =
+
+Yes. You can choose which public post types should be searchable.
+
+= Does it support Gutenberg? =
+
+Yes. A dedicated Gutenberg Search Widget block is included.
+
+= Does it support classic widgets? =
+
+Yes. The plugin includes a WordPress widget.
+
+= Can I export analytics? =
+
+Yes. Analytics can be exported as CSV.
+
+= Can I filter search logs? =
+
+Yes. Filter by search term, page title, page type, and date range.
 
 = Does it store IP addresses? =
 
-No. Raw IP addresses are not stored.
+No. Raw IP addresses are never stored.
 
-= Does it work with custom themes? =
+= Does it require any third-party service? =
 
-Yes. The search form shortcode uses standard WordPress search behavior and should work with most themes.
+No. Everything runs completely inside WordPress.
+
+= Is it lightweight? =
+
+Yes. The plugin is designed to be fast and efficient.
+
+= Does it work with most themes? =
+
+Yes. The plugin works with most WordPress themes.
 
 == Screenshots ==
 
-1. Search analytics dashboard showing totals, top terms, and daily search activity.
-2. Popular searches shortcode displayed on a front-end page.
-3. Trending searches shortcode showing searches from the last 7 days.
-4. Search analytics table with filters and pagination.
+1. Analytics Dashboard.
+2. Search Analytics Overview.
+3. Recent Search Logs.
+4. Search Filters.
+5. Search Settings.
+6. AJAX Search Widget.
+7. Gutenberg Search Widget Block.
+8. CSV Export.
 
 == Changelog ==
 
-= 0.6.0 =
-* Add page tracking capabilities (page title, url, referrer, page type)
-* Add three new dashboard analytics widgets
-* Enable filtering search logs by page title, url, and page type
+= 1.0.0 =
 
-= 0.5.0 =
-* Initial Release
+* Initial public release.
+* Native WordPress search tracking.
+* AJAX search tracking.
+* Analytics dashboard.
+* Search statistics overview.
+* Top searched keywords.
+* Recent searches.
+* No-result search tracking.
+* Page tracking (title, URL, type, and referrer).
+* Advanced search filters.
+* CSV export.
+* Search widget.
+* Gutenberg Search Widget block.
+* Search shortcode support.
+* Configurable searchable post types.
+* Configurable AJAX search settings.
+* Responsive admin interface.
+* Performance improvements.
+* Security improvements.
 
 == Upgrade Notice ==
 
-= 0.6.0 =
-Upgrade to 0.6.0 to get page tracking features and widgets.
+= 1.0.0 =
 
-= 0.5.0 =
-Initial release of Search Analytics & Insights.
+Initial public release of Search Analytics & Insights.
