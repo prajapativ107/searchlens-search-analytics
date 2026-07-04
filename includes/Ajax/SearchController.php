@@ -2,12 +2,12 @@
 /**
  * AJAX search controller.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Ajax;
+namespace SearchLens\Ajax;
 
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -50,7 +50,7 @@ final class SearchController {
 		if ( ! $this->search_service->is_enabled() ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'AJAX search is disabled.', 'search-analytics-insights' ),
+					'message' => __( 'AJAX search is disabled.', 'searchlens-search-analytics' ),
 				),
 				403
 			);
@@ -65,7 +65,7 @@ final class SearchController {
 				array(
 					'message' => sprintf(
 						/* translators: %d: minimum character count */
-						__( 'Please enter at least %d characters.', 'search-analytics-insights' ),
+						__( 'Please enter at least %d characters.', 'searchlens-search-analytics' ),
 						$minimum_characters
 					),
 				),

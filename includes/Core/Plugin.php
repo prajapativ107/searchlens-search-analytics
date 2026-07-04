@@ -2,31 +2,31 @@
 /**
  * Main plugin orchestrator.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Core;
+namespace SearchLens\Core;
 
-use SearchAnalyticsInsights\API\RestController;
-use SearchAnalyticsInsights\Ajax\SearchController;
-use SearchAnalyticsInsights\Ajax\SearchService as AjaxSearchService;
-use SearchAnalyticsInsights\Ajax\SearchTracker as AjaxSearchTracker;
-use SearchAnalyticsInsights\Admin\Dashboard;
-use SearchAnalyticsInsights\Admin\Assets;
-use SearchAnalyticsInsights\Admin\Menu;
-use SearchAnalyticsInsights\Admin\Settings;
-use SearchAnalyticsInsights\Analytics\Service\AnalyticsService;
-use SearchAnalyticsInsights\Database\Repository\SearchRepository;
-use SearchAnalyticsInsights\Database\Schema;
-use SearchAnalyticsInsights\Helpers\Privacy;
-use SearchAnalyticsInsights\Tracking\Tracker;
-use SearchAnalyticsInsights\Shortcodes\Registrar;
-use SearchAnalyticsInsights\Shortcodes\AjaxSearchForm;
-use SearchAnalyticsInsights\Shortcodes\SearchForm;
-use SearchAnalyticsInsights\Shortcodes\PopularSearches;
-use SearchAnalyticsInsights\Shortcodes\TrendingSearches;
-use SearchAnalyticsInsights\Widgets\WidgetManager;
-use SearchAnalyticsInsights\Blocks\BlockManager;
+use SearchLens\API\RestController;
+use SearchLens\Ajax\SearchController;
+use SearchLens\Ajax\SearchService as AjaxSearchService;
+use SearchLens\Ajax\SearchTracker as AjaxSearchTracker;
+use SearchLens\Admin\Dashboard;
+use SearchLens\Admin\Assets;
+use SearchLens\Admin\Menu;
+use SearchLens\Admin\Settings;
+use SearchLens\Analytics\Service\AnalyticsService;
+use SearchLens\Database\Repository\SearchRepository;
+use SearchLens\Database\Schema;
+use SearchLens\Helpers\Privacy;
+use SearchLens\Tracking\Tracker;
+use SearchLens\Shortcodes\Registrar;
+use SearchLens\Shortcodes\AjaxSearchForm;
+use SearchLens\Shortcodes\SearchForm;
+use SearchLens\Shortcodes\PopularSearches;
+use SearchLens\Shortcodes\TrendingSearches;
+use SearchLens\Widgets\WidgetManager;
+use SearchLens\Blocks\BlockManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -250,6 +250,7 @@ final class Plugin {
 		}
 
 		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		do_action( 'searchlens_container_ready', $this->container );
 		do_action( 'search_analytics_insights_container_ready', $this->container );
 	}
 

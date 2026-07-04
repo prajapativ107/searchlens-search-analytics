@@ -2,12 +2,12 @@
 /**
  * Analytics service.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Analytics\Service;
+namespace SearchLens\Analytics\Service;
 
-use SearchAnalyticsInsights\Database\Repository\SearchRepository;
+use SearchLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 

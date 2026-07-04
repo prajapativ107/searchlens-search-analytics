@@ -2,10 +2,10 @@
 /**
  * Page helper.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Helpers;
+namespace SearchLens\Helpers;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -66,7 +66,7 @@ final class PageHelper {
 		if ( is_search() ) {
 			return sprintf(
 			/* translators: %s: search query */
-				__( 'Search Results for "%s"', 'search-analytics-insights' ),
+				__( 'Search Results for "%s"', 'searchlens-search-analytics' ),
 				get_search_query()
 			);
 		}

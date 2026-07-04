@@ -2,12 +2,12 @@
 /**
  * Widget manager.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Widgets;
+namespace SearchLens\Widgets;
 
-use SearchAnalyticsInsights\Admin\Settings;
+use SearchLens\Admin\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,20 +2,20 @@
 /**
  * Block render template.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  *
  * @var array<string, mixed> $attributes Block attributes.
  */
 
-use SearchAnalyticsInsights\Admin\Settings;
-use SearchAnalyticsInsights\Core\Constants;
-use SearchAnalyticsInsights\Shortcodes\AjaxSearchForm;
-use SearchAnalyticsInsights\Shortcodes\SearchForm;
-use SearchAnalyticsInsights\Widgets\SearchWidget;
+use SearchLens\Admin\Settings;
+use SearchLens\Core\Constants;
+use SearchLens\Shortcodes\AjaxSearchForm;
+use SearchLens\Shortcodes\SearchForm;
+use SearchLens\Widgets\SearchWidget;
 
 defined( 'ABSPATH' ) || exit;
 
-( function( $attributes ) {
+( function ( $attributes ) {
 	$settings                     = new Settings();
 	$default_open_mode            = 'dropdown';
 	$default_show_label           = true;
@@ -33,27 +33,27 @@ defined( 'ABSPATH' ) || exit;
 
 	$search_form = new SearchForm();
 	$ajax_form   = new AjaxSearchForm( $settings );
-	$widget_id   = wp_unique_id( 'search-analytics-insights-block-search-widget-' );
+	$widget_id   = wp_unique_id( 'searchlens-block-search-widget-' );
 	$popup_id    = $widget_id . '-popup';
 
 	wp_enqueue_style(
-		'search-analytics-insights-block-search-widget',
-		SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/css/block-search-widget.css',
+		'searchlens-block-search-widget',
+		SEARCHLENS_URL . 'assets/css/block-search-widget.css',
 		array(),
 		Constants::VERSION
 	);
 
 	wp_enqueue_style(
-		'search-analytics-insights-search-widget',
-		SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/css/search-widget.css',
+		'searchlens-search-widget',
+		SEARCHLENS_URL . 'assets/css/search-widget.css',
 		array(),
 		Constants::VERSION
 	);
 
 	wp_enqueue_script(
-		'search-analytics-insights-block-search-widget',
-		SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/js/search-widget.js',
-		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-i18n', 'wp-block-editor', 'wp-compose', 'wp-data', 'search-analytics-insights-frontend' ),
+		'searchlens-block-search-widget',
+		SEARCHLENS_URL . 'assets/js/search-widget.js',
+		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-i18n', 'wp-block-editor', 'wp-compose', 'wp-data', 'searchlens-frontend' ),
 		Constants::VERSION,
 		true
 	);
@@ -85,7 +85,7 @@ defined( 'ABSPATH' ) || exit;
 	);
 	?>
 	<div
-		class="search-analytics-insights-search-widget search-analytics-insights-search-widget--<?php echo esc_attr( $open_mode ); ?> search-analytics-insights-search-widget--block"
+		class="searchlens-search-widget searchlens-search-widget--<?php echo esc_attr( $open_mode ); ?> searchlens-search-widget--block"
 		data-open-mode="<?php echo esc_attr( $open_mode ); ?>"
 		data-ajax-enabled="<?php echo esc_attr( $enable_ajax_search ? '1' : '0' ); ?>"
 		data-ajax-url="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>"
@@ -95,29 +95,29 @@ defined( 'ABSPATH' ) || exit;
 		data-limit="<?php echo esc_attr( (string) $settings->get_max_results() ); ?>"
 		data-show-featured-images="<?php echo esc_attr( $show_featured_images ? '1' : '0' ); ?>"
 		data-show-post-type-label="<?php echo esc_attr( $settings->get_show_post_type_label() ? '1' : '0' ); ?>"
-		data-loading-text="<?php echo esc_attr__( 'Searching...', 'search-analytics-insights' ); ?>"
-		data-empty-text="<?php echo esc_attr__( 'No results found.', 'search-analytics-insights' ); ?>"
-		data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
+		data-loading-text="<?php echo esc_attr__( 'Searching...', 'searchlens-search-analytics' ); ?>"
+		data-empty-text="<?php echo esc_attr__( 'No results found.', 'searchlens-search-analytics' ); ?>"
+		data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'searchlens-search-analytics' ); ?>"
 	>
 		<button
 			type="button"
-			class="search-analytics-insights-search-toggle"
-			aria-label="<?php echo esc_attr( $show_label ? __( 'Open search', 'search-analytics-insights' ) : __( 'Search', 'search-analytics-insights' ) ); ?>"
+			class="searchlens-search-toggle"
+			aria-label="<?php echo esc_attr( $show_label ? __( 'Open search', 'searchlens-search-analytics' ) : __( 'Search', 'searchlens-search-analytics' ) ); ?>"
 			aria-expanded="false"
 			aria-controls="<?php echo esc_attr( $popup_id ); ?>"
 		>
-			<span class="search-analytics-insights-search-toggle-icon" aria-hidden="true">
+			<span class="searchlens-search-toggle-icon" aria-hidden="true">
 				<?php echo wp_kses( SearchWidget::get_icon_markup(), $allowed_tags ); ?>
 			</span>
 			<?php if ( $show_label ) : ?>
-				<span class="search-analytics-insights-search-toggle-label"><?php esc_html_e( 'Search', 'search-analytics-insights' ); ?></span>
+				<span class="searchlens-search-toggle-label"><?php esc_html_e( 'Search', 'searchlens-search-analytics' ); ?></span>
 			<?php endif; ?>
 		</button>
 
-		<div id="<?php echo esc_attr( $popup_id ); ?>" class="search-analytics-insights-search-popup" hidden aria-hidden="true" inert>
-			<div class="search-analytics-insights-search-panel">
+		<div id="<?php echo esc_attr( $popup_id ); ?>" class="searchlens-search-popup" hidden aria-hidden="true" inert>
+			<div class="searchlens-search-panel">
 				<?php if ( 'modal' === $open_mode ) : ?>
-					<button type="button" class="search-analytics-insights-search-close" aria-label="<?php echo esc_attr__( 'Close search', 'search-analytics-insights' ); ?>">
+					<button type="button" class="searchlens-search-close" aria-label="<?php echo esc_attr__( 'Close search', 'searchlens-search-analytics' ); ?>">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				<?php endif; ?>

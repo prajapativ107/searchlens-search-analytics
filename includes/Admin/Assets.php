@@ -2,12 +2,12 @@
 /**
  * Admin assets loader.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Admin;
+namespace SearchLens\Admin;
 
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * Enqueues admin-side assets for the plugin screens only.
  */
 final class Assets {
-	private const SCREEN_ID = 'toplevel_page_search-analytics-insights';
+	private const SCREEN_ID = 'toplevel_page_searchlens';
 
 	/**
 	 * Register hooks.
@@ -29,27 +29,25 @@ final class Assets {
 	/**
 	 * Enqueue CSS and JS for the plugin screen.
 	 *
-	 * @param string $hook_suffix Current admin page hook suffix.
-	 *
 	 * @return void
 	 */
-	public function enqueue_assets( string $hook_suffix ): void {
+	public function enqueue_assets(): void {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		if ( ! $screen || false === strpos( $screen->id, 'search-analytics' ) ) {
+		if ( ! $screen || false === strpos( $screen->id, 'searchlens' ) ) {
 			return;
 		}
 
 		wp_enqueue_style(
-			'search-analytics-insights-admin',
-			SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/css/admin.css',
+			'searchlens-admin',
+			SEARCHLENS_URL . 'assets/css/admin.css',
 			array(),
 			Constants::VERSION
 		);
 
 		wp_enqueue_script(
-			'search-analytics-insights-admin',
-			SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/js/admin.js',
+			'searchlens-admin',
+			SEARCHLENS_URL . 'assets/js/admin.js',
 			array( 'wp-element' ),
 			Constants::VERSION,
 			true

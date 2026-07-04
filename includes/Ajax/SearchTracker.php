@@ -2,13 +2,13 @@
 /**
  * AJAX search tracker.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Ajax;
+namespace SearchLens\Ajax;
 
-use SearchAnalyticsInsights\Core\Constants;
-use SearchAnalyticsInsights\Database\Repository\SearchRepository;
+use SearchLens\Core\Constants;
+use SearchLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,9 +31,10 @@ final class SearchTracker {
 	/**
 	 * Store an AJAX search event.
 	 *
-	 * @param string             $search_term        Search term.
-	 * @param int                $result_count       Result count.
-	 * @param array<int, string> $matched_post_types Matched post type slugs.
+	 * @param string                $search_term        Search term.
+	 * @param int                   $result_count       Result count.
+	 * @param array<int, string>    $matched_post_types Matched post type slugs.
+	 * @param array<string, string> $page_data       Page tracking data parameters.
 	 *
 	 * @return int|false
 	 */
@@ -56,7 +57,7 @@ final class SearchTracker {
 
 		$raw_title  = $page_data['page_title'] ?? '';
 		$page_url   = $page_data['page_url'] ?? '';
-		$page_title = \SearchAnalyticsInsights\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
+		$page_title = \SearchLens\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
 
 		return $this->repository->insert(
 			array(
@@ -82,10 +83,14 @@ final class SearchTracker {
 	 * @return string|null
 	 */
 	private function get_session_id(): ?string {
-		if ( empty( $_COOKIE['search_analytics_insights_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			return null;
+		if ( ! empty( $_COOKIE['searchlens_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return sanitize_text_field( wp_unslash( (string) $_COOKIE['searchlens_session'] ) );
 		}
 
-		return sanitize_text_field( wp_unslash( (string) $_COOKIE['search_analytics_insights_session'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( ! empty( $_COOKIE['search_analytics_insights_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return sanitize_text_field( wp_unslash( (string) $_COOKIE['search_analytics_insights_session'] ) );
+		}
+
+		return null;
 	}
 }

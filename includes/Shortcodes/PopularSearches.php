@@ -2,13 +2,13 @@
 /**
  * Popular searches shortcode.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Shortcodes;
+namespace SearchLens\Shortcodes;
 
-use SearchAnalyticsInsights\Analytics\Service\AnalyticsService;
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Analytics\Service\AnalyticsService;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,11 +38,11 @@ final class PopularSearches {
 		$attributes = shortcode_atts(
 			array(
 				'limit'      => 5,
-				'title'      => __( 'Popular Searches', 'search-analytics-insights' ),
+				'title'      => __( 'Popular Searches', 'searchlens-search-analytics' ),
 				'show_count' => 'false',
 			),
 			$attributes,
-			'search_insights_popular'
+			'searchlens_popular'
 		);
 
 		$limit      = max( 1, min( 50, absint( $attributes['limit'] ) ) );
@@ -52,30 +52,30 @@ final class PopularSearches {
 
 		ob_start();
 		?>
-		<div class="search-analytics-insights-shortcode search-analytics-insights-popular-searches">
+		<div class="searchlens-shortcode searchlens-popular-searches">
 			<?php if ( '' !== $title ) : ?>
-				<h2 class="search-analytics-insights-shortcode-title"><?php echo esc_html( $title ); ?></h2>
+				<h2 class="searchlens-shortcode-title"><?php echo esc_html( $title ); ?></h2>
 			<?php endif; ?>
 
 			<?php if ( empty( $searches ) ) : ?>
-				<p><?php esc_html_e( 'No popular searches found yet.', 'search-analytics-insights' ); ?></p>
+				<p><?php esc_html_e( 'No popular searches found yet.', 'searchlens-search-analytics' ); ?></p>
 			<?php else : ?>
-				<ul class="search-analytics-insights-popular-searches-list">
+				<ul class="searchlens-popular-searches-list">
 					<?php foreach ( $searches as $row ) : ?>
 						<?php
 						$term   = isset( $row['search_term'] ) ? (string) $row['search_term'] : '';
 						$count  = isset( $row['search_count'] ) ? absint( $row['search_count'] ) : 0;
 						$search = add_query_arg( 's', rawurlencode( $term ), home_url( '/' ) );
 						?>
-						<li class="search-analytics-insights-popular-searches-item">
+						<li class="searchlens-popular-searches-item">
 							<a href="<?php echo esc_url( $search ); ?>"><?php echo esc_html( $term ); ?></a>
 							<?php if ( $show_count ) : ?>
-								<span class="search-analytics-insights-search-count">
+								<span class="searchlens-search-count">
 									<?php
 									echo esc_html(
 										sprintf(
 										/* translators: %d: search count */
-											_n( '%d search', '%d searches', $count, 'search-analytics-insights' ),
+											_n( '%d search', '%d searches', $count, 'searchlens-search-analytics' ),
 											$count
 										)
 									);

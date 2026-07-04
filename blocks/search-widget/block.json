@@ -1,11 +1,11 @@
 {
 	"apiVersion": 3,
-	"name": "search-analytics-insights/search-widget",
-	"title": "Search Analytics Search",
+	"name": "searchlens/search-widget",
+	"title": "SearchLens Search",
 	"category": "widgets",
 	"icon": "search",
-	"description": "Display a search icon that opens the Search Analytics search form.",
-	"textdomain": "search-analytics-insights",
+	"description": "Display a search icon that opens the SearchLens search form.",
+	"textdomain": "searchlens-search-analytics",
 	"attributes": {
 		"openMode": {
 			"type": "string",

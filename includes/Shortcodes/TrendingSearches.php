@@ -2,13 +2,13 @@
 /**
  * Trending searches shortcode.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Shortcodes;
+namespace SearchLens\Shortcodes;
 
-use SearchAnalyticsInsights\Analytics\Service\AnalyticsService;
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Analytics\Service\AnalyticsService;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,10 +38,10 @@ final class TrendingSearches {
 		$attributes = shortcode_atts(
 			array(
 				'limit' => 5,
-				'title' => __( 'Trending Searches', 'search-analytics-insights' ),
+				'title' => __( 'Trending Searches', 'searchlens-search-analytics' ),
 			),
 			$attributes,
-			'search_insights_trending'
+			'searchlens_trending'
 		);
 
 		$limit    = max( 1, min( 50, absint( $attributes['limit'] ) ) );
@@ -53,21 +53,21 @@ final class TrendingSearches {
 
 		ob_start();
 		?>
-		<div class="search-analytics-insights-shortcode search-analytics-insights-trending-searches">
+		<div class="searchlens-shortcode searchlens-trending-searches">
 			<?php if ( '' !== $title ) : ?>
-				<h2 class="search-analytics-insights-shortcode-title"><?php echo esc_html( $title ); ?></h2>
+				<h2 class="searchlens-shortcode-title"><?php echo esc_html( $title ); ?></h2>
 			<?php endif; ?>
 
 			<?php if ( empty( $searches ) ) : ?>
-				<p><?php esc_html_e( 'No trending searches found for the last 7 days.', 'search-analytics-insights' ); ?></p>
+				<p><?php esc_html_e( 'No trending searches found for the last 7 days.', 'searchlens-search-analytics' ); ?></p>
 			<?php else : ?>
-				<ul class="search-analytics-insights-trending-searches-list">
+				<ul class="searchlens-trending-searches-list">
 					<?php foreach ( $searches as $row ) : ?>
 						<?php
 						$term   = isset( $row['search_term'] ) ? (string) $row['search_term'] : '';
 						$search = add_query_arg( 's', rawurlencode( $term ), home_url( '/' ) );
 						?>
-						<li class="search-analytics-insights-trending-searches-item">
+						<li class="searchlens-trending-searches-item">
 							<a href="<?php echo esc_url( $search ); ?>"><?php echo esc_html( $term ); ?></a>
 						</li>
 					<?php endforeach; ?>

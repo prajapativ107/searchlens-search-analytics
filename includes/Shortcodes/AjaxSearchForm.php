@@ -2,14 +2,14 @@
 /**
  * AJAX search shortcode.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Shortcodes;
+namespace SearchLens\Shortcodes;
 
-use SearchAnalyticsInsights\Admin\Settings;
-use SearchAnalyticsInsights\Core\Constants;
-use SearchAnalyticsInsights\Widgets\SearchWidget;
+use SearchLens\Admin\Settings;
+use SearchLens\Core\Constants;
+use SearchLens\Widgets\SearchWidget;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,7 +45,7 @@ final class AjaxSearchForm {
 				'form_style'           => '',
 			),
 			$attributes,
-			'search_insights_ajax_form'
+			'searchlens_ajax_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );
@@ -60,16 +60,16 @@ final class AjaxSearchForm {
 		$form_style      = in_array( $form_style, array( 'rounded', 'rectangle', 'underlined' ), true ) ? $form_style : $this->settings->get_form_style();
 
 		wp_enqueue_style(
-			'search-analytics-insights-ajax-search',
-			SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/css/ajax-search.css',
+			'searchlens-ajax-search',
+			SEARCHLENS_URL . 'assets/css/ajax-search.css',
 			array(),
 			Constants::VERSION
 		);
 
 		wp_enqueue_script(
-			'search-analytics-insights-ajax-search',
-			SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/js/ajax-search.js',
-			array( 'search-analytics-insights-frontend' ),
+			'searchlens-ajax-search',
+			SEARCHLENS_URL . 'assets/js/ajax-search.js',
+			array( 'searchlens-frontend' ),
 			Constants::VERSION,
 			true
 		);
@@ -77,7 +77,7 @@ final class AjaxSearchForm {
 		ob_start();
 		?>
 		<div
-			class="search-analytics-insights-ajax-search search-analytics-insights-ajax-search--<?php echo esc_attr( $form_style ); ?>"
+			class="searchlens-ajax-search searchlens-ajax-search--<?php echo esc_attr( $form_style ); ?>"
 			data-ajax-url="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( Constants::NONCE_ACTION ) ); ?>"
 			data-action="<?php echo esc_attr( Constants::AJAX_ACTION_SEARCH ); ?>"
@@ -86,33 +86,33 @@ final class AjaxSearchForm {
 			data-limit="<?php echo esc_attr( (string) $limit ); ?>"
 			data-show-featured-images="<?php echo esc_attr( $show_images ? '1' : '0' ); ?>"
 			data-show-post-type-label="<?php echo esc_attr( $this->settings->get_show_post_type_label() ? '1' : '0' ); ?>"
-			data-loading-text="<?php echo esc_attr__( 'Searching...', 'search-analytics-insights' ); ?>"
+			data-loading-text="<?php echo esc_attr__( 'Searching...', 'searchlens-search-analytics' ); ?>"
 			data-empty-text="<?php echo esc_attr( $this->settings->get_no_results_message() ); ?>"
-			data-min-chars-text="<?php echo esc_attr( sprintf( /* translators: %d: minimum characters count */ __( 'Type at least %d characters to search.', 'search-analytics-insights' ), (int) $settings['minimum_characters'] ) ); ?>"
-			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
+			data-min-chars-text="<?php echo esc_attr( sprintf( /* translators: %d: minimum characters count */ __( 'Type at least %d characters to search.', 'searchlens-search-analytics' ), (int) $settings['minimum_characters'] ) ); ?>"
+			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'searchlens-search-analytics' ); ?>"
 		>
-			<form class="search-analytics-insights-ajax-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" novalidate>
-				<label class="screen-reader-text" for="search-analytics-insights-ajax-search-input">
-					<?php esc_html_e( 'Search for:', 'search-analytics-insights' ); ?>
+			<form class="searchlens-ajax-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" novalidate>
+				<label class="screen-reader-text" for="searchlens-ajax-search-input">
+					<?php esc_html_e( 'Search for:', 'searchlens-search-analytics' ); ?>
 				</label>
-				<div class="search-analytics-insights-ajax-search-fields<?php echo $is_ajax_enabled ? ' search-analytics-insights-ajax-search-fields--no-button search-analytics-insights-ajax-search-fields--has-icon' : ''; ?>">
+				<div class="searchlens-ajax-search-fields<?php echo $is_ajax_enabled ? ' searchlens-ajax-search-fields--no-button searchlens-ajax-search-fields--has-icon' : ''; ?>">
 					<input
-						id="search-analytics-insights-ajax-search-input"
+						id="searchlens-ajax-search-input"
 						type="search"
-						class="search-analytics-insights-ajax-search-input"
+						class="searchlens-ajax-search-input"
 						name="s"
 						placeholder="<?php echo esc_attr( $placeholder ); ?>"
 						autocomplete="off"
 						aria-autocomplete="list"
 						aria-expanded="false"
-						aria-controls="search-analytics-insights-ajax-search-results"
+						aria-controls="searchlens-ajax-search-results"
 					/>
 					<?php if ( ! $is_ajax_enabled ) : ?>
-						<button type="submit" class="search-analytics-insights-ajax-search-button">
+						<button type="submit" class="searchlens-ajax-search-button">
 							<?php echo esc_html( $button_text ); ?>
 						</button>
 					<?php else : ?>
-						<span class="search-analytics-insights-input-icon">
+						<span class="searchlens-input-icon">
 							<?php
 							$allowed_tags = array(
 								'svg'  => array(
@@ -132,10 +132,10 @@ final class AjaxSearchForm {
 						</span>
 					<?php endif; ?>
 				</div>
-				<span class="search-analytics-insights-ajax-search-status" style="display:none;" aria-live="polite" aria-atomic="true"></span>
+				<span class="searchlens-ajax-search-status" style="display:none;" aria-live="polite" aria-atomic="true"></span>
 			</form>
-			<div class="search-analytics-insights-ajax-search-results-wrap">
-				<ul id="search-analytics-insights-ajax-search-results" class="search-analytics-insights-ajax-search-results" role="listbox"></ul>
+			<div class="searchlens-ajax-search-results-wrap">
+				<ul id="searchlens-ajax-search-results" class="searchlens-ajax-search-results" role="listbox"></ul>
 			</div>
 		</div>
 		<?php

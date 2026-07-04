@@ -2,14 +2,14 @@
 /**
  * Search form shortcode.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Shortcodes;
+namespace SearchLens\Shortcodes;
 
-use SearchAnalyticsInsights\Admin\Settings;
-use SearchAnalyticsInsights\Core\Constants;
-use SearchAnalyticsInsights\Widgets\SearchWidget;
+use SearchLens\Admin\Settings;
+use SearchLens\Core\Constants;
+use SearchLens\Widgets\SearchWidget;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,7 +25,7 @@ final class SearchForm {
 	 * @param Settings $settings Plugin settings helper.
 	 */
 	public function __construct( ?Settings $settings = null ) {
-		$this->settings = $settings ?: new Settings();
+		$this->settings = $settings ? $settings : new Settings();
 	}
 
 	/**
@@ -44,7 +44,7 @@ final class SearchForm {
 				'form_style'  => '',
 			),
 			$attributes,
-			'search_insights_form'
+			'searchlens_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );
@@ -56,17 +56,17 @@ final class SearchForm {
 		}
 		$form_style   = sanitize_key( (string) ( '' !== (string) $attributes['form_style'] ? $attributes['form_style'] : $this->settings->get_form_style() ) );
 		$form_style   = in_array( $form_style, array( 'rounded', 'rectangle', 'underlined' ), true ) ? $form_style : $this->settings->get_form_style();
-		$field_id     = wp_unique_id( 'search-analytics-insights-search-field-' );
+		$field_id     = wp_unique_id( 'searchlens-search-field-' );
 		$action_url   = home_url( '/' );
 		$current_term = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		ob_start();
 		?>
-		<form role="search" method="get" class="search-form search-analytics-insights-form search-analytics-insights-form--<?php echo esc_attr( $form_style ); ?>" action="<?php echo esc_url( $action_url ); ?>">
+		<form role="search" method="get" class="search-form searchlens-form searchlens-form--<?php echo esc_attr( $form_style ); ?>" action="<?php echo esc_url( $action_url ); ?>">
 			<label for="<?php echo esc_attr( $field_id ); ?>" class="screen-reader-text">
-				<?php esc_html_e( 'Search for:', 'search-analytics-insights' ); ?>
+				<?php esc_html_e( 'Search for:', 'searchlens-search-analytics' ); ?>
 			</label>
-			<div class="search-analytics-insights-form-fields search-analytics-insights-form-fields--<?php echo esc_attr( $show_button ? 'with-button' : 'no-button' ); ?><?php echo $is_ajax_enabled ? ' search-analytics-insights-form-fields--has-icon' : ''; ?>">
+			<div class="searchlens-form-fields searchlens-form-fields--<?php echo esc_attr( $show_button ? 'with-button' : 'no-button' ); ?><?php echo $is_ajax_enabled ? ' searchlens-form-fields--has-icon' : ''; ?>">
 				<input
 					id="<?php echo esc_attr( $field_id ); ?>"
 					type="search"
@@ -81,7 +81,7 @@ final class SearchForm {
 						<?php echo esc_html( $button_text ); ?>
 					</button>
 				<?php elseif ( $is_ajax_enabled ) : ?>
-					<span class="search-analytics-insights-input-icon">
+					<span class="searchlens-input-icon">
 						<?php
 						$allowed_tags = array(
 							'svg'  => array(

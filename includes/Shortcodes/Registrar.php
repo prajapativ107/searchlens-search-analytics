@@ -2,12 +2,12 @@
 /**
  * Shortcode registrar.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Shortcodes;
+namespace SearchLens\Shortcodes;
 
-use SearchAnalyticsInsights\Admin\Settings;
+use SearchLens\Admin\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -59,8 +59,15 @@ final class Registrar {
 	 * @return void
 	 */
 	public function register_shortcodes(): void {
-		add_shortcode( 'search_insights_ajax_form', array( $this, 'render_deprecated_ajax_search_form' ) );
+		// New primary shortcodes
+		add_shortcode( 'searchlens_form', array( $this, 'render_search_form' ) );
+		add_shortcode( 'searchlens_ajax_form', array( $this, 'render_ajax_search_form' ) );
+		add_shortcode( 'searchlens_popular', array( $this->popular_searches, 'render' ) );
+		add_shortcode( 'searchlens_trending', array( $this->trending_searches, 'render' ) );
+
+		// Legacy backward-compatible shortcodes
 		add_shortcode( 'search_insights_form', array( $this, 'render_search_form' ) );
+		add_shortcode( 'search_insights_ajax_form', array( $this, 'render_ajax_search_form' ) );
 		add_shortcode( 'search_insights_popular', array( $this->popular_searches, 'render' ) );
 		add_shortcode( 'search_insights_trending', array( $this->trending_searches, 'render' ) );
 	}
@@ -84,17 +91,13 @@ final class Registrar {
 	}
 
 	/**
-	 * Render the deprecated [search_insights_ajax_form] shortcode.
-	 *
-	 * Forward to the single search form renderer for backward compatibility.
-	 *
-	 * @deprecated 1.0.0 Use [search_insights_form] instead.
+	 * Render the live AJAX search form shortcode directly.
 	 *
 	 * @param array<string, mixed> $attributes Shortcode attributes.
 	 *
 	 * @return string
 	 */
-	public function render_deprecated_ajax_search_form( array $attributes = array() ): string {
-		return $this->render_search_form( $attributes );
+	public function render_ajax_search_form( array $attributes = array() ): string {
+		return $this->ajax_search_form->render( $attributes );
 	}
 }

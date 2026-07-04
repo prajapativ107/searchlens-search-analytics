@@ -2,13 +2,13 @@
 /**
  * AJAX search service.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Ajax;
+namespace SearchLens\Ajax;
 
-use SearchAnalyticsInsights\Admin\Settings;
-use SearchAnalyticsInsights\Database\Repository\SearchRepository;
+use SearchLens\Admin\Settings;
+use SearchLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 

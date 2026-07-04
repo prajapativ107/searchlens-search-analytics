@@ -4,16 +4,16 @@
 	window.addEventListener(
 		'DOMContentLoaded',
 		function () {
-			const wrapper = document.querySelector( '.search-analytics-insights-wrap' );
+			const wrapper = document.querySelector( '.searchlens-wrap' );
 
 			if ( ! wrapper) {
 				return;
 			}
 
-			const buttons                   = wrapper.querySelectorAll( '.search-analytics-insights-copy-shortcode' );
+			const buttons                   = wrapper.querySelectorAll( '.searchlens-copy-shortcode' );
 			const copiedLabel               = wrapper.getAttribute( 'data-copied-label' ) || 'Copied';
-			const loadAllPublicPostTypes    = wrapper.querySelector( '#search-analytics-insights-search_sources-load_all_public_post_types' );
-			const searchablePostTypeOptions = wrapper.querySelectorAll( '.search-analytics-insights-post-type-option input[type="checkbox"]' );
+			const loadAllPublicPostTypes    = wrapper.querySelector( '#searchlens-search_sources-load_all_public_post_types' );
+			const searchablePostTypeOptions = wrapper.querySelectorAll( '.searchlens-post-type-option input[type="checkbox"]' );
 
 			if (loadAllPublicPostTypes && searchablePostTypeOptions.length) {
 				const syncSearchablePostTypes = function () {
@@ -22,7 +22,7 @@
 					searchablePostTypeOptions.forEach(
 						function (checkbox) {
 							checkbox.disabled = isDisabled;
-							const option      = checkbox.closest( '.search-analytics-insights-post-type-option' );
+							const option      = checkbox.closest( '.searchlens-post-type-option' );
 
 							if (option) {
 								option.classList.toggle( 'is-disabled', isDisabled );
@@ -39,7 +39,7 @@
 			wrapper.addEventListener(
 				'click',
 				function (e) {
-					const toggleBtn = e.target.closest( '.sai-toggle-details' );
+					const toggleBtn = e.target.closest( '.searchlens-toggle-details' );
 					if ( ! toggleBtn) {
 						return;
 					}
@@ -61,10 +61,10 @@
 			);
 
 			// Collapsible toggle logic for Search Filters with localStorage persistence.
-			const filterToggleBtn = wrapper.querySelector( '.sai-filters-toggle-btn' );
-			const filtersForm     = wrapper.querySelector( '.sai-filters-form' );
+			const filterToggleBtn = wrapper.querySelector( '.searchlens-filters-toggle-btn' );
+			const filtersForm     = wrapper.querySelector( '.searchlens-filters-form' );
 			if (filterToggleBtn && filtersForm) {
-				const toggleText = filterToggleBtn.querySelector( '.sai-toggle-text' );
+				const toggleText = filterToggleBtn.querySelector( '.searchlens-toggle-text' );
 				const toggleIcon = filterToggleBtn.querySelector( '.dashicons' );
 
 				const setFiltersState = function (isCollapsed) {
@@ -92,7 +92,7 @@
 				};
 
 				// Initial state from localStorage (default: expanded)
-				const storedState = localStorage.getItem( 'sai_filters_collapsed' );
+				const storedState = localStorage.getItem( 'searchlens_filters_collapsed' );
 				if (storedState === 'true') {
 					setFiltersState( true );
 				} else {
@@ -105,7 +105,7 @@
 						e.preventDefault();
 						const isCurrentlyCollapsed = filtersForm.classList.contains( 'collapsed' );
 						setFiltersState( ! isCurrentlyCollapsed );
-						localStorage.setItem( 'sai_filters_collapsed', ( ! isCurrentlyCollapsed ).toString() );
+						localStorage.setItem( 'searchlens_filters_collapsed', ( ! isCurrentlyCollapsed ).toString() );
 					}
 				);
 			}

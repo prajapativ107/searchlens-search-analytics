@@ -2,10 +2,10 @@
 /**
  * Service container.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Core;
+namespace SearchLens\Core;
 
 defined( 'ABSPATH' ) || exit;
 

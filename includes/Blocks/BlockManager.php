@@ -2,10 +2,10 @@
 /**
  * Block manager.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Blocks;
+namespace SearchLens\Blocks;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,7 +29,7 @@ final class BlockManager {
 	 */
 	public function register_blocks(): void {
 		register_block_type(
-			SEARCH_ANALYTICS_INSIGHTS_PATH . 'blocks/search-widget'
+			SEARCHLENS_PATH . 'blocks/search-widget'
 		);
 	}
 }

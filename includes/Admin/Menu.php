@@ -2,12 +2,12 @@
 /**
  * Admin menu registration.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Admin;
+namespace SearchLens\Admin;
 
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,10 +45,10 @@ final class Menu {
 	public function register_menu(): void {
 		// Parent top-level menu (mapped to dashboard page render)
 		add_menu_page(
-			esc_html__( 'Search Analytics', 'search-analytics-insights' ),
-			esc_html__( 'Search Analytics', 'search-analytics-insights' ),
+			esc_html__( 'SearchLens', 'searchlens-search-analytics' ),
+			esc_html__( 'SearchLens', 'searchlens-search-analytics' ),
 			Constants::CAPABILITY,
-			'search-analytics-insights',
+			'searchlens',
 			array( $this->dashboard, 'render_dashboard_page' ),
 			'dashicons-search',
 			56
@@ -56,51 +56,51 @@ final class Menu {
 
 		// Submenu: Dashboard
 		add_submenu_page(
-			'search-analytics-insights',
-			esc_html__( 'Dashboard', 'search-analytics-insights' ),
-			esc_html__( 'Dashboard', 'search-analytics-insights' ),
+			'searchlens',
+			esc_html__( 'Dashboard', 'searchlens-search-analytics' ),
+			esc_html__( 'Dashboard', 'searchlens-search-analytics' ),
 			Constants::CAPABILITY,
-			'search-analytics-insights',
+			'searchlens',
 			''
 		);
 
 		// Submenu: Analytics & Insights
 		add_submenu_page(
-			'search-analytics-insights',
-			esc_html__( 'Analytics & Insights', 'search-analytics-insights' ),
-			esc_html__( 'Analytics & Insights', 'search-analytics-insights' ),
+			'searchlens',
+			esc_html__( 'Analytics & Insights', 'searchlens-search-analytics' ),
+			esc_html__( 'Analytics & Insights', 'searchlens-search-analytics' ),
 			Constants::CAPABILITY,
-			'search-analytics-analytics',
+			'searchlens-analytics',
 			array( $this->dashboard, 'render_analytics_page' )
 		);
 
 		// Submenu: Search Settings
 		add_submenu_page(
-			'search-analytics-insights',
-			esc_html__( 'Search Settings', 'search-analytics-insights' ),
-			esc_html__( 'Search Settings', 'search-analytics-insights' ),
+			'searchlens',
+			esc_html__( 'Search Settings', 'searchlens-search-analytics' ),
+			esc_html__( 'Search Settings', 'searchlens-search-analytics' ),
 			Constants::CAPABILITY,
-			'search-analytics-settings',
+			'searchlens-settings',
 			array( $this->dashboard, 'render_settings_page' )
 		);
 
 		// Submenu: Tools
 		add_submenu_page(
-			'search-analytics-insights',
-			esc_html__( 'Tools', 'search-analytics-insights' ),
-			esc_html__( 'Tools', 'search-analytics-insights' ),
+			'searchlens',
+			esc_html__( 'Tools', 'searchlens-search-analytics' ),
+			esc_html__( 'Tools', 'searchlens-search-analytics' ),
 			Constants::CAPABILITY,
-			'search-analytics-tools',
+			'searchlens-tools',
 			array( $this->dashboard, 'render_tools_page' )
 		);
 
 		// Submenu: Help & Documentation
 		add_submenu_page(
-			'search-analytics-insights',
-			esc_html__( 'Help & Documentation', 'search-analytics-insights' ),
-			esc_html__( 'Help & Docs', 'search-analytics-insights' ),
+			'searchlens',
+			esc_html__( 'Help & Documentation', 'searchlens-search-analytics' ),
+			esc_html__( 'Help & Docs', 'searchlens-search-analytics' ),
 			Constants::CAPABILITY,
-			'search-analytics-help',
+			'searchlens-help',
 			array( $this->dashboard, 'render_help_page' )
 		);
 	}
@@ -116,19 +116,19 @@ final class Menu {
 		}
 
 		$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : '';
-		if ( 'search-analytics-tools' !== $page ) {
+		if ( 'searchlens-tools' !== $page ) {
 			return;
 		}
 
-		$action = isset( $_POST['sai_action'] ) ? sanitize_key( $_POST['sai_action'] ) : '';
+		$action = isset( $_POST['searchlens_action'] ) ? sanitize_key( $_POST['searchlens_action'] ) : '';
 		if ( empty( $action ) ) {
 			return;
 		}
 
 		// Verify Nonce
-		$nonce = isset( $_POST['sai_tools_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['sai_tools_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'sai_tools_action' ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'search-analytics-insights' ) );
+		$nonce = isset( $_POST['searchlens_tools_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['searchlens_tools_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'searchlens_tools_action' ) ) {
+			wp_die( esc_html__( 'Security check failed.', 'searchlens-search-analytics' ) );
 		}
 
 		if ( 'export' === $action ) {
@@ -150,32 +150,32 @@ final class Menu {
 
 		// Set headers for download.
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=search-analytics-export-' . gmdate( 'Y-m-d' ) . '.csv' );
+		header( 'Content-Disposition: attachment; filename=searchlens-export-' . gmdate( 'Y-m-d' ) . '.csv' );
 		header( 'Pragma: no-cache' );
 		header( 'Expires: 0' );
 
 		$output = fopen( 'php://output', 'w' );
 		if ( ! $output ) {
-			wp_die( esc_html__( 'Failed to generate export file.', 'search-analytics-insights' ) );
+			wp_die( esc_html__( 'Failed to generate export file.', 'searchlens-search-analytics' ) );
 		}
 
 		// Write the UTF-8 BOM to ensure spreadsheet applications display special characters correctly.
-     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
 		fwrite( $output, "\xEF\xBB\xBF" );
 
 		// CSV Column headers.
 		$headers = array(
-			__( 'ID', 'search-analytics-insights' ),
-			__( 'Search Term', 'search-analytics-insights' ),
-			__( 'Searched At', 'search-analytics-insights' ),
-			__( 'Source', 'search-analytics-insights' ),
-			__( 'Matched Post Types', 'search-analytics-insights' ),
-			__( 'Result Count', 'search-analytics-insights' ),
-			__( 'Username', 'search-analytics-insights' ),
-			__( 'Page Title', 'search-analytics-insights' ),
-			__( 'Page URL', 'search-analytics-insights' ),
-			__( 'Referrer', 'search-analytics-insights' ),
-			__( 'Page Type', 'search-analytics-insights' ),
+			__( 'ID', 'searchlens-search-analytics' ),
+			__( 'Search Term', 'searchlens-search-analytics' ),
+			__( 'Searched At', 'searchlens-search-analytics' ),
+			__( 'Source', 'searchlens-search-analytics' ),
+			__( 'Matched Post Types', 'searchlens-search-analytics' ),
+			__( 'Result Count', 'searchlens-search-analytics' ),
+			__( 'Username', 'searchlens-search-analytics' ),
+			__( 'Page Title', 'searchlens-search-analytics' ),
+			__( 'Page URL', 'searchlens-search-analytics' ),
+			__( 'Referrer', 'searchlens-search-analytics' ),
+			__( 'Page Type', 'searchlens-search-analytics' ),
 		);
 
 		fputcsv( $output, array_map( array( $this, 'escape_csv_value' ), $headers ) );
@@ -186,9 +186,9 @@ final class Menu {
 		$offset = 0;
 
 		while ( true ) {
-         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$query = "SELECT {$table}.id, {$table}.search_term, {$table}.searched_at, {$table}.source, {$table}.matched_post_types, {$table}.result_count, {$table}.page_title, {$table}.page_url, {$table}.referrer, {$table}.page_type, u.display_name, u.user_login FROM {$table} LEFT JOIN {$wpdb->users} AS u ON {$table}.user_id = u.ID ORDER BY {$table}.id ASC LIMIT %d OFFSET %d";
-         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			$rows = $wpdb->get_results( $wpdb->prepare( $query, $limit, $offset ), ARRAY_A );
 
 			if ( empty( $rows ) ) {
@@ -196,7 +196,7 @@ final class Menu {
 			}
 
 			foreach ( $rows as $row ) {
-				$page_title = \SearchAnalyticsInsights\Helpers\PageHelper::resolve_page_title( $row['page_url'], $row['page_title'] );
+				$page_title = \SearchLens\Helpers\PageHelper::resolve_page_title( $row['page_url'], $row['page_title'] );
 
 				$csv_row = array(
 					$row['id'],
@@ -219,7 +219,7 @@ final class Menu {
 			$wpdb->flush();
 		}
 
-     // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		fclose( $output );
 		exit;
 	}
@@ -260,7 +260,7 @@ final class Menu {
 			return $display_name;
 		}
 
-		return ! empty( $record['user_login'] ) ? (string) $record['user_login'] : __( 'Guest', 'search-analytics-insights' );
+		return ! empty( $record['user_login'] ) ? (string) $record['user_login'] : __( 'Guest', 'searchlens-search-analytics' );
 	}
 
 	/**
@@ -269,10 +269,10 @@ final class Menu {
 	 * @return void
 	 */
 	private function clear_analytics_data(): void {
-		$repository = new \SearchAnalyticsInsights\Database\Repository\SearchRepository();
+		$repository = new \SearchLens\Database\Repository\SearchRepository();
 		$repository->clear_all();
 
-		wp_safe_redirect( add_query_arg( 'sai_message', 'clear_success', admin_url( 'admin.php?page=search-analytics-tools' ) ) );
+		wp_safe_redirect( add_query_arg( 'searchlens_message', 'clear_success', admin_url( 'admin.php?page=searchlens-tools' ) ) );
 		exit;
 	}
 
@@ -284,7 +284,7 @@ final class Menu {
 	private function reset_plugin_settings(): void {
 		delete_option( Constants::OPTION_SETTINGS );
 
-		wp_safe_redirect( add_query_arg( 'sai_message', 'reset_success', admin_url( 'admin.php?page=search-analytics-tools' ) ) );
+		wp_safe_redirect( add_query_arg( 'searchlens_message', 'reset_success', admin_url( 'admin.php?page=searchlens-tools' ) ) );
 		exit;
 	}
 }

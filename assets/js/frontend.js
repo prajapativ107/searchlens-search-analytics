@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	window.SearchAnalyticsInsights = window.SearchAnalyticsInsights || {};
+	window.SearchLens = window.SearchLens || {};
 
 	function getPageType() {
 		const classes = document.body.classList;
@@ -41,17 +41,17 @@
 		return 'Other';
 	}
 
-	window.SearchAnalyticsInsights.getPageType = getPageType;
+	window.SearchLens.getPageType = getPageType;
 
 	document.addEventListener('submit', function (event) {
 		const form = event.target;
 		const sInput = form.querySelector('input[name="s"]');
 		if (sInput && form.method.toLowerCase() === 'get') {
 			const pageData = {
-				'sai_page_title': window.sai_data && window.sai_data.page_title ? window.sai_data.page_title : document.title,
-				'sai_page_url': window.sai_data && window.sai_data.page_url ? window.sai_data.page_url : window.location.href,
-				'sai_referrer': document.referrer,
-				'sai_page_type': window.sai_data && window.sai_data.page_type ? window.sai_data.page_type : getPageType()
+				'searchlens_page_title': window.searchlens_data && window.searchlens_data.page_title ? window.searchlens_data.page_title : document.title,
+				'searchlens_page_url': window.searchlens_data && window.searchlens_data.page_url ? window.searchlens_data.page_url : window.location.href,
+				'searchlens_referrer': document.referrer,
+				'searchlens_page_type': window.searchlens_data && window.searchlens_data.page_type ? window.searchlens_data.page_type : getPageType()
 			};
 			for (const key in pageData) {
 				let input = form.querySelector('input[name="' + key + '"]');

@@ -19,7 +19,7 @@
 		var setAttributes = props.setAttributes;
 		var blockProps    = useBlockProps(
 			{
-				className: 'search-analytics-insights-search-widget search-analytics-insights-search-widget--editor',
+				className: 'searchlens-search-widget searchlens-search-widget--editor',
 			}
 		);
 
@@ -28,16 +28,16 @@
 			null,
 			el(
 				PanelBody,
-				{ title: __( 'Search Settings', 'search-analytics-insights' ) },
+				{ title: __( 'Search Settings', 'searchlens-search-analytics' ) },
 				el(
 					SelectControl,
 					{
-						label: __( 'Open Mode', 'search-analytics-insights' ),
+						label: __( 'Open Mode', 'searchlens-search-analytics' ),
 						value: attributes.openMode,
 						options: [
-						{ label: __( 'Dropdown', 'search-analytics-insights' ), value: 'dropdown' },
-						{ label: __( 'Modal', 'search-analytics-insights' ), value: 'modal' },
-						{ label: __( 'Slide Down', 'search-analytics-insights' ), value: 'slide-down' },
+						{ label: __( 'Dropdown', 'searchlens-search-analytics' ), value: 'dropdown' },
+						{ label: __( 'Modal', 'searchlens-search-analytics' ), value: 'modal' },
+						{ label: __( 'Slide Down', 'searchlens-search-analytics' ), value: 'slide-down' },
 						],
 						onChange: function ( value ) {
 							setAttributes( { openMode: value } );
@@ -47,7 +47,7 @@
 				el(
 					ToggleControl,
 					{
-						label: __( 'Show Label', 'search-analytics-insights' ),
+						label: __( 'Show Label', 'searchlens-search-analytics' ),
 						checked: attributes.showLabel,
 						onChange: function ( value ) {
 							setAttributes( { showLabel: value } );
@@ -62,27 +62,27 @@
 			blockProps,
 			el(
 				'button',
-				{ type: 'button', className: 'search-analytics-insights-search-toggle', 'aria-expanded': 'true' },
+				{ type: 'button', className: 'searchlens-search-toggle', 'aria-expanded': 'true' },
 				el(
 					'span',
 					{
-						className: 'search-analytics-insights-search-toggle-icon',
+						className: 'searchlens-search-toggle-icon',
 						'aria-hidden': 'true',
 						dangerouslySetInnerHTML: { __html: iconMarkup },
 					}
 				),
-				attributes.showLabel ? el( 'span', { className : 'search-analytics-insights-search-toggle-label' }, __( 'Search', 'search-analytics-insights' ) ) : null
+				attributes.showLabel ? el( 'span', { className : 'searchlens-search-toggle-label' }, __( 'Search', 'searchlens-search-analytics' ) ) : null
 			),
 			el(
 				'div',
-				{ className: 'search-analytics-insights-search-popup' },
+				{ className: 'searchlens-search-popup' },
 				el(
 					'div',
-					{ className: 'search-analytics-insights-search-panel' },
+					{ className: 'searchlens-search-panel' },
 					el(
 						'div',
-						{ className: 'search-analytics-insights-search-preview' },
-						__( 'Search Analytics Search Form Preview', 'search-analytics-insights' )
+						{ className: 'searchlens-search-preview' },
+						__( 'SearchLens Search Form Preview', 'searchlens-search-analytics' )
 					)
 				)
 			)
@@ -92,7 +92,7 @@
 	}
 
 	wp.blocks.registerBlockType(
-		'search-analytics-insights/search-widget',
+		'searchlens/search-widget',
 		{
 			edit: Edit,
 			save: function () {

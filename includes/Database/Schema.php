@@ -2,12 +2,12 @@
 /**
  * Database schema.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Database;
+namespace SearchLens\Database;
 
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 

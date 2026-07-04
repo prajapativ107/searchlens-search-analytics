@@ -1,10 +1,10 @@
-# Search Analytics & Insights
+# SearchLens – Search Analytics & Insights
 
 Track WordPress searches with powerful analytics, AJAX search support, widgets, Gutenberg blocks, and exportable reports.
 
 | Metadata | Details |
 | :--- | :--- |
-| **Contributors** | vivekprajapati |
+| **Contributors** | vivek34 |
 | **Tags** | search, analytics, ajax search, search tracking, dashboard |
 | **Requires at least** | WordPress 6.0 |
 | **Tested up to** | WordPress 7.0 |
@@ -17,7 +17,7 @@ Track WordPress searches with powerful analytics, AJAX search support, widgets, 
 
 ## Description
 
-Search Analytics & Insights is a lightweight and privacy-friendly WordPress plugin that helps website owners understand what visitors are searching for.
+SearchLens – Search Analytics & Insights is a lightweight and privacy-friendly WordPress plugin that helps website owners understand what visitors are searching for.
 
 Track search activity across your website, identify popular searches, discover searches with no results, and gain valuable insights through an intuitive analytics dashboard.
 
@@ -51,9 +51,9 @@ Display your search form anywhere using a shortcode, widget, or Gutenberg block.
 
 ## Installation
 
-1. Upload the `search-analytics-insights` folder to the `/wp-content/plugins/` directory.
+1. Upload the `searchlens-search-analytics` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Open **Search Analytics** from the WordPress admin menu.
+3. Open **SearchLens** from the WordPress admin menu.
 4. Configure your preferred search settings.
 5. Add the search widget, Gutenberg block, or shortcode wherever required.
 
@@ -134,4 +134,4 @@ Yes. The plugin works with most WordPress themes.
 ## Upgrade Notice
 
 ### 1.0.0
-Initial public release of Search Analytics & Insights.
+Initial public release of SearchLens – Search Analytics & Insights.

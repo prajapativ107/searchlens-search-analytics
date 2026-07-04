@@ -28,7 +28,7 @@
 	}
 
 	function setStatus(wrapper, message, isLoading) {
-		const status = wrapper.querySelector('.search-analytics-insights-ajax-search-status');
+		const status = wrapper.querySelector('.searchlens-ajax-search-status');
 
 		if (!status) {
 			return;
@@ -40,7 +40,7 @@
 	}
 
 	function setResultsVisibility(wrapper, isVisible) {
-		const resultsWrap = wrapper.querySelector('.search-analytics-insights-ajax-search-results-wrap');
+		const resultsWrap = wrapper.querySelector('.searchlens-ajax-search-results-wrap');
 
 		if (resultsWrap) {
 			resultsWrap.style.display = isVisible ? 'block' : 'none';
@@ -53,8 +53,8 @@
 	}
 
 	function clearResults(wrapper) {
-		const results = wrapper.querySelector('.search-analytics-insights-ajax-search-results');
-		const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
+		const results = wrapper.querySelector('.searchlens-ajax-search-results');
+		const input = wrapper.querySelector('.searchlens-ajax-search-input');
 
 		if (results) {
 			results.innerHTML = '';
@@ -69,8 +69,8 @@
 	}
 
 	function renderResults(wrapper, items) {
-		const results = wrapper.querySelector('.search-analytics-insights-ajax-search-results');
-		const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
+		const results = wrapper.querySelector('.searchlens-ajax-search-results');
+		const input = wrapper.querySelector('.searchlens-ajax-search-input');
 		const showFeaturedImages = '1' === wrapper.getAttribute('data-show-featured-images');
 		const showPostTypeLabel = '1' === wrapper.getAttribute('data-show-post-type-label');
 		const state = getState(wrapper);
@@ -97,19 +97,19 @@
 				const title = document.createElement('span');
 				const meta = document.createElement('span');
 
-				li.className = 'search-analytics-insights-ajax-search-result';
+				li.className = 'searchlens-ajax-search-result';
 				li.setAttribute('role', 'option');
-				li.id = 'search-analytics-insights-ajax-search-option-' + index;
+				li.id = 'searchlens-ajax-search-option-' + index;
 
-				link.className = 'search-analytics-insights-ajax-search-link';
+				link.className = 'searchlens-ajax-search-link';
 				link.href = item.url || '#';
 				link.tabIndex = -1;
 
-				imageWrap.className = 'search-analytics-insights-ajax-search-image-wrap';
+				imageWrap.className = 'searchlens-ajax-search-image-wrap';
 
 				if (showFeaturedImages && item.featured_image) {
 					const image = document.createElement('img');
-					image.className = 'search-analytics-insights-ajax-search-image';
+					image.className = 'searchlens-ajax-search-image';
 					image.src = item.featured_image;
 					image.alt = '';
 					image.loading = 'lazy';
@@ -119,7 +119,7 @@
 					link.classList.add('has-featured-image');
 				}
 
-				title.className = 'search-analytics-insights-ajax-search-title';
+				title.className = 'searchlens-ajax-search-title';
 				title.textContent = item.title || '';
 
 				if (imageWrap.childNodes.length) {
@@ -128,7 +128,7 @@
 				link.appendChild(title);
 
 				if (showPostTypeLabel && item.post_type_label) {
-					meta.className = 'search-analytics-insights-ajax-search-meta';
+					meta.className = 'searchlens-ajax-search-meta';
 					meta.textContent = item.post_type_label;
 					link.appendChild(meta);
 				}
@@ -144,7 +144,7 @@
 
 	function updateActiveItem(wrapper, direction) {
 		const state = getState(wrapper);
-		const items = wrapper.querySelectorAll('.search-analytics-insights-ajax-search-result');
+		const items = wrapper.querySelectorAll('.searchlens-ajax-search-result');
 
 		if (!items.length) {
 			return;
@@ -167,7 +167,7 @@
 
 				if (index === state.activeIndex && link) {
 					link.focus({ preventScroll: true });
-					const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
+					const input = wrapper.querySelector('.searchlens-ajax-search-input');
 
 					if (input) {
 						input.setAttribute('aria-activedescendant', item.id);
@@ -202,9 +202,9 @@
 		params.append('term', term);
 		params.append('limit', limit);
 
-		const pageTitle = window.sai_data && window.sai_data.page_title ? window.sai_data.page_title : document.title;
-		const pageUrl   = window.sai_data && window.sai_data.page_url ? window.sai_data.page_url : window.location.href;
-		const pageType  = window.sai_data && window.sai_data.page_type ? window.sai_data.page_type : (window.SearchAnalyticsInsights && window.SearchAnalyticsInsights.getPageType ? window.SearchAnalyticsInsights.getPageType() : 'Other');
+		const pageTitle = window.searchlens_data && window.searchlens_data.page_title ? window.searchlens_data.page_title : document.title;
+		const pageUrl   = window.searchlens_data && window.searchlens_data.page_url ? window.searchlens_data.page_url : window.location.href;
+		const pageType  = window.searchlens_data && window.searchlens_data.page_type ? window.searchlens_data.page_type : (window.SearchLens && window.SearchLens.getPageType ? window.SearchLens.getPageType() : 'Other');
 
 		params.append('page_title', pageTitle);
 		params.append('page_url', pageUrl);
@@ -263,7 +263,7 @@
 			.finally(
 				function () {
 					state.controller = null;
-					const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
+					const input = wrapper.querySelector('.searchlens-ajax-search-input');
 
 					if (input) {
 						input.removeAttribute('aria-busy');
@@ -300,8 +300,8 @@
 	}
 
 	function initWrapper(wrapper) {
-		const input = wrapper.querySelector('.search-analytics-insights-ajax-search-input');
-		const form = wrapper.querySelector('.search-analytics-insights-ajax-search-form');
+		const input = wrapper.querySelector('.searchlens-ajax-search-input');
+		const form = wrapper.querySelector('.searchlens-ajax-search-form');
 
 		if (!input || !form) {
 			return;
@@ -338,7 +338,7 @@
 				event.preventDefault();
 
 				const state = getState(wrapper);
-				const items = wrapper.querySelectorAll('.search-analytics-insights-ajax-search-result');
+				const items = wrapper.querySelectorAll('.searchlens-ajax-search-result');
 				const activeResult = state.activeIndex >= 0 ? items[state.activeIndex] : null;
 				const link = activeResult ? activeResult.querySelector('a') : null;
 
@@ -354,7 +354,7 @@
 		wrapper.addEventListener(
 			'click',
 			function (event) {
-				const link = event.target.closest('.search-analytics-insights-ajax-search-link');
+				const link = event.target.closest('.searchlens-ajax-search-link');
 
 				if (link) {
 					clearResults(wrapper);
@@ -375,7 +375,7 @@
 	}
 
 	function init() {
-		document.querySelectorAll('.search-analytics-insights-ajax-search').forEach(initWrapper);
+		document.querySelectorAll('.searchlens-ajax-search').forEach(initWrapper);
 	}
 
 	if ('loading' === document.readyState) {

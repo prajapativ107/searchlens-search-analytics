@@ -2,13 +2,13 @@
 /**
  * Search tracker.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Tracking;
+namespace SearchLens\Tracking;
 
-use SearchAnalyticsInsights\Core\Constants;
-use SearchAnalyticsInsights\Database\Repository\SearchRepository;
+use SearchLens\Core\Constants;
+use SearchLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Tracker {
 
-	private const COOKIE_NAME     = 'search_analytics_insights_session';
+	private const COOKIE_NAME     = 'searchlens_session';
 	private const COOKIE_LIFETIME = MONTH_IN_SECONDS;
 
 	private SearchRepository $repository;
@@ -49,20 +49,20 @@ final class Tracker {
 	 */
 	public function enqueue_frontend_scripts(): void {
 		wp_enqueue_script(
-			'search-analytics-insights-frontend',
-			SEARCH_ANALYTICS_INSIGHTS_URL . 'assets/js/frontend.js',
+			'searchlens-frontend',
+			SEARCHLENS_URL . 'assets/js/frontend.js',
 			array(),
 			Constants::VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'search-analytics-insights-frontend',
-			'sai_data',
+			'searchlens-frontend',
+			'searchlens_data',
 			array(
-				'page_title' => \SearchAnalyticsInsights\Helpers\PageHelper::get_current_page_title(),
-				'page_url'   => \SearchAnalyticsInsights\Helpers\PageHelper::get_current_page_url(),
-				'page_type'  => \SearchAnalyticsInsights\Helpers\PageHelper::get_current_page_type(),
+				'page_title' => \SearchLens\Helpers\PageHelper::get_current_page_title(),
+				'page_url'   => \SearchLens\Helpers\PageHelper::get_current_page_url(),
+				'page_type'  => \SearchLens\Helpers\PageHelper::get_current_page_type(),
 			)
 		);
 	}
@@ -77,7 +77,7 @@ final class Tracker {
 			return;
 		}
 
-		if ( ! empty( $_COOKIE[ self::COOKIE_NAME ] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( ! empty( $_COOKIE[ self::COOKIE_NAME ] ) || ! empty( $_COOKIE['search_analytics_insights_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return;
 		}
 
@@ -119,9 +119,9 @@ final class Tracker {
 			return;
 		}
 
-		$raw_title  = isset( $_GET['sai_page_title'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['sai_page_title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$page_url   = isset( $_GET['sai_page_url'] ) ? esc_url_raw( wp_unslash( (string) $_GET['sai_page_url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$page_title = \SearchAnalyticsInsights\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
+		$raw_title  = isset( $_GET['searchlens_page_title'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['searchlens_page_title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page_url   = isset( $_GET['searchlens_page_url'] ) ? esc_url_raw( wp_unslash( (string) $_GET['searchlens_page_url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page_title = \SearchLens\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
 
 		$this->repository->insert(
 			array(
@@ -134,8 +134,8 @@ final class Tracker {
 				'blog_id'      => get_current_blog_id(),
 				'page_title'   => sanitize_text_field( $page_title ),
 				'page_url'     => $page_url,
-				'referrer'     => isset( $_GET['sai_referrer'] ) ? esc_url_raw( wp_unslash( (string) $_GET['sai_referrer'] ) ) : ( isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( (string) $_SERVER['HTTP_REFERER'] ) ) : '' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			'page_type'        => isset( $_GET['sai_page_type'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['sai_page_type'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'referrer'     => isset( $_GET['searchlens_referrer'] ) ? esc_url_raw( wp_unslash( (string) $_GET['searchlens_referrer'] ) ) : ( isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( (string) $_SERVER['HTTP_REFERER'] ) ) : '' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				'page_type'    => isset( $_GET['searchlens_page_type'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['searchlens_page_type'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			)
 		);
 	}
@@ -146,11 +146,15 @@ final class Tracker {
 	 * @return string|null
 	 */
 	private function get_session_id(): ?string {
-		if ( empty( $_COOKIE[ self::COOKIE_NAME ] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			return null;
+		if ( ! empty( $_COOKIE[ self::COOKIE_NAME ] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return sanitize_text_field( wp_unslash( (string) $_COOKIE[ self::COOKIE_NAME ] ) );
 		}
 
-		return sanitize_text_field( wp_unslash( (string) $_COOKIE[ self::COOKIE_NAME ] ) );
+		if ( ! empty( $_COOKIE['search_analytics_insights_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return sanitize_text_field( wp_unslash( (string) $_COOKIE['search_analytics_insights_session'] ) );
+		}
+
+		return null;
 	}
 
 	/**

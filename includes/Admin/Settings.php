@@ -2,12 +2,12 @@
 /**
  * Plugin settings.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Admin;
+namespace SearchLens\Admin;
 
-use SearchAnalyticsInsights\Core\Constants;
+use SearchLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -15,13 +15,13 @@ defined( 'ABSPATH' ) || exit;
  * Registers and renders plugin settings.
  */
 final class Settings {
-	private const SETTINGS_GROUP                  = 'search_analytics_insights_settings';
-	private const PAGE_SLUG                       = 'search-analytics-insights';
-	private const SECTION_SEARCH_FORM             = 'search_analytics_insights_search_form';
-	private const SECTION_AJAX_SEARCH             = 'search_analytics_insights_ajax_search';
-	private const SECTION_SEARCH_RESULTS          = 'search_analytics_insights_search_results';
-	private const SECTION_SEARCH_SOURCES          = 'search_analytics_insights_search_sources';
-	private const SECTION_ANALYTICS               = 'search_analytics_insights_analytics';
+	private const SETTINGS_GROUP                  = 'searchlens_settings';
+	private const PAGE_SLUG                       = 'searchlens';
+	private const SECTION_SEARCH_FORM             = 'searchlens_search_form';
+	private const SECTION_AJAX_SEARCH             = 'searchlens_ajax_search';
+	private const SECTION_SEARCH_RESULTS          = 'searchlens_search_results';
+	private const SECTION_SEARCH_SOURCES          = 'searchlens_search_sources';
+	private const SECTION_ANALYTICS               = 'searchlens_analytics';
 	private const DEFAULT_PLACEHOLDER             = 'Search posts and pages...';
 	private const DEFAULT_BUTTON_TEXT             = 'Search';
 	private const DEFAULT_NO_RESULTS_MESSAGE      = 'No results found.';
@@ -75,14 +75,14 @@ final class Settings {
 
 		add_settings_section(
 			self::SECTION_SEARCH_FORM,
-			__( 'Search Form', 'search-analytics-insights' ),
+			__( 'Search Form', 'searchlens-search-analytics' ),
 			array( $this, 'render_search_form_section_description' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'placeholder',
-			__( 'Placeholder text', 'search-analytics-insights' ),
+			__( 'Placeholder text', 'searchlens-search-analytics' ),
 			array( $this, 'render_placeholder_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_FORM
@@ -90,7 +90,7 @@ final class Settings {
 
 		add_settings_field(
 			'button_text',
-			__( 'Button text', 'search-analytics-insights' ),
+			__( 'Button text', 'searchlens-search-analytics' ),
 			array( $this, 'render_button_text_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_FORM
@@ -98,7 +98,7 @@ final class Settings {
 
 		add_settings_field(
 			'show_button',
-			__( 'Show button', 'search-analytics-insights' ),
+			__( 'Show button', 'searchlens-search-analytics' ),
 			array( $this, 'render_show_button_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_FORM
@@ -106,7 +106,7 @@ final class Settings {
 
 		add_settings_field(
 			'form_style',
-			__( 'Form style', 'search-analytics-insights' ),
+			__( 'Form style', 'searchlens-search-analytics' ),
 			array( $this, 'render_form_style_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_FORM
@@ -114,14 +114,14 @@ final class Settings {
 
 		add_settings_section(
 			self::SECTION_AJAX_SEARCH,
-			__( 'AJAX Search', 'search-analytics-insights' ),
+			__( 'AJAX Search', 'searchlens-search-analytics' ),
 			array( $this, 'render_ajax_search_section_description' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'enabled',
-			__( 'Enable AJAX search', 'search-analytics-insights' ),
+			__( 'Enable AJAX search', 'searchlens-search-analytics' ),
 			array( $this, 'render_ajax_enabled_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_AJAX_SEARCH
@@ -129,7 +129,7 @@ final class Settings {
 
 		add_settings_field(
 			'minimum_characters',
-			__( 'Minimum characters', 'search-analytics-insights' ),
+			__( 'Minimum characters', 'searchlens-search-analytics' ),
 			array( $this, 'render_minimum_characters_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_AJAX_SEARCH
@@ -137,7 +137,7 @@ final class Settings {
 
 		add_settings_field(
 			'maximum_results',
-			__( 'Maximum results', 'search-analytics-insights' ),
+			__( 'Maximum results', 'searchlens-search-analytics' ),
 			array( $this, 'render_maximum_results_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_AJAX_SEARCH
@@ -145,7 +145,7 @@ final class Settings {
 
 		add_settings_field(
 			'debounce_time',
-			__( 'Debounce time', 'search-analytics-insights' ),
+			__( 'Debounce time', 'searchlens-search-analytics' ),
 			array( $this, 'render_debounce_time_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_AJAX_SEARCH
@@ -153,14 +153,14 @@ final class Settings {
 
 		add_settings_section(
 			self::SECTION_SEARCH_RESULTS,
-			__( 'Search Results', 'search-analytics-insights' ),
+			__( 'Search Results', 'searchlens-search-analytics' ),
 			array( $this, 'render_search_results_section_description' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'show_featured_images',
-			__( 'Show featured images', 'search-analytics-insights' ),
+			__( 'Show featured images', 'searchlens-search-analytics' ),
 			array( $this, 'render_show_featured_images_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_RESULTS
@@ -168,7 +168,7 @@ final class Settings {
 
 		add_settings_field(
 			'show_post_type_label',
-			__( 'Show post type label', 'search-analytics-insights' ),
+			__( 'Show post type label', 'searchlens-search-analytics' ),
 			array( $this, 'render_show_post_type_label_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_RESULTS
@@ -176,7 +176,7 @@ final class Settings {
 
 		add_settings_field(
 			'no_results_message',
-			__( 'No results message', 'search-analytics-insights' ),
+			__( 'No results message', 'searchlens-search-analytics' ),
 			array( $this, 'render_no_results_message_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_RESULTS
@@ -184,14 +184,14 @@ final class Settings {
 
 		add_settings_section(
 			self::SECTION_SEARCH_SOURCES,
-			__( 'Search Sources', 'search-analytics-insights' ),
+			__( 'Search Sources', 'searchlens-search-analytics' ),
 			array( $this, 'render_search_sources_section_description' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'load_all_public_post_types',
-			__( 'Automatically load all public post types', 'search-analytics-insights' ),
+			__( 'Automatically load all public post types', 'searchlens-search-analytics' ),
 			array( $this, 'render_load_all_public_post_types_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_SOURCES
@@ -199,7 +199,7 @@ final class Settings {
 
 		add_settings_field(
 			'searchable_post_types',
-			__( 'Allow selecting searchable post types', 'search-analytics-insights' ),
+			__( 'Allow selecting searchable post types', 'searchlens-search-analytics' ),
 			array( $this, 'render_searchable_post_types_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_SEARCH_SOURCES
@@ -207,14 +207,14 @@ final class Settings {
 
 		add_settings_section(
 			self::SECTION_ANALYTICS,
-			__( 'Analytics', 'search-analytics-insights' ),
+			__( 'Analytics', 'searchlens-search-analytics' ),
 			array( $this, 'render_analytics_section_description' ),
 			self::PAGE_SLUG
 		);
 
 		add_settings_field(
 			'track_logged_in_users',
-			__( 'Track logged-in users', 'search-analytics-insights' ),
+			__( 'Track logged-in users', 'searchlens-search-analytics' ),
 			array( $this, 'render_track_logged_in_users_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_ANALYTICS
@@ -222,7 +222,7 @@ final class Settings {
 
 		add_settings_field(
 			'track_guests',
-			__( 'Track guests', 'search-analytics-insights' ),
+			__( 'Track guests', 'searchlens-search-analytics' ),
 			array( $this, 'render_track_guests_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_ANALYTICS
@@ -230,7 +230,7 @@ final class Settings {
 
 		add_settings_field(
 			'search_retention_period',
-			__( 'Search retention period', 'search-analytics-insights' ),
+			__( 'Search retention period', 'searchlens-search-analytics' ),
 			array( $this, 'render_search_retention_period_field' ),
 			self::PAGE_SLUG,
 			self::SECTION_ANALYTICS
@@ -243,7 +243,7 @@ final class Settings {
 	 * @return void
 	 */
 	public function render_search_form_section_description(): void {
-		echo '<p>' . esc_html__( 'Set the default search form copy and visual style.', 'search-analytics-insights' ) . '</p>';
+		echo '<p>' . esc_html__( 'Set the default search form copy and visual style.', 'searchlens-search-analytics' ) . '</p>';
 	}
 
 	/**
@@ -252,7 +252,7 @@ final class Settings {
 	 * @return void
 	 */
 	public function render_ajax_search_section_description(): void {
-		echo '<p>' . esc_html__( 'Control how quickly live search appears and how many results it returns.', 'search-analytics-insights' ) . '</p>';
+		echo '<p>' . esc_html__( 'Control how quickly live search appears and how many results it returns.', 'searchlens-search-analytics' ) . '</p>';
 	}
 
 	/**
@@ -261,7 +261,7 @@ final class Settings {
 	 * @return void
 	 */
 	public function render_search_results_section_description(): void {
-		echo '<p>' . esc_html__( 'Adjust what visitors see in live search result items.', 'search-analytics-insights' ) . '</p>';
+		echo '<p>' . esc_html__( 'Adjust what visitors see in live search result items.', 'searchlens-search-analytics' ) . '</p>';
 	}
 
 	/**
@@ -270,18 +270,16 @@ final class Settings {
 	 * @return void
 	 */
 	public function render_search_sources_section_description(): void {
-		echo '<p>' . esc_html__( 'Choose which public content types should be searchable.', 'search-analytics-insights' ) . '</p>';
+		echo '<p>' . esc_html__( 'Choose which public content types should be searchable.', 'searchlens-search-analytics' ) . '</p>';
 	}
 
-	/**
-	 * Render the Widget & Block section description.
 	/**
 	 * Render the Analytics section description.
 	 *
 	 * @return void
 	 */
 	public function render_analytics_section_description(): void {
-		echo '<p>' . esc_html__( 'Define which searches should be tracked and how long they are retained.', 'search-analytics-insights' ) . '</p>';
+		echo '<p>' . esc_html__( 'Define which searches should be tracked and how long they are retained.', 'searchlens-search-analytics' ) . '</p>';
 	}
 
 	/**
@@ -295,7 +293,7 @@ final class Settings {
 			$this->field_id( 'search_form', 'placeholder' ),
 			$this->field_name( 'search_form', 'placeholder' ),
 			(string) $settings['placeholder'],
-			__( 'Text displayed inside the search input before typing.', 'search-analytics-insights' )
+			__( 'Text displayed inside the search input before typing.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -310,7 +308,7 @@ final class Settings {
 			$this->field_id( 'search_form', 'button_text' ),
 			$this->field_name( 'search_form', 'button_text' ),
 			(string) $settings['button_text'],
-			__( 'Label shown on the search submit button.', 'search-analytics-insights' )
+			__( 'Label shown on the search submit button.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -325,7 +323,7 @@ final class Settings {
 			$this->field_id( 'search_form', 'show_button' ),
 			$this->field_name( 'search_form', 'show_button' ),
 			! empty( $settings['show_button'] ),
-			__( 'Show the submit button next to the input.', 'search-analytics-insights' )
+			__( 'Show the submit button next to the input.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -341,11 +339,11 @@ final class Settings {
 			$this->field_name( 'search_form', 'form_style' ),
 			(string) $settings['form_style'],
 			array(
-				'rounded'    => __( 'Rounded', 'search-analytics-insights' ),
-				'rectangle'  => __( 'Rectangle', 'search-analytics-insights' ),
-				'underlined' => __( 'Underlined', 'search-analytics-insights' ),
+				'rounded'    => __( 'Rounded', 'searchlens-search-analytics' ),
+				'rectangle'  => __( 'Rectangle', 'searchlens-search-analytics' ),
+				'underlined' => __( 'Underlined', 'searchlens-search-analytics' ),
 			),
-			__( 'Choose the default visual treatment for the search form.', 'search-analytics-insights' )
+			__( 'Choose the default visual treatment for the search form.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -360,7 +358,7 @@ final class Settings {
 			$this->field_id( 'ajax_search', 'enabled' ),
 			$this->field_name( 'ajax_search', 'enabled' ),
 			! empty( $settings['enabled'] ),
-			__( 'Enable the live AJAX search experience on the front end.', 'search-analytics-insights' )
+			__( 'Enable the live AJAX search experience on the front end.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -377,7 +375,7 @@ final class Settings {
 			(int) $settings['minimum_characters'],
 			1,
 			10,
-			__( 'Search only starts after this many characters are entered.', 'search-analytics-insights' )
+			__( 'Search only starts after this many characters are entered.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -394,7 +392,7 @@ final class Settings {
 			(int) $settings['max_results'],
 			1,
 			20,
-			__( 'Controls how many results the AJAX search returns.', 'search-analytics-insights' )
+			__( 'Controls how many results the AJAX search returns.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -411,7 +409,7 @@ final class Settings {
 			(int) $settings['debounce_time'],
 			50,
 			2000,
-			__( 'Delay in milliseconds before the AJAX request is sent.', 'search-analytics-insights' )
+			__( 'Delay in milliseconds before the AJAX request is sent.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -426,7 +424,7 @@ final class Settings {
 			$this->field_id( 'search_results', 'show_featured_images' ),
 			$this->field_name( 'search_results', 'show_featured_images' ),
 			! empty( $settings['show_featured_images'] ),
-			__( 'Display featured images in live search results.', 'search-analytics-insights' )
+			__( 'Display featured images in live search results.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -441,7 +439,7 @@ final class Settings {
 			$this->field_id( 'search_results', 'show_post_type_label' ),
 			$this->field_name( 'search_results', 'show_post_type_label' ),
 			! empty( $settings['show_post_type_label'] ),
-			__( 'Show the post type label under each result title.', 'search-analytics-insights' )
+			__( 'Show the post type label under each result title.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -456,7 +454,7 @@ final class Settings {
 			$this->field_id( 'search_results', 'no_results_message' ),
 			$this->field_name( 'search_results', 'no_results_message' ),
 			(string) $settings['no_results_message'],
-			__( 'Message shown when a search returns no matches.', 'search-analytics-insights' )
+			__( 'Message shown when a search returns no matches.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -471,7 +469,7 @@ final class Settings {
 			$this->field_id( 'search_sources', 'load_all_public_post_types' ),
 			$this->field_name( 'search_sources', 'load_all_public_post_types' ),
 			! empty( $settings['load_all_public_post_types'] ),
-			__( 'Use every public post type as a searchable source.', 'search-analytics-insights' )
+			__( 'Use every public post type as a searchable source.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -485,18 +483,18 @@ final class Settings {
 		$post_types         = $this->get_public_post_types();
 
 		if ( empty( $post_types ) ) {
-			echo '<p>' . esc_html__( 'No public post types are available.', 'search-analytics-insights' ) . '</p>';
+			echo '<p>' . esc_html__( 'No public post types are available.', 'searchlens-search-analytics' ) . '</p>';
 			return;
 		}
 
-		echo '<fieldset class="search-analytics-insights-post-types-fieldset">';
+		echo '<fieldset class="searchlens-post-types-fieldset">';
 
 		foreach ( $post_types as $post_type ) {
 			$checked = in_array( $post_type->name, $enabled_post_types, true );
 			?>
-			<label class="search-analytics-insights-post-type-option" for="search-analytics-insights-post-type-<?php echo esc_attr( $post_type->name ); ?>">
+			<label class="searchlens-post-type-option" for="searchlens-post-type-<?php echo esc_attr( $post_type->name ); ?>">
 				<input
-					id="search-analytics-insights-post-type-<?php echo esc_attr( $post_type->name ); ?>"
+					id="searchlens-post-type-<?php echo esc_attr( $post_type->name ); ?>"
 					type="checkbox"
 					name="<?php echo esc_attr( Constants::OPTION_SETTINGS ); ?>[search_sources][searchable_post_types][]"
 					value="<?php echo esc_attr( $post_type->name ); ?>"
@@ -522,7 +520,7 @@ final class Settings {
 			$this->field_id( 'analytics', 'track_logged_in_users' ),
 			$this->field_name( 'analytics', 'track_logged_in_users' ),
 			! empty( $settings['track_logged_in_users'] ),
-			__( 'Count search events from signed-in users.', 'search-analytics-insights' )
+			__( 'Count search events from signed-in users.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -537,7 +535,7 @@ final class Settings {
 			$this->field_id( 'analytics', 'track_guests' ),
 			$this->field_name( 'analytics', 'track_guests' ),
 			! empty( $settings['track_guests'] ),
-			__( 'Count search events from anonymous visitors.', 'search-analytics-insights' )
+			__( 'Count search events from anonymous visitors.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -554,7 +552,7 @@ final class Settings {
 			(int) $settings['search_retention_period'],
 			1,
 			3650,
-			__( 'Number of days to keep search records before cleanup.', 'search-analytics-insights' )
+			__( 'Number of days to keep search records before cleanup.', 'searchlens-search-analytics' )
 		);
 	}
 
@@ -628,7 +626,7 @@ final class Settings {
 	}
 
 	/**
-	 * Determine whether the search form should show a button.
+	 * Get the saved show button.
 	 *
 	 * @return bool
 	 */
@@ -918,8 +916,8 @@ final class Settings {
 	 */
 	private function get_legacy_settings(): array {
 		$legacy               = array();
-		$legacy_post_types    = get_option( Constants::OPTION_SEARCHABLE_POST_TYPES, null );
-		$legacy_ajax_settings = get_option( Constants::OPTION_AJAX_SEARCH_SETTINGS, null );
+		$legacy_post_types    = get_option( 'search_analytics_insights_post_types', null );
+		$legacy_ajax_settings = get_option( 'search_analytics_insights_ajax_search_settings', null );
 
 		if ( is_array( $legacy_post_types ) && ! empty( $legacy_post_types ) ) {
 			$legacy['search_sources'] = array(
@@ -1176,7 +1174,7 @@ final class Settings {
 	 */
 	private function render_checkbox_field( string $id, string $name, bool $checked, string $description ): void {
 		?>
-		<label class="search-analytics-insights-toggle" for="<?php echo esc_attr( $id ); ?>">
+		<label class="searchlens-toggle" for="<?php echo esc_attr( $id ); ?>">
 			<input id="<?php echo esc_attr( $id ); ?>" type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php checked( $checked ); ?> />
 			<span><?php echo esc_html( $description ); ?></span>
 		</label>
@@ -1226,7 +1224,7 @@ final class Settings {
 	 * @return string
 	 */
 	private function field_id( string $section, string $key ): string {
-		return 'search-analytics-insights-' . $section . '-' . $key;
+		return 'searchlens-' . $section . '-' . $key;
 	}
 
 	/**

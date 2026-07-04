@@ -2,10 +2,10 @@
 /**
  * Plugin autoloader.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Core;
+namespace SearchLens\Core;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * Lightweight PSR-4 style autoloader for the plugin namespace.
  */
 final class Autoloader {
-	private const NAMESPACE_PREFIX = 'SearchAnalyticsInsights\\';
+	private const NAMESPACE_PREFIX = 'SearchLens\\';
 
 	/**
 	 * Register the autoloader.
@@ -27,18 +27,18 @@ final class Autoloader {
 	/**
 	 * Load a class file if it belongs to this plugin namespace.
 	 *
-	 * @param string $class Class name.
+	 * @param string $class_name Class name.
 	 *
 	 * @return void
 	 */
-	public static function autoload( string $class ): void {
-		if ( 0 !== strpos( $class, self::NAMESPACE_PREFIX ) ) {
+	public static function autoload( string $class_name ): void {
+		if ( 0 !== strpos( $class_name, self::NAMESPACE_PREFIX ) ) {
 			return;
 		}
 
-		$relative_class = substr( $class, strlen( self::NAMESPACE_PREFIX ) );
+		$relative_class = substr( $class_name, strlen( self::NAMESPACE_PREFIX ) );
 		$relative_path  = str_replace( '\\', '/', $relative_class );
-		$file_path      = SEARCH_ANALYTICS_INSIGHTS_PATH . 'includes/' . $relative_path . '.php';
+		$file_path      = SEARCHLENS_PATH . 'includes/' . $relative_path . '.php';
 
 		if ( is_readable( $file_path ) ) {
 			require_once $file_path;

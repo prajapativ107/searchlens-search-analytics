@@ -29,14 +29,14 @@
 
 	function getSearchElements(wrapper) {
 		return {
-			toggle: wrapper.querySelector('.search-analytics-insights-search-toggle'),
-			popup: wrapper.querySelector('.search-analytics-insights-search-popup'),
-			closeButton: wrapper.querySelector('.search-analytics-insights-search-close'),
-			form: wrapper.querySelector('.search-analytics-insights-form, .search-analytics-insights-ajax-search-form'),
-			input: wrapper.querySelector('.search-analytics-insights-form .search-field, .search-analytics-insights-ajax-search-input'),
-			status: wrapper.querySelector('.search-analytics-insights-search-status, .search-analytics-insights-ajax-search-status'),
-			resultsWrap: wrapper.querySelector('.search-analytics-insights-search-results-wrap, .search-analytics-insights-ajax-search-results-wrap'),
-			results: wrapper.querySelector('.search-analytics-insights-search-results, .search-analytics-insights-ajax-search-results'),
+			toggle: wrapper.querySelector('.searchlens-search-toggle'),
+			popup: wrapper.querySelector('.searchlens-search-popup'),
+			closeButton: wrapper.querySelector('.searchlens-search-close'),
+			form: wrapper.querySelector('.searchlens-form, .searchlens-ajax-search-form'),
+			input: wrapper.querySelector('.searchlens-form .search-field, .searchlens-ajax-search-input'),
+			status: wrapper.querySelector('.searchlens-search-status, .searchlens-ajax-search-status'),
+			resultsWrap: wrapper.querySelector('.searchlens-search-results-wrap, .searchlens-ajax-search-results-wrap'),
+			results: wrapper.querySelector('.searchlens-search-results, .searchlens-ajax-search-results'),
 		};
 	}
 
@@ -172,11 +172,11 @@
 				const title = document.createElement('span');
 				const meta = document.createElement('span');
 
-				li.className = 'search-analytics-insights-search-result';
-				li.id = 'search-analytics-insights-search-widget-option-' + index;
+				li.className = 'searchlens-search-result';
+				li.id = 'searchlens-search-widget-option-' + index;
 				li.setAttribute('role', 'option');
 
-				link.className = 'search-analytics-insights-search-link';
+				link.className = 'searchlens-search-link';
 				link.href = item.url || '#';
 				link.tabIndex = -1;
 
@@ -184,8 +184,8 @@
 					const imageWrap = document.createElement('span');
 					const image = document.createElement('img');
 
-					imageWrap.className = 'search-analytics-insights-search-image-wrap';
-					image.className = 'search-analytics-insights-search-image';
+					imageWrap.className = 'searchlens-search-image-wrap';
+					image.className = 'searchlens-search-image';
 					image.src = item.featured_image;
 					image.alt = '';
 					image.loading = 'lazy';
@@ -196,11 +196,11 @@
 					link.classList.add('has-featured-image');
 				}
 
-				title.className = 'search-analytics-insights-search-title';
+				title.className = 'searchlens-search-title';
 				title.textContent = item.title || '';
 
 				if (showPostTypeLabel && item.post_type_label) {
-					meta.className = 'search-analytics-insights-search-meta';
+					meta.className = 'searchlens-search-meta';
 					meta.textContent = item.post_type_label;
 					link.appendChild(title);
 					link.appendChild(meta);
@@ -242,9 +242,9 @@
 		params.append('term', term);
 		params.append('limit', limit);
 
-		const pageTitle = window.sai_data && window.sai_data.page_title ? window.sai_data.page_title : document.title;
-		const pageUrl   = window.sai_data && window.sai_data.page_url ? window.sai_data.page_url : window.location.href;
-		const pageType  = window.sai_data && window.sai_data.page_type ? window.sai_data.page_type : (window.SearchAnalyticsInsights && window.SearchAnalyticsInsights.getPageType ? window.SearchAnalyticsInsights.getPageType() : 'Other');
+		const pageTitle = window.searchlens_data && window.searchlens_data.page_title ? window.searchlens_data.page_title : document.title;
+		const pageUrl   = window.searchlens_data && window.searchlens_data.page_url ? window.searchlens_data.page_url : window.location.href;
+		const pageType  = window.searchlens_data && window.searchlens_data.page_type ? window.searchlens_data.page_type : (window.SearchLens && window.SearchLens.getPageType ? window.SearchLens.getPageType() : 'Other');
 
 		params.append('page_title', pageTitle);
 		params.append('page_url', pageUrl);
@@ -324,7 +324,7 @@
 	function updateActiveItem(wrapper, direction) {
 		const elements = getSearchElements(wrapper);
 		const state = getState(wrapper);
-		const items = elements.results ? elements.results.querySelectorAll('.search-analytics-insights-search-result') : [];
+		const items = elements.results ? elements.results.querySelectorAll('.searchlens-search-result') : [];
 
 		if (!items.length) {
 			return;
@@ -359,13 +359,13 @@
 		const state = getState(wrapper);
 		const elements = getSearchElements(wrapper);
 		const ajaxEnabled = '1' === wrapper.getAttribute('data-ajax-enabled');
-		const usesAjaxSearchModule = Boolean(wrapper.querySelector('.search-analytics-insights-ajax-search'));
+		const usesAjaxSearchModule = Boolean(wrapper.querySelector('.searchlens-ajax-search'));
 
 		if (!elements.toggle || !elements.popup) {
 			return;
 		}
 
-		wrapper.classList.add('search-analytics-insights-search-widget--initialized');
+		wrapper.classList.add('searchlens-search-widget--initialized');
 		setStatus(wrapper, '', false);
 		clearResults(wrapper);
 
@@ -425,7 +425,7 @@
 				'submit',
 				function (event) {
 					const state = getState(wrapper);
-					const items = elements.results ? elements.results.querySelectorAll('.search-analytics-insights-search-result, .search-analytics-insights-ajax-search-result') : [];
+					const items = elements.results ? elements.results.querySelectorAll('.searchlens-search-result, .searchlens-ajax-search-result') : [];
 					const activeResult = state.activeIndex >= 0 ? items[state.activeIndex] : null;
 					const link = activeResult ? activeResult.querySelector('a') : null;
 
@@ -445,12 +445,12 @@
 					return;
 				}
 
-				if (event.target.closest('.search-analytics-insights-search-close')) {
+				if (event.target.closest('.searchlens-search-close')) {
 					closeWidget(wrapper);
 					return;
 				}
 
-				const link = event.target.closest('.search-analytics-insights-search-link');
+				const link = event.target.closest('.searchlens-search-link');
 
 				if (link) {
 					closeWidget(wrapper);
@@ -478,7 +478,7 @@
 	}
 
 	function initAllWidgets() {
-		document.querySelectorAll('.search-analytics-insights-search-widget').forEach(
+		document.querySelectorAll('.searchlens-search-widget').forEach(
 			function (wrapper) {
 				initWidget(wrapper);
 			}

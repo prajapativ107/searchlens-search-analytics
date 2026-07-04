@@ -2,12 +2,12 @@
 /**
  * Plugin activation handler.
  *
- * @package SearchAnalyticsInsights
+ * @package SearchLens
  */
 
-namespace SearchAnalyticsInsights\Core;
+namespace SearchLens\Core;
 
-use SearchAnalyticsInsights\Database\Schema;
+use SearchLens\Database\Schema;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -54,6 +54,42 @@ final class Activator {
 	 * @return void
 	 */
 	public static function activate(): void {
+		// Migrate old settings to new keys if needed
+		if ( false === get_option( Constants::OPTION_SETTINGS, false ) ) {
+			$old_settings = get_option( 'search_analytics_insights_settings', false );
+			if ( false !== $old_settings ) {
+				add_option( Constants::OPTION_SETTINGS, $old_settings );
+			}
+		}
+
+		if ( false === get_option( Constants::OPTION_SCHEMA_VERSION, false ) ) {
+			$old_schema = get_option( 'search_analytics_insights_schema_version', false );
+			if ( false !== $old_schema ) {
+				add_option( Constants::OPTION_SCHEMA_VERSION, $old_schema );
+			}
+		}
+
+		if ( false === get_option( Constants::OPTION_PLUGIN_VERSION, false ) ) {
+			$old_version = get_option( 'search_analytics_insights_plugin_version', false );
+			if ( false !== $old_version ) {
+				add_option( Constants::OPTION_PLUGIN_VERSION, $old_version );
+			}
+		}
+
+		if ( false === get_option( Constants::OPTION_SEARCHABLE_POST_TYPES, false ) ) {
+			$old_post_types = get_option( 'search_analytics_insights_post_types', false );
+			if ( false !== $old_post_types ) {
+				add_option( Constants::OPTION_SEARCHABLE_POST_TYPES, $old_post_types );
+			}
+		}
+
+		if ( false === get_option( Constants::OPTION_AJAX_SEARCH_SETTINGS, false ) ) {
+			$old_ajax = get_option( 'search_analytics_insights_ajax_search_settings', false );
+			if ( false !== $old_ajax ) {
+				add_option( Constants::OPTION_AJAX_SEARCH_SETTINGS, $old_ajax );
+			}
+		}
+
 		Schema::create_table();
 
 		if ( false === get_option( Constants::OPTION_SETTINGS, false ) ) {

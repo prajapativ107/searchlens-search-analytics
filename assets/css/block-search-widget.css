@@ -1,18 +1,18 @@
-.search-analytics-insights-search-widget--editor {
+.searchlens-search-widget--editor {
 	padding: 1rem;
 	border: 1px dashed #d9e1ea;
 	border-radius: 18px;
 	background: #fff;
 }
 
-.search-analytics-insights-search-preview {
+.searchlens-search-preview {
 	padding: 0.75rem 1rem;
 	border-radius: 12px;
 	background: #f7f9fc;
 	color: #5f6b7a;
 }
 
-.search-analytics-insights-search-toggle-label {
+.searchlens-search-toggle-label {
 	margin-left: 0.5rem;
 	font-weight: 600;
 }
