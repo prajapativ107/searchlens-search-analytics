@@ -26,7 +26,7 @@ final class Constants {
 	public const SOURCE_AJAX_SEARCH           = 'ajax_search';
 	public const SOURCE_WORDPRESS_SEARCH      = 'wordpress_search';
 	public const CAPABILITY                   = 'manage_options';
-	public const TABLE_SUFFIX                 = 'search_analytics_insights_searches';
+	public const TABLE_SUFFIX                 = 'searchlens_searches';
 
 	/**
 	 * Get the full database table name.
