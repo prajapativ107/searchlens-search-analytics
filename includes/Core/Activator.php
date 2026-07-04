@@ -127,5 +127,9 @@ final class Activator {
 
 		update_option( Constants::OPTION_SCHEMA_VERSION, Constants::VERSION, true );
 		update_option( Constants::OPTION_PLUGIN_VERSION, Constants::VERSION, true );
+
+		if ( ! wp_next_scheduled( 'searchlens_cleanup' ) ) {
+			wp_schedule_event( time(), 'daily', 'searchlens_cleanup' );
+		}
 	}
 }

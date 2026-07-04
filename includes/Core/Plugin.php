@@ -64,7 +64,9 @@ final class Plugin {
 	 * @return void
 	 */
 	private function register_hooks(): void {
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( $this, 'boot_modules' ), 5 );
+		add_action( 'searchlens_cleanup', array( $this, 'run_cleanup' ) );
 	}
 
 
@@ -269,5 +271,36 @@ final class Plugin {
 		Schema::create_table();
 		update_option( Constants::OPTION_SCHEMA_VERSION, Constants::VERSION, true );
 		update_option( Constants::OPTION_PLUGIN_VERSION, Constants::VERSION, true );
+	}
+
+	/**
+	 * Load translation files.
+	 *
+	 * @return void
+	 */
+	public function load_textdomain(): void {
+		load_plugin_textdomain(
+			Constants::TEXT_DOMAIN,
+			false,
+			dirname( Constants::plugin_basename() ) . '/languages'
+		);
+	}
+
+	/**
+	 * Run the retention cleanup scheduled cron job.
+	 *
+	 * @return void
+	 */
+	public function run_cleanup(): void {
+		$settings           = $this->container->has( Settings::class ) ? $this->container->get( Settings::class ) : new Settings();
+		$analytics_settings = $settings->get_analytics_settings();
+		$retention_days     = isset( $analytics_settings['search_retention_period'] ) ? absint( $analytics_settings['search_retention_period'] ) : 30;
+
+		if ( $retention_days <= 0 ) {
+			return;
+		}
+
+		$repository = $this->container->has( SearchRepository::class ) ? $this->container->get( SearchRepository::class ) : new SearchRepository();
+		$repository->delete_older_than( $retention_days );
 	}
 }

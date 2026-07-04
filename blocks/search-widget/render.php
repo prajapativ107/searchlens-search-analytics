@@ -53,7 +53,7 @@ defined( 'ABSPATH' ) || exit;
 	wp_enqueue_script(
 		'searchlens-block-search-widget',
 		SEARCHLENS_URL . 'assets/js/search-widget.js',
-		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-i18n', 'wp-block-editor', 'wp-compose', 'wp-data', 'searchlens-frontend' ),
+		array( 'searchlens-frontend' ),
 		Constants::VERSION,
 		true
 	);

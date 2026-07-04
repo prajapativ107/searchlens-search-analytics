@@ -533,4 +533,28 @@ final class SearchRepository {
 	private function normalize_date_end( string $date ): string {
 		return gmdate( 'Y-m-d 23:59:59', strtotime( $date ) );
 	}
+
+	/**
+	 * Delete search records older than a specific number of days.
+	 *
+	 * @param int $days Number of days of retention.
+	 *
+	 * @return int|false Number of deleted rows or false on failure.
+	 */
+	public function delete_older_than( int $days ) {
+		global $wpdb;
+
+		if ( $days <= 0 ) {
+			return false;
+		}
+
+		$table = esc_sql( Constants::table_name() );
+		$date  = gmdate( 'Y-m-d H:i:s', time() - ( $days * DAY_IN_SECONDS ) );
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$query = $wpdb->prepare( "DELETE FROM {$table} WHERE searched_at < %s", $date );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->query( $query );
+	}
 }
