@@ -64,7 +64,6 @@ final class Plugin {
 	 * @return void
 	 */
 	private function register_hooks(): void {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( $this, 'boot_modules' ), 5 );
 		add_action( 'searchlens_cleanup', array( $this, 'run_cleanup' ) );
 	}
@@ -251,9 +250,7 @@ final class Plugin {
 			$this->container->get( Assets::class )->register_hooks();
 		}
 
-		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		do_action( 'searchlens_container_ready', $this->container );
-		do_action( 'search_analytics_insights_container_ready', $this->container );
 	}
 
 	/**
@@ -273,18 +270,6 @@ final class Plugin {
 		update_option( Constants::OPTION_PLUGIN_VERSION, Constants::VERSION, true );
 	}
 
-	/**
-	 * Load translation files.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain(
-			'searchlens-search-analytics',
-			false,
-			dirname( Constants::plugin_basename() ) . '/languages'
-		);
-	}
 
 	/**
 	 * Run the retention cleanup scheduled cron job.
