@@ -30,8 +30,5 @@ phpcbf.xml
 
 # Coverage
 coverage/
-
-# Languages
-/languages/
-/search-analytics-insights.pot
 composer.json
+*.zip
