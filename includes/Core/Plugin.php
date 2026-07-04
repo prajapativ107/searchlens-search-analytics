@@ -280,7 +280,7 @@ final class Plugin {
 	 */
 	public function load_textdomain(): void {
 		load_plugin_textdomain(
-			Constants::TEXT_DOMAIN,
+			'searchlens-search-analytics',
 			false,
 			dirname( Constants::plugin_basename() ) . '/languages'
 		);
