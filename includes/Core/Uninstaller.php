@@ -34,13 +34,6 @@ final class Uninstaller {
 		delete_option( Constants::OPTION_SETTINGS );
 		delete_option( Constants::OPTION_SEARCHABLE_POST_TYPES );
 		delete_option( Constants::OPTION_AJAX_SEARCH_SETTINGS );
-
-		// Clean up old options if they exist
-		delete_option( 'search_analytics_insights_schema_version' );
-		delete_option( 'search_analytics_insights_plugin_version' );
-		delete_option( 'search_analytics_insights_settings' );
-		delete_option( 'search_analytics_insights_post_types' );
-		delete_option( 'search_analytics_insights_ajax_search_settings' );
 	}
 
 	/**
