@@ -44,8 +44,12 @@ final class Uninstaller {
 	private static function delete_tables(): void {
 		global $wpdb;
 
-		$table = esc_sql( Constants::table_name() );
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-		$wpdb->query( "DROP TABLE IF EXISTS {$table}" );
+		$table = Constants::table_name();
+		if ( ! preg_match( '/^[a-zA-Z0-9_]+$/', $table ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+		$wpdb->query( "DROP TABLE IF EXISTS `{$table}`" );
 	}
 }

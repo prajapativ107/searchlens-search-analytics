@@ -181,15 +181,17 @@ final class Menu {
 		fputcsv( $output, array_map( array( $this, 'escape_csv_value' ), $headers ) );
 
 		// Batch fetch search logs.
-		$table  = Constants::table_name();
-		$limit  = 1000;
-		$offset = 0;
+		$table       = esc_sql( Constants::table_name() );
+		$users_table = esc_sql( $wpdb->users );
+		$limit       = 1000;
+		$offset      = 0;
 
 		while ( true ) {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$query = "SELECT {$table}.id, {$table}.search_term, {$table}.searched_at, {$table}.source, {$table}.matched_post_types, {$table}.result_count, {$table}.page_title, {$table}.page_url, {$table}.referrer, {$table}.page_type, u.display_name, u.user_login FROM {$table} LEFT JOIN {$wpdb->users} AS u ON {$table}.user_id = u.ID ORDER BY {$table}.id ASC LIMIT %d OFFSET %d";
+			$query = "SELECT `{$table}`.id, `{$table}`.search_term, `{$table}`.searched_at, `{$table}`.source, `{$table}`.matched_post_types, `{$table}`.result_count, `{$table}`.page_title, `{$table}`.page_url, `{$table}`.referrer, `{$table}`.page_type, u.display_name, u.user_login FROM `{$table}` LEFT JOIN `{$users_table}` AS u ON `{$table}`.user_id = u.ID ORDER BY `{$table}`.id ASC LIMIT %d OFFSET %d";
+			$params = array( $limit, $offset );
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-			$rows = $wpdb->get_results( $wpdb->prepare( $query, $limit, $offset ), ARRAY_A );
+			$rows = $wpdb->get_results( $wpdb->prepare( $query, ...$params ), ARRAY_A );
 
 			if ( empty( $rows ) ) {
 				break;
