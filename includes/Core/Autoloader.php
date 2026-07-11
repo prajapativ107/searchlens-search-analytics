@@ -2,10 +2,10 @@
 /**
  * Plugin autoloader.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Core;
+namespace VPLens\Core;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * Lightweight PSR-4 style autoloader for the plugin namespace.
  */
 final class Autoloader {
-	private const NAMESPACE_PREFIX = 'SearchLens\\';
+	private const NAMESPACE_PREFIX = 'VPLens\\';
 
 	/**
 	 * Register the autoloader.
@@ -38,7 +38,7 @@ final class Autoloader {
 
 		$relative_class = substr( $class_name, strlen( self::NAMESPACE_PREFIX ) );
 		$relative_path  = str_replace( '\\', '/', $relative_class );
-		$file_path      = SEARCHLENS_PATH . 'includes/' . $relative_path . '.php';
+		$file_path      = VPLENS_PATH . 'includes/' . $relative_path . '.php';
 
 		if ( is_readable( $file_path ) ) {
 			require_once $file_path;

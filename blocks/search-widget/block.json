@@ -1,6 +1,6 @@
 {
 	"apiVersion": 3,
-	"name": "searchlens/search-widget",
+	"name": "vplens/search-widget",
 	"title": "SearchLens Search",
 	"category": "widgets",
 	"icon": "search",

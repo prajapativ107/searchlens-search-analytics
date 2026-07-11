@@ -2,7 +2,7 @@
 /**
  * Uninstall entry point.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
@@ -12,4 +12,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 require_once __DIR__ . '/includes/Core/Constants.php';
 require_once __DIR__ . '/includes/Core/Uninstaller.php';
 
-SearchLens\Core\Uninstaller::uninstall();
+VPLens\Core\Uninstaller::uninstall();

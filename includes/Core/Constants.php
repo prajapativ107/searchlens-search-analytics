@@ -2,10 +2,10 @@
 /**
  * Plugin constants.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Core;
+namespace VPLens\Core;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -15,18 +15,18 @@ defined( 'ABSPATH' ) || exit;
 final class Constants {
 	public const VERSION                      = '1.0.0';
 	public const TEXT_DOMAIN                  = 'search-analytics-insights';
-	public const OPTION_SCHEMA_VERSION        = 'searchlens_schema_version';
-	public const OPTION_PLUGIN_VERSION        = 'searchlens_plugin_version';
-	public const OPTION_SETTINGS              = 'searchlens_settings';
-	public const OPTION_SEARCHABLE_POST_TYPES = 'searchlens_post_types';
-	public const OPTION_AJAX_SEARCH_SETTINGS  = 'searchlens_ajax_search_settings';
-	public const NONCE_ACTION                 = 'searchlens_action';
-	public const NONCE_NAME                   = 'searchlens_nonce';
-	public const AJAX_ACTION_SEARCH           = 'searchlens_search';
+	public const OPTION_SCHEMA_VERSION        = 'vplens_schema_version';
+	public const OPTION_PLUGIN_VERSION        = 'vplens_plugin_version';
+	public const OPTION_SETTINGS              = 'vplens_settings';
+	public const OPTION_SEARCHABLE_POST_TYPES = 'vplens_post_types';
+	public const OPTION_AJAX_SEARCH_SETTINGS  = 'vplens_ajax_search_settings';
+	public const NONCE_ACTION                 = 'vplens_action';
+	public const NONCE_NAME                   = 'vplens_nonce';
+	public const AJAX_ACTION_SEARCH           = 'vplens_search';
 	public const SOURCE_AJAX_SEARCH           = 'ajax_search';
 	public const SOURCE_WORDPRESS_SEARCH      = 'wordpress_search';
 	public const CAPABILITY                   = 'manage_options';
-	public const TABLE_SUFFIX                 = 'searchlens_searches';
+	public const TABLE_SUFFIX                 = 'vplens_searches';
 
 	/**
 	 * Get the full database table name.
@@ -47,6 +47,6 @@ final class Constants {
 	 * @return string
 	 */
 	public static function plugin_basename(): string {
-		return plugin_basename( SEARCHLENS_FILE );
+		return plugin_basename( VPLENS_FILE );
 	}
 }

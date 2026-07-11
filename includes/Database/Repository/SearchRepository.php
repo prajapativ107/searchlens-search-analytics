@@ -2,12 +2,12 @@
 /**
  * Search repository.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Database\Repository;
+namespace VPLens\Database\Repository;
 
-use SearchLens\Core\Constants;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 

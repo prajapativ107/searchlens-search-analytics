@@ -29,14 +29,14 @@
 
 	function getSearchElements(wrapper) {
 		return {
-			toggle: wrapper.querySelector('.searchlens-search-toggle'),
-			popup: wrapper.querySelector('.searchlens-search-popup'),
-			closeButton: wrapper.querySelector('.searchlens-search-close'),
-			form: wrapper.querySelector('.searchlens-form, .searchlens-ajax-search-form'),
-			input: wrapper.querySelector('.searchlens-form .search-field, .searchlens-ajax-search-input'),
-			status: wrapper.querySelector('.searchlens-search-status, .searchlens-ajax-search-status'),
-			resultsWrap: wrapper.querySelector('.searchlens-search-results-wrap, .searchlens-ajax-search-results-wrap'),
-			results: wrapper.querySelector('.searchlens-search-results, .searchlens-ajax-search-results'),
+			toggle: wrapper.querySelector('.vplens-search-toggle'),
+			popup: wrapper.querySelector('.vplens-search-popup'),
+			closeButton: wrapper.querySelector('.vplens-search-close'),
+			form: wrapper.querySelector('.vplens-form, .vplens-ajax-search-form'),
+			input: wrapper.querySelector('.vplens-form .search-field, .vplens-ajax-search-input'),
+			status: wrapper.querySelector('.vplens-search-status, .vplens-ajax-search-status'),
+			resultsWrap: wrapper.querySelector('.vplens-search-results-wrap, .vplens-ajax-search-results-wrap'),
+			results: wrapper.querySelector('.vplens-search-results, .vplens-ajax-search-results'),
 		};
 	}
 
@@ -172,11 +172,11 @@
 				const title = document.createElement('span');
 				const meta = document.createElement('span');
 
-				li.className = 'searchlens-search-result';
-				li.id = 'searchlens-search-widget-option-' + index;
+				li.className = 'vplens-search-result';
+				li.id = 'vplens-search-widget-option-' + index;
 				li.setAttribute('role', 'option');
 
-				link.className = 'searchlens-search-link';
+				link.className = 'vplens-search-link';
 				link.href = item.url || '#';
 				link.tabIndex = -1;
 
@@ -184,8 +184,8 @@
 					const imageWrap = document.createElement('span');
 					const image = document.createElement('img');
 
-					imageWrap.className = 'searchlens-search-image-wrap';
-					image.className = 'searchlens-search-image';
+					imageWrap.className = 'vplens-search-image-wrap';
+					image.className = 'vplens-search-image';
 					image.src = item.featured_image;
 					image.alt = '';
 					image.loading = 'lazy';
@@ -196,11 +196,11 @@
 					link.classList.add('has-featured-image');
 				}
 
-				title.className = 'searchlens-search-title';
+				title.className = 'vplens-search-title';
 				title.textContent = item.title || '';
 
 				if (showPostTypeLabel && item.post_type_label) {
-					meta.className = 'searchlens-search-meta';
+					meta.className = 'vplens-search-meta';
 					meta.textContent = item.post_type_label;
 					link.appendChild(title);
 					link.appendChild(meta);
@@ -242,9 +242,9 @@
 		params.append('term', term);
 		params.append('limit', limit);
 
-		const pageTitle = window.searchlens_data && window.searchlens_data.page_title ? window.searchlens_data.page_title : document.title;
-		const pageUrl   = window.searchlens_data && window.searchlens_data.page_url ? window.searchlens_data.page_url : window.location.href;
-		const pageType  = window.searchlens_data && window.searchlens_data.page_type ? window.searchlens_data.page_type : (window.SearchLens && window.SearchLens.getPageType ? window.SearchLens.getPageType() : 'Other');
+		const pageTitle = window.vplens_data && window.vplens_data.page_title ? window.vplens_data.page_title : document.title;
+		const pageUrl   = window.vplens_data && window.vplens_data.page_url ? window.vplens_data.page_url : window.location.href;
+		const pageType  = window.vplens_data && window.vplens_data.page_type ? window.vplens_data.page_type : (window.VPLens && window.VPLens.getPageType ? window.VPLens.getPageType() : 'Other');
 
 		params.append('page_title', pageTitle);
 		params.append('page_url', pageUrl);
@@ -324,7 +324,7 @@
 	function updateActiveItem(wrapper, direction) {
 		const elements = getSearchElements(wrapper);
 		const state = getState(wrapper);
-		const items = elements.results ? elements.results.querySelectorAll('.searchlens-search-result') : [];
+		const items = elements.results ? elements.results.querySelectorAll('.vplens-search-result') : [];
 
 		if (!items.length) {
 			return;
@@ -359,13 +359,13 @@
 		const state = getState(wrapper);
 		const elements = getSearchElements(wrapper);
 		const ajaxEnabled = '1' === wrapper.getAttribute('data-ajax-enabled');
-		const usesAjaxSearchModule = Boolean(wrapper.querySelector('.searchlens-ajax-search'));
+		const usesAjaxSearchModule = Boolean(wrapper.querySelector('.vplens-ajax-search'));
 
 		if (!elements.toggle || !elements.popup) {
 			return;
 		}
 
-		wrapper.classList.add('searchlens-search-widget--initialized');
+		wrapper.classList.add('vplens-search-widget--initialized');
 		setStatus(wrapper, '', false);
 		clearResults(wrapper);
 
@@ -425,7 +425,7 @@
 				'submit',
 				function (event) {
 					const state = getState(wrapper);
-					const items = elements.results ? elements.results.querySelectorAll('.searchlens-search-result, .searchlens-ajax-search-result') : [];
+					const items = elements.results ? elements.results.querySelectorAll('.vplens-search-result, .vplens-ajax-search-result') : [];
 					const activeResult = state.activeIndex >= 0 ? items[state.activeIndex] : null;
 					const link = activeResult ? activeResult.querySelector('a') : null;
 
@@ -445,12 +445,12 @@
 					return;
 				}
 
-				if (event.target.closest('.searchlens-search-close')) {
+				if (event.target.closest('.vplens-search-close')) {
 					closeWidget(wrapper);
 					return;
 				}
 
-				const link = event.target.closest('.searchlens-search-link');
+				const link = event.target.closest('.vplens-search-link');
 
 				if (link) {
 					closeWidget(wrapper);
@@ -478,7 +478,7 @@
 	}
 
 	function initAllWidgets() {
-		document.querySelectorAll('.searchlens-search-widget').forEach(
+		document.querySelectorAll('.vplens-search-widget').forEach(
 			function (wrapper) {
 				initWidget(wrapper);
 			}

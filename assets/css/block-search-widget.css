@@ -1,18 +1,18 @@
-.searchlens-search-widget--editor {
+.vplens-search-widget--editor {
 	padding: 1rem;
 	border: 1px dashed #d9e1ea;
 	border-radius: 18px;
 	background: #fff;
 }
 
-.searchlens-search-preview {
+.vplens-search-preview {
 	padding: 0.75rem 1rem;
 	border-radius: 12px;
 	background: #f7f9fc;
 	color: #5f6b7a;
 }
 
-.searchlens-search-toggle-label {
+.vplens-search-toggle-label {
 	margin-left: 0.5rem;
 	font-weight: 600;
 }

@@ -2,13 +2,13 @@
 /**
  * Search tracker.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Tracking;
+namespace VPLens\Tracking;
 
-use SearchLens\Core\Constants;
-use SearchLens\Database\Repository\SearchRepository;
+use VPLens\Core\Constants;
+use VPLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Tracker {
 
-	private const COOKIE_NAME     = 'searchlens_session';
+	private const COOKIE_NAME     = 'vplens_session';
 	private const COOKIE_LIFETIME = MONTH_IN_SECONDS;
 
 	private SearchRepository $repository;
@@ -49,20 +49,20 @@ final class Tracker {
 	 */
 	public function enqueue_frontend_scripts(): void {
 		wp_enqueue_script(
-			'searchlens-frontend',
-			SEARCHLENS_URL . 'assets/js/frontend.js',
+			'vplens-frontend',
+			VPLENS_URL . 'assets/js/frontend.js',
 			array(),
 			Constants::VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'searchlens-frontend',
-			'searchlens_data',
+			'vplens-frontend',
+			'vplens_data',
 			array(
-				'page_title' => \SearchLens\Helpers\PageHelper::get_current_page_title(),
-				'page_url'   => \SearchLens\Helpers\PageHelper::get_current_page_url(),
-				'page_type'  => \SearchLens\Helpers\PageHelper::get_current_page_type(),
+				'page_title' => \VPLens\Helpers\PageHelper::get_current_page_title(),
+				'page_url'   => \VPLens\Helpers\PageHelper::get_current_page_url(),
+				'page_type'  => \VPLens\Helpers\PageHelper::get_current_page_type(),
 			)
 		);
 	}
@@ -119,9 +119,9 @@ final class Tracker {
 			return;
 		}
 
-		$raw_title  = isset( $_GET['searchlens_page_title'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['searchlens_page_title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$page_url   = isset( $_GET['searchlens_page_url'] ) ? esc_url_raw( wp_unslash( (string) $_GET['searchlens_page_url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$page_title = \SearchLens\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
+		$raw_title  = isset( $_GET['vplens_page_title'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['vplens_page_title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page_url   = isset( $_GET['vplens_page_url'] ) ? esc_url_raw( wp_unslash( (string) $_GET['vplens_page_url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page_title = \VPLens\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
 
 		$this->repository->insert(
 			array(
@@ -134,8 +134,8 @@ final class Tracker {
 				'blog_id'      => get_current_blog_id(),
 				'page_title'   => sanitize_text_field( $page_title ),
 				'page_url'     => $page_url,
-				'referrer'     => isset( $_GET['searchlens_referrer'] ) ? esc_url_raw( wp_unslash( (string) $_GET['searchlens_referrer'] ) ) : ( isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( (string) $_SERVER['HTTP_REFERER'] ) ) : '' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				'page_type'    => isset( $_GET['searchlens_page_type'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['searchlens_page_type'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'referrer'     => isset( $_GET['vplens_referrer'] ) ? esc_url_raw( wp_unslash( (string) $_GET['vplens_referrer'] ) ) : ( isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( (string) $_SERVER['HTTP_REFERER'] ) ) : '' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				'page_type'    => isset( $_GET['vplens_page_type'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['vplens_page_type'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			)
 		);
 	}

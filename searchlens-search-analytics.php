@@ -12,33 +12,33 @@
  * Text Domain: search-analytics-insights
  * Domain Path: /languages
  *
- * @package SearchLens
+ * @package VPLens
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SEARCHLENS_FILE', __FILE__ );
-define( 'SEARCHLENS_PATH', plugin_dir_path( __FILE__ ) );
-define( 'SEARCHLENS_URL', plugin_dir_url( __FILE__ ) );
+define( 'VPLENS_FILE', __FILE__ );
+define( 'VPLENS_PATH', plugin_dir_path( __FILE__ ) );
+define( 'VPLENS_URL', plugin_dir_url( __FILE__ ) );
 
-require_once SEARCHLENS_PATH . 'includes/Core/Constants.php';
-require_once SEARCHLENS_PATH . 'includes/Core/Autoloader.php';
-require_once SEARCHLENS_PATH . 'includes/Database/Schema.php';
-require_once SEARCHLENS_PATH . 'includes/Core/Activator.php';
-require_once SEARCHLENS_PATH . 'includes/Core/Deactivator.php';
-require_once SEARCHLENS_PATH . 'includes/Core/Uninstaller.php';
-require_once SEARCHLENS_PATH . 'includes/Core/Plugin.php';
+require_once VPLENS_PATH . 'includes/Core/Constants.php';
+require_once VPLENS_PATH . 'includes/Core/Autoloader.php';
+require_once VPLENS_PATH . 'includes/Database/Schema.php';
+require_once VPLENS_PATH . 'includes/Core/Activator.php';
+require_once VPLENS_PATH . 'includes/Core/Deactivator.php';
+require_once VPLENS_PATH . 'includes/Core/Uninstaller.php';
+require_once VPLENS_PATH . 'includes/Core/Plugin.php';
 
-register_activation_hook( __FILE__, array( 'SearchLens\Core\Activator', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'SearchLens\Core\Deactivator', 'deactivate' ) );
-register_uninstall_hook( __FILE__, array( 'SearchLens\Core\Uninstaller', 'uninstall' ) );
+register_activation_hook( __FILE__, array( 'VPLens\Core\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'VPLens\Core\Deactivator', 'deactivate' ) );
+register_uninstall_hook( __FILE__, array( 'VPLens\Core\Uninstaller', 'uninstall' ) );
 
 add_action(
 	'plugins_loaded',
 	static function (): void {
-		SearchLens\Core\Autoloader::register();
-		SearchLens\Core\Plugin::instance();
+		VPLens\Core\Autoloader::register();
+		VPLens\Core\Plugin::instance();
 	}
 );

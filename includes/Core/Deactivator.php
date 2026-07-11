@@ -2,10 +2,10 @@
 /**
  * Plugin deactivation handler.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Core;
+namespace VPLens\Core;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,7 +19,7 @@ final class Deactivator {
 	 * @return void
 	 */
 	public static function deactivate(): void {
-		wp_clear_scheduled_hook( 'searchlens_cleanup' );
+		wp_clear_scheduled_hook( 'vplens_cleanup' );
 		wp_clear_scheduled_hook( 'search_analytics_insights_cleanup' );
 	}
 }

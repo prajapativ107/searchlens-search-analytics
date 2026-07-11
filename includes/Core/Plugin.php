@@ -2,31 +2,31 @@
 /**
  * Main plugin orchestrator.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Core;
+namespace VPLens\Core;
 
-use SearchLens\API\RestController;
-use SearchLens\Ajax\SearchController;
-use SearchLens\Ajax\SearchService as AjaxSearchService;
-use SearchLens\Ajax\SearchTracker as AjaxSearchTracker;
-use SearchLens\Admin\Dashboard;
-use SearchLens\Admin\Assets;
-use SearchLens\Admin\Menu;
-use SearchLens\Admin\Settings;
-use SearchLens\Analytics\Service\AnalyticsService;
-use SearchLens\Database\Repository\SearchRepository;
-use SearchLens\Database\Schema;
-use SearchLens\Helpers\Privacy;
-use SearchLens\Tracking\Tracker;
-use SearchLens\Shortcodes\Registrar;
-use SearchLens\Shortcodes\AjaxSearchForm;
-use SearchLens\Shortcodes\SearchForm;
-use SearchLens\Shortcodes\PopularSearches;
-use SearchLens\Shortcodes\TrendingSearches;
-use SearchLens\Widgets\WidgetManager;
-use SearchLens\Blocks\BlockManager;
+use VPLens\API\RestController;
+use VPLens\Ajax\SearchController;
+use VPLens\Ajax\SearchService as AjaxSearchService;
+use VPLens\Ajax\SearchTracker as AjaxSearchTracker;
+use VPLens\Admin\Dashboard;
+use VPLens\Admin\Assets;
+use VPLens\Admin\Menu;
+use VPLens\Admin\Settings;
+use VPLens\Analytics\Service\AnalyticsService;
+use VPLens\Database\Repository\SearchRepository;
+use VPLens\Database\Schema;
+use VPLens\Helpers\Privacy;
+use VPLens\Tracking\Tracker;
+use VPLens\Shortcodes\Registrar;
+use VPLens\Shortcodes\AjaxSearchForm;
+use VPLens\Shortcodes\SearchForm;
+use VPLens\Shortcodes\PopularSearches;
+use VPLens\Shortcodes\TrendingSearches;
+use VPLens\Widgets\WidgetManager;
+use VPLens\Blocks\BlockManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -65,7 +65,7 @@ final class Plugin {
 	 */
 	private function register_hooks(): void {
 		add_action( 'init', array( $this, 'boot_modules' ), 5 );
-		add_action( 'searchlens_cleanup', array( $this, 'run_cleanup' ) );
+		add_action( 'vplens_cleanup', array( $this, 'run_cleanup' ) );
 	}
 
 
@@ -256,7 +256,7 @@ final class Plugin {
 			$this->container->get( Assets::class )->register_hooks();
 		}
 
-		do_action( 'searchlens_container_ready', $this->container );
+		do_action( 'vplens_container_ready', $this->container );
 	}
 
 	/**

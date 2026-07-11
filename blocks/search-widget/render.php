@@ -2,16 +2,16 @@
 /**
  * Block render template.
  *
- * @package SearchLens
+ * @package VPLens
  *
  * @var array<string, mixed> $attributes Block attributes.
  */
 
-use SearchLens\Admin\Settings;
-use SearchLens\Core\Constants;
-use SearchLens\Shortcodes\AjaxSearchForm;
-use SearchLens\Shortcodes\SearchForm;
-use SearchLens\Widgets\SearchWidget;
+use VPLens\Admin\Settings;
+use VPLens\Core\Constants;
+use VPLens\Shortcodes\AjaxSearchForm;
+use VPLens\Shortcodes\SearchForm;
+use VPLens\Widgets\SearchWidget;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,27 +33,27 @@ defined( 'ABSPATH' ) || exit;
 
 	$search_form = new SearchForm();
 	$ajax_form   = new AjaxSearchForm( $settings );
-	$widget_id   = wp_unique_id( 'searchlens-block-search-widget-' );
+	$widget_id   = wp_unique_id( 'vplens-block-search-widget-' );
 	$popup_id    = $widget_id . '-popup';
 
 	wp_enqueue_style(
-		'searchlens-block-search-widget',
-		SEARCHLENS_URL . 'assets/css/block-search-widget.css',
+		'vplens-block-search-widget',
+		VPLENS_URL . 'assets/css/block-search-widget.css',
 		array(),
 		Constants::VERSION
 	);
 
 	wp_enqueue_style(
-		'searchlens-search-widget',
-		SEARCHLENS_URL . 'assets/css/search-widget.css',
+		'vplens-search-widget',
+		VPLENS_URL . 'assets/css/search-widget.css',
 		array(),
 		Constants::VERSION
 	);
 
 	wp_enqueue_script(
-		'searchlens-block-search-widget',
-		SEARCHLENS_URL . 'assets/js/search-widget.js',
-		array( 'searchlens-frontend' ),
+		'vplens-block-search-widget',
+		VPLENS_URL . 'assets/js/search-widget.js',
+		array( 'vplens-frontend' ),
 		Constants::VERSION,
 		true
 	);
@@ -85,7 +85,7 @@ defined( 'ABSPATH' ) || exit;
 	);
 	?>
 	<div
-		class="searchlens-search-widget searchlens-search-widget--<?php echo esc_attr( $open_mode ); ?> searchlens-search-widget--block"
+		class="vplens-search-widget vplens-search-widget--<?php echo esc_attr( $open_mode ); ?> vplens-search-widget--block"
 		data-open-mode="<?php echo esc_attr( $open_mode ); ?>"
 		data-ajax-enabled="<?php echo esc_attr( $enable_ajax_search ? '1' : '0' ); ?>"
 		data-ajax-url="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>"
@@ -101,23 +101,23 @@ defined( 'ABSPATH' ) || exit;
 	>
 		<button
 			type="button"
-			class="searchlens-search-toggle"
+			class="vplens-search-toggle"
 			aria-label="<?php echo esc_attr( $show_label ? __( 'Open search', 'search-analytics-insights' ) : __( 'Search', 'search-analytics-insights' ) ); ?>"
 			aria-expanded="false"
 			aria-controls="<?php echo esc_attr( $popup_id ); ?>"
 		>
-			<span class="searchlens-search-toggle-icon" aria-hidden="true">
+			<span class="vplens-search-toggle-icon" aria-hidden="true">
 				<?php echo wp_kses( SearchWidget::get_icon_markup(), $allowed_tags ); ?>
 			</span>
 			<?php if ( $show_label ) : ?>
-				<span class="searchlens-search-toggle-label"><?php esc_html_e( 'Search', 'search-analytics-insights' ); ?></span>
+				<span class="vplens-search-toggle-label"><?php esc_html_e( 'Search', 'search-analytics-insights' ); ?></span>
 			<?php endif; ?>
 		</button>
 
-		<div id="<?php echo esc_attr( $popup_id ); ?>" class="searchlens-search-popup" hidden aria-hidden="true" inert>
-			<div class="searchlens-search-panel">
+		<div id="<?php echo esc_attr( $popup_id ); ?>" class="vplens-search-popup" hidden aria-hidden="true" inert>
+			<div class="vplens-search-panel">
 				<?php if ( 'modal' === $open_mode ) : ?>
-					<button type="button" class="searchlens-search-close" aria-label="<?php echo esc_attr__( 'Close search', 'search-analytics-insights' ); ?>">
+					<button type="button" class="vplens-search-close" aria-label="<?php echo esc_attr__( 'Close search', 'search-analytics-insights' ); ?>">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				<?php endif; ?>

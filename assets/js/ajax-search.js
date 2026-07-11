@@ -28,7 +28,7 @@
 	}
 
 	function setStatus(wrapper, message, isLoading) {
-		const status = wrapper.querySelector('.searchlens-ajax-search-status');
+		const status = wrapper.querySelector('.vplens-ajax-search-status');
 
 		if (!status) {
 			return;
@@ -40,7 +40,7 @@
 	}
 
 	function setResultsVisibility(wrapper, isVisible) {
-		const resultsWrap = wrapper.querySelector('.searchlens-ajax-search-results-wrap');
+		const resultsWrap = wrapper.querySelector('.vplens-ajax-search-results-wrap');
 
 		if (resultsWrap) {
 			resultsWrap.style.display = isVisible ? 'block' : 'none';
@@ -53,8 +53,8 @@
 	}
 
 	function clearResults(wrapper) {
-		const results = wrapper.querySelector('.searchlens-ajax-search-results');
-		const input = wrapper.querySelector('.searchlens-ajax-search-input');
+		const results = wrapper.querySelector('.vplens-ajax-search-results');
+		const input = wrapper.querySelector('.vplens-ajax-search-input');
 
 		if (results) {
 			results.innerHTML = '';
@@ -69,8 +69,8 @@
 	}
 
 	function renderResults(wrapper, items) {
-		const results = wrapper.querySelector('.searchlens-ajax-search-results');
-		const input = wrapper.querySelector('.searchlens-ajax-search-input');
+		const results = wrapper.querySelector('.vplens-ajax-search-results');
+		const input = wrapper.querySelector('.vplens-ajax-search-input');
 		const showFeaturedImages = '1' === wrapper.getAttribute('data-show-featured-images');
 		const showPostTypeLabel = '1' === wrapper.getAttribute('data-show-post-type-label');
 		const state = getState(wrapper);
@@ -97,19 +97,19 @@
 				const title = document.createElement('span');
 				const meta = document.createElement('span');
 
-				li.className = 'searchlens-ajax-search-result';
+				li.className = 'vplens-ajax-search-result';
 				li.setAttribute('role', 'option');
-				li.id = 'searchlens-ajax-search-option-' + index;
+				li.id = 'vplens-ajax-search-option-' + index;
 
-				link.className = 'searchlens-ajax-search-link';
+				link.className = 'vplens-ajax-search-link';
 				link.href = item.url || '#';
 				link.tabIndex = -1;
 
-				imageWrap.className = 'searchlens-ajax-search-image-wrap';
+				imageWrap.className = 'vplens-ajax-search-image-wrap';
 
 				if (showFeaturedImages && item.featured_image) {
 					const image = document.createElement('img');
-					image.className = 'searchlens-ajax-search-image';
+					image.className = 'vplens-ajax-search-image';
 					image.src = item.featured_image;
 					image.alt = '';
 					image.loading = 'lazy';
@@ -119,7 +119,7 @@
 					link.classList.add('has-featured-image');
 				}
 
-				title.className = 'searchlens-ajax-search-title';
+				title.className = 'vplens-ajax-search-title';
 				title.textContent = item.title || '';
 
 				if (imageWrap.childNodes.length) {
@@ -128,7 +128,7 @@
 				link.appendChild(title);
 
 				if (showPostTypeLabel && item.post_type_label) {
-					meta.className = 'searchlens-ajax-search-meta';
+					meta.className = 'vplens-ajax-search-meta';
 					meta.textContent = item.post_type_label;
 					link.appendChild(meta);
 				}
@@ -144,7 +144,7 @@
 
 	function updateActiveItem(wrapper, direction) {
 		const state = getState(wrapper);
-		const items = wrapper.querySelectorAll('.searchlens-ajax-search-result');
+		const items = wrapper.querySelectorAll('.vplens-ajax-search-result');
 
 		if (!items.length) {
 			return;
@@ -167,7 +167,7 @@
 
 				if (index === state.activeIndex && link) {
 					link.focus({ preventScroll: true });
-					const input = wrapper.querySelector('.searchlens-ajax-search-input');
+					const input = wrapper.querySelector('.vplens-ajax-search-input');
 
 					if (input) {
 						input.setAttribute('aria-activedescendant', item.id);
@@ -202,9 +202,9 @@
 		params.append('term', term);
 		params.append('limit', limit);
 
-		const pageTitle = window.searchlens_data && window.searchlens_data.page_title ? window.searchlens_data.page_title : document.title;
-		const pageUrl   = window.searchlens_data && window.searchlens_data.page_url ? window.searchlens_data.page_url : window.location.href;
-		const pageType  = window.searchlens_data && window.searchlens_data.page_type ? window.searchlens_data.page_type : (window.SearchLens && window.SearchLens.getPageType ? window.SearchLens.getPageType() : 'Other');
+		const pageTitle = window.vplens_data && window.vplens_data.page_title ? window.vplens_data.page_title : document.title;
+		const pageUrl   = window.vplens_data && window.vplens_data.page_url ? window.vplens_data.page_url : window.location.href;
+		const pageType  = window.vplens_data && window.vplens_data.page_type ? window.vplens_data.page_type : (window.VPLens && window.VPLens.getPageType ? window.VPLens.getPageType() : 'Other');
 
 		params.append('page_title', pageTitle);
 		params.append('page_url', pageUrl);
@@ -263,7 +263,7 @@
 			.finally(
 				function () {
 					state.controller = null;
-					const input = wrapper.querySelector('.searchlens-ajax-search-input');
+					const input = wrapper.querySelector('.vplens-ajax-search-input');
 
 					if (input) {
 						input.removeAttribute('aria-busy');
@@ -300,8 +300,8 @@
 	}
 
 	function initWrapper(wrapper) {
-		const input = wrapper.querySelector('.searchlens-ajax-search-input');
-		const form = wrapper.querySelector('.searchlens-ajax-search-form');
+		const input = wrapper.querySelector('.vplens-ajax-search-input');
+		const form = wrapper.querySelector('.vplens-ajax-search-form');
 
 		if (!input || !form) {
 			return;
@@ -338,7 +338,7 @@
 				event.preventDefault();
 
 				const state = getState(wrapper);
-				const items = wrapper.querySelectorAll('.searchlens-ajax-search-result');
+				const items = wrapper.querySelectorAll('.vplens-ajax-search-result');
 				const activeResult = state.activeIndex >= 0 ? items[state.activeIndex] : null;
 				const link = activeResult ? activeResult.querySelector('a') : null;
 
@@ -354,7 +354,7 @@
 		wrapper.addEventListener(
 			'click',
 			function (event) {
-				const link = event.target.closest('.searchlens-ajax-search-link');
+				const link = event.target.closest('.vplens-ajax-search-link');
 
 				if (link) {
 					clearResults(wrapper);
@@ -375,7 +375,7 @@
 	}
 
 	function init() {
-		document.querySelectorAll('.searchlens-ajax-search').forEach(initWrapper);
+		document.querySelectorAll('.vplens-ajax-search').forEach(initWrapper);
 	}
 
 	if ('loading' === document.readyState) {

@@ -2,12 +2,12 @@
 /**
  * Admin menu registration.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Admin;
+namespace VPLens\Admin;
 
-use SearchLens\Core\Constants;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,7 +48,7 @@ final class Menu {
 			esc_html__( 'SearchLens', 'search-analytics-insights' ),
 			esc_html__( 'SearchLens', 'search-analytics-insights' ),
 			Constants::CAPABILITY,
-			'searchlens',
+			'vplens',
 			array( $this->dashboard, 'render_dashboard_page' ),
 			'dashicons-search',
 			56
@@ -56,51 +56,51 @@ final class Menu {
 
 		// Submenu: Dashboard
 		add_submenu_page(
-			'searchlens',
+			'vplens',
 			esc_html__( 'Dashboard', 'search-analytics-insights' ),
 			esc_html__( 'Dashboard', 'search-analytics-insights' ),
 			Constants::CAPABILITY,
-			'searchlens',
+			'vplens',
 			''
 		);
 
 		// Submenu: Analytics & Insights
 		add_submenu_page(
-			'searchlens',
+			'vplens',
 			esc_html__( 'Analytics & Insights', 'search-analytics-insights' ),
 			esc_html__( 'Analytics & Insights', 'search-analytics-insights' ),
 			Constants::CAPABILITY,
-			'searchlens-analytics',
+			'vplens-analytics',
 			array( $this->dashboard, 'render_analytics_page' )
 		);
 
 		// Submenu: Search Settings
 		add_submenu_page(
-			'searchlens',
+			'vplens',
 			esc_html__( 'Search Settings', 'search-analytics-insights' ),
 			esc_html__( 'Search Settings', 'search-analytics-insights' ),
 			Constants::CAPABILITY,
-			'searchlens-settings',
+			'vplens-settings',
 			array( $this->dashboard, 'render_settings_page' )
 		);
 
 		// Submenu: Tools
 		add_submenu_page(
-			'searchlens',
+			'vplens',
 			esc_html__( 'Tools', 'search-analytics-insights' ),
 			esc_html__( 'Tools', 'search-analytics-insights' ),
 			Constants::CAPABILITY,
-			'searchlens-tools',
+			'vplens-tools',
 			array( $this->dashboard, 'render_tools_page' )
 		);
 
 		// Submenu: Help & Documentation
 		add_submenu_page(
-			'searchlens',
+			'vplens',
 			esc_html__( 'Help & Documentation', 'search-analytics-insights' ),
 			esc_html__( 'Help & Docs', 'search-analytics-insights' ),
 			Constants::CAPABILITY,
-			'searchlens-help',
+			'vplens-help',
 			array( $this->dashboard, 'render_help_page' )
 		);
 	}
@@ -116,18 +116,18 @@ final class Menu {
 		}
 
 		$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : '';
-		if ( 'searchlens-tools' !== $page ) {
+		if ( 'vplens-tools' !== $page ) {
 			return;
 		}
 
-		$action = isset( $_POST['searchlens_action'] ) ? sanitize_key( $_POST['searchlens_action'] ) : '';
+		$action = isset( $_POST['vplens_action'] ) ? sanitize_key( $_POST['vplens_action'] ) : '';
 		if ( empty( $action ) ) {
 			return;
 		}
 
 		// Verify Nonce
-		$nonce = isset( $_POST['searchlens_tools_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['searchlens_tools_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'searchlens_tools_action' ) ) {
+		$nonce = isset( $_POST['vplens_tools_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['vplens_tools_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'vplens_tools_action' ) ) {
 			wp_die( esc_html__( 'Security check failed.', 'search-analytics-insights' ) );
 		}
 
@@ -150,7 +150,7 @@ final class Menu {
 
 		// Set headers for download.
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=searchlens-export-' . gmdate( 'Y-m-d' ) . '.csv' );
+		header( 'Content-Disposition: attachment; filename=vplens-export-' . gmdate( 'Y-m-d' ) . '.csv' );
 		header( 'Pragma: no-cache' );
 		header( 'Expires: 0' );
 
@@ -196,7 +196,7 @@ final class Menu {
 			}
 
 			foreach ( $rows as $row ) {
-				$page_title = \SearchLens\Helpers\PageHelper::resolve_page_title( $row['page_url'], $row['page_title'] );
+				$page_title = \VPLens\Helpers\PageHelper::resolve_page_title( $row['page_url'], $row['page_title'] );
 
 				$csv_row = array(
 					$row['id'],
@@ -269,10 +269,10 @@ final class Menu {
 	 * @return void
 	 */
 	private function clear_analytics_data(): void {
-		$repository = new \SearchLens\Database\Repository\SearchRepository();
+		$repository = new \VPLens\Database\Repository\SearchRepository();
 		$repository->clear_all();
 
-		wp_safe_redirect( add_query_arg( 'searchlens_message', 'clear_success', admin_url( 'admin.php?page=searchlens-tools' ) ) );
+		wp_safe_redirect( add_query_arg( 'vplens_message', 'clear_success', admin_url( 'admin.php?page=vplens-tools' ) ) );
 		exit;
 	}
 
@@ -284,7 +284,7 @@ final class Menu {
 	private function reset_plugin_settings(): void {
 		delete_option( Constants::OPTION_SETTINGS );
 
-		wp_safe_redirect( add_query_arg( 'searchlens_message', 'reset_success', admin_url( 'admin.php?page=searchlens-tools' ) ) );
+		wp_safe_redirect( add_query_arg( 'vplens_message', 'reset_success', admin_url( 'admin.php?page=vplens-tools' ) ) );
 		exit;
 	}
 }

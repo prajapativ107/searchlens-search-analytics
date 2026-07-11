@@ -2,13 +2,13 @@
 /**
  * Trending searches shortcode.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Shortcodes;
+namespace VPLens\Shortcodes;
 
-use SearchLens\Analytics\Service\AnalyticsService;
-use SearchLens\Core\Constants;
+use VPLens\Analytics\Service\AnalyticsService;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -41,7 +41,7 @@ final class TrendingSearches {
 				'title' => __( 'Trending Searches', 'search-analytics-insights' ),
 			),
 			$attributes,
-			'searchlens_trending'
+			'vplens_trending'
 		);
 
 		$limit    = max( 1, min( 50, absint( $attributes['limit'] ) ) );
@@ -53,21 +53,21 @@ final class TrendingSearches {
 
 		ob_start();
 		?>
-		<div class="searchlens-shortcode searchlens-trending-searches">
+		<div class="vplens-shortcode vplens-trending-searches">
 			<?php if ( '' !== $title ) : ?>
-				<h2 class="searchlens-shortcode-title"><?php echo esc_html( $title ); ?></h2>
+				<h2 class="vplens-shortcode-title"><?php echo esc_html( $title ); ?></h2>
 			<?php endif; ?>
 
 			<?php if ( empty( $searches ) ) : ?>
 				<p><?php esc_html_e( 'No trending searches found for the last 7 days.', 'search-analytics-insights' ); ?></p>
 			<?php else : ?>
-				<ul class="searchlens-trending-searches-list">
+				<ul class="vplens-trending-searches-list">
 					<?php foreach ( $searches as $row ) : ?>
 						<?php
 						$term   = isset( $row['search_term'] ) ? (string) $row['search_term'] : '';
 						$search = add_query_arg( 's', rawurlencode( $term ), home_url( '/' ) );
 						?>
-						<li class="searchlens-trending-searches-item">
+						<li class="vplens-trending-searches-item">
 							<a href="<?php echo esc_url( $search ); ?>"><?php echo esc_html( $term ); ?></a>
 						</li>
 					<?php endforeach; ?>

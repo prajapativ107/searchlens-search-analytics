@@ -2,14 +2,14 @@
 /**
  * AJAX search shortcode.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Shortcodes;
+namespace VPLens\Shortcodes;
 
-use SearchLens\Admin\Settings;
-use SearchLens\Core\Constants;
-use SearchLens\Widgets\SearchWidget;
+use VPLens\Admin\Settings;
+use VPLens\Core\Constants;
+use VPLens\Widgets\SearchWidget;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,7 +45,7 @@ final class AjaxSearchForm {
 				'form_style'           => '',
 			),
 			$attributes,
-			'searchlens_ajax_form'
+			'vplens_ajax_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );
@@ -60,16 +60,16 @@ final class AjaxSearchForm {
 		$form_style      = in_array( $form_style, array( 'rounded', 'rectangle', 'underlined' ), true ) ? $form_style : $this->settings->get_form_style();
 
 		wp_enqueue_style(
-			'searchlens-ajax-search',
-			SEARCHLENS_URL . 'assets/css/ajax-search.css',
+			'vplens-ajax-search',
+			VPLENS_URL . 'assets/css/ajax-search.css',
 			array(),
 			Constants::VERSION
 		);
 
 		wp_enqueue_script(
-			'searchlens-ajax-search',
-			SEARCHLENS_URL . 'assets/js/ajax-search.js',
-			array( 'searchlens-frontend' ),
+			'vplens-ajax-search',
+			VPLENS_URL . 'assets/js/ajax-search.js',
+			array( 'vplens-frontend' ),
 			Constants::VERSION,
 			true
 		);
@@ -77,7 +77,7 @@ final class AjaxSearchForm {
 		ob_start();
 		?>
 		<div
-			class="searchlens-ajax-search searchlens-ajax-search--<?php echo esc_attr( $form_style ); ?>"
+			class="vplens-ajax-search vplens-ajax-search--<?php echo esc_attr( $form_style ); ?>"
 			data-ajax-url="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( Constants::NONCE_ACTION ) ); ?>"
 			data-action="<?php echo esc_attr( Constants::AJAX_ACTION_SEARCH ); ?>"
@@ -91,28 +91,28 @@ final class AjaxSearchForm {
 			data-min-chars-text="<?php echo esc_attr( sprintf( /* translators: %d: minimum characters count */ __( 'Type at least %d characters to search.', 'search-analytics-insights' ), (int) $settings['minimum_characters'] ) ); ?>"
 			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
 		>
-			<form class="searchlens-ajax-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" novalidate>
-				<label class="screen-reader-text" for="searchlens-ajax-search-input">
+			<form class="vplens-ajax-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" novalidate>
+				<label class="screen-reader-text" for="vplens-ajax-search-input">
 					<?php esc_html_e( 'Search for:', 'search-analytics-insights' ); ?>
 				</label>
-				<div class="searchlens-ajax-search-fields<?php echo $is_ajax_enabled ? ' searchlens-ajax-search-fields--no-button searchlens-ajax-search-fields--has-icon' : ''; ?>">
+				<div class="vplens-ajax-search-fields<?php echo $is_ajax_enabled ? ' vplens-ajax-search-fields--no-button vplens-ajax-search-fields--has-icon' : ''; ?>">
 					<input
-						id="searchlens-ajax-search-input"
+						id="vplens-ajax-search-input"
 						type="search"
-						class="searchlens-ajax-search-input"
+						class="vplens-ajax-search-input"
 						name="s"
 						placeholder="<?php echo esc_attr( $placeholder ); ?>"
 						autocomplete="off"
 						aria-autocomplete="list"
 						aria-expanded="false"
-						aria-controls="searchlens-ajax-search-results"
+						aria-controls="vplens-ajax-search-results"
 					/>
 					<?php if ( ! $is_ajax_enabled ) : ?>
-						<button type="submit" class="searchlens-ajax-search-button">
+						<button type="submit" class="vplens-ajax-search-button">
 							<?php echo esc_html( $button_text ); ?>
 						</button>
 					<?php else : ?>
-						<span class="searchlens-input-icon">
+						<span class="vplens-input-icon">
 							<?php
 							$allowed_tags = array(
 								'svg'  => array(
@@ -132,10 +132,10 @@ final class AjaxSearchForm {
 						</span>
 					<?php endif; ?>
 				</div>
-				<span class="searchlens-ajax-search-status" style="display:none;" aria-live="polite" aria-atomic="true"></span>
+				<span class="vplens-ajax-search-status" style="display:none;" aria-live="polite" aria-atomic="true"></span>
 			</form>
-			<div class="searchlens-ajax-search-results-wrap">
-				<ul id="searchlens-ajax-search-results" class="searchlens-ajax-search-results" role="listbox"></ul>
+			<div class="vplens-ajax-search-results-wrap">
+				<ul id="vplens-ajax-search-results" class="vplens-ajax-search-results" role="listbox"></ul>
 			</div>
 		</div>
 		<?php

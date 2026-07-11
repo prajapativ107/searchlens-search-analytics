@@ -2,12 +2,12 @@
 /**
  * Analytics service.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Analytics\Service;
+namespace VPLens\Analytics\Service;
 
-use SearchLens\Database\Repository\SearchRepository;
+use VPLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 

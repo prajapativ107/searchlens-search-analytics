@@ -2,15 +2,15 @@
 /**
  * Search widget.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Widgets;
+namespace VPLens\Widgets;
 
-use SearchLens\Admin\Settings;
-use SearchLens\Ajax\SearchService;
-use SearchLens\Core\Constants;
-use SearchLens\Shortcodes\SearchForm;
+use VPLens\Admin\Settings;
+use VPLens\Ajax\SearchService;
+use VPLens\Core\Constants;
+use VPLens\Shortcodes\SearchForm;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -40,7 +40,7 @@ final class SearchWidget extends \WP_Widget {
 	 */
 	public function __construct() {
 		parent::__construct(
-			'searchlens_search_widget',
+			'vplens_search_widget',
 			__( 'SearchLens Search Widget', 'search-analytics-insights' ),
 			array(
 				'description'                 => __( 'Displays a search icon that opens a search form.', 'search-analytics-insights' ),
@@ -61,23 +61,23 @@ final class SearchWidget extends \WP_Widget {
 		$instance     = wp_parse_args( (array) $instance, $this->get_default_instance() );
 		$settings     = $this->get_settings_helper();
 		$search_form  = new SearchForm();
-		$widget_id    = ! empty( $args['widget_id'] ) ? sanitize_html_class( (string) $args['widget_id'] ) : wp_unique_id( 'searchlens-search-widget-' );
+		$widget_id    = ! empty( $args['widget_id'] ) ? sanitize_html_class( (string) $args['widget_id'] ) : wp_unique_id( 'vplens-search-widget-' );
 		$popup_id     = $widget_id . '-popup';
 		$ajax_enabled = $settings->is_ajax_search_enabled();
 		$open_mode    = ! empty( $instance['open_mode'] ) ? sanitize_key( (string) $instance['open_mode'] ) : 'dropdown';
 		$show_label   = ! empty( $instance['show_label'] );
 
 		wp_enqueue_style(
-			'searchlens-search-widget',
-			SEARCHLENS_URL . 'assets/css/search-widget.css',
+			'vplens-search-widget',
+			VPLENS_URL . 'assets/css/search-widget.css',
 			array(),
 			Constants::VERSION
 		);
 
 		wp_enqueue_script(
-			'searchlens-search-widget',
-			SEARCHLENS_URL . 'assets/js/search-widget.js',
-			array( 'searchlens-frontend' ),
+			'vplens-search-widget',
+			VPLENS_URL . 'assets/js/search-widget.js',
+			array( 'vplens-frontend' ),
 			Constants::VERSION,
 			true
 		);
@@ -85,7 +85,7 @@ final class SearchWidget extends \WP_Widget {
 		echo isset( $args['before_widget'] ) ? wp_kses_post( (string) $args['before_widget'] ) : '';
 		?>
 		<div
-			class="searchlens-search-widget searchlens-search-widget--<?php echo esc_attr( $open_mode ); ?>"
+			class="vplens-search-widget vplens-search-widget--<?php echo esc_attr( $open_mode ); ?>"
 			data-open-mode="<?php echo esc_attr( $open_mode ); ?>"
 			data-ajax-enabled="<?php echo esc_attr( $ajax_enabled ? '1' : '0' ); ?>"
 			data-ajax-url="<?php echo esc_attr( admin_url( 'admin-ajax.php' ) ); ?>"
@@ -101,13 +101,13 @@ final class SearchWidget extends \WP_Widget {
 		>
 			<button
 				type="button"
-				class="searchlens-search-toggle"
+				class="vplens-search-toggle"
 				aria-label="<?php echo esc_attr( $this->get_toggle_label( (string) $instance['title'], $show_label ) ); ?>"
 				aria-expanded="false"
 				aria-controls="<?php echo esc_attr( $popup_id ); ?>"
-				style="--searchlens-search-icon-size: <?php echo esc_attr( (string) $instance['icon_size'] ); ?>px;"
+				style="--vplens-search-icon-size: <?php echo esc_attr( (string) $instance['icon_size'] ); ?>px;"
 			>
-				<span class="searchlens-search-toggle-icon" aria-hidden="true">
+				<span class="vplens-search-toggle-icon" aria-hidden="true">
 					<?php
 					$allowed_tags = array(
 						'svg'  => array(
@@ -126,16 +126,16 @@ final class SearchWidget extends \WP_Widget {
 					?>
 				</span>
 				<?php if ( $show_label ) : ?>
-					<span class="searchlens-search-toggle-label"><?php echo esc_html__( 'Search', 'search-analytics-insights' ); ?></span>
+					<span class="vplens-search-toggle-label"><?php echo esc_html__( 'Search', 'search-analytics-insights' ); ?></span>
 				<?php else : ?>
 					<span class="screen-reader-text"><?php echo esc_html__( 'Search', 'search-analytics-insights' ); ?></span>
 				<?php endif; ?>
 			</button>
 
-			<div id="<?php echo esc_attr( $popup_id ); ?>" class="searchlens-search-popup" hidden>
-				<div class="searchlens-search-panel">
+			<div id="<?php echo esc_attr( $popup_id ); ?>" class="vplens-search-popup" hidden>
+				<div class="vplens-search-panel">
 					<?php if ( '' !== trim( (string) $instance['title'] ) ) : ?>
-						<h2 class="searchlens-search-title"><?php echo esc_html( (string) $instance['title'] ); ?></h2>
+						<h2 class="vplens-search-title"><?php echo esc_html( (string) $instance['title'] ); ?></h2>
 					<?php endif; ?>
 					<?php
 					$rendered_form = $search_form->render(
@@ -148,9 +148,9 @@ final class SearchWidget extends \WP_Widget {
 					echo $rendered_form;
 					?>
 					<?php if ( $ajax_enabled ) : ?>
-						<div class="searchlens-search-status" aria-live="polite" aria-atomic="true"></div>
-						<div class="searchlens-search-results-wrap" hidden>
-							<ul class="searchlens-search-results" role="listbox"></ul>
+						<div class="vplens-search-status" aria-live="polite" aria-atomic="true"></div>
+						<div class="vplens-search-results-wrap" hidden>
+							<ul class="vplens-search-results" role="listbox"></ul>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -313,6 +313,6 @@ final class SearchWidget extends \WP_Widget {
 	 * @return string
 	 */
 	public static function get_icon_markup(): string {
-		return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="searchlens-search-icon" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10.5 4a6.5 6.5 0 1 0 4.02 11.62l4.43 4.43 1.41-1.41-4.43-4.43A6.5 6.5 0 0 0 10.5 4Zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"/></svg>';
+		return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="vplens-search-icon" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10.5 4a6.5 6.5 0 1 0 4.02 11.62l4.43 4.43 1.41-1.41-4.43-4.43A6.5 6.5 0 0 0 10.5 4Zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"/></svg>';
 	}
 }

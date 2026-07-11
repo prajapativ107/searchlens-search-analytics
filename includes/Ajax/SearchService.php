@@ -2,13 +2,13 @@
 /**
  * AJAX search service.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Ajax;
+namespace VPLens\Ajax;
 
-use SearchLens\Admin\Settings;
-use SearchLens\Database\Repository\SearchRepository;
+use VPLens\Admin\Settings;
+use VPLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,12 +2,12 @@
 /**
  * Plugin settings.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Admin;
+namespace VPLens\Admin;
 
-use SearchLens\Core\Constants;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -15,13 +15,13 @@ defined( 'ABSPATH' ) || exit;
  * Registers and renders plugin settings.
  */
 final class Settings {
-	private const SETTINGS_GROUP                  = 'searchlens_settings';
-	private const PAGE_SLUG                       = 'searchlens';
-	private const SECTION_SEARCH_FORM             = 'searchlens_search_form';
-	private const SECTION_AJAX_SEARCH             = 'searchlens_ajax_search';
-	private const SECTION_SEARCH_RESULTS          = 'searchlens_search_results';
-	private const SECTION_SEARCH_SOURCES          = 'searchlens_search_sources';
-	private const SECTION_ANALYTICS               = 'searchlens_analytics';
+	private const SETTINGS_GROUP                  = 'vplens_settings';
+	private const PAGE_SLUG                       = 'vplens';
+	private const SECTION_SEARCH_FORM             = 'vplens_search_form';
+	private const SECTION_AJAX_SEARCH             = 'vplens_ajax_search';
+	private const SECTION_SEARCH_RESULTS          = 'vplens_search_results';
+	private const SECTION_SEARCH_SOURCES          = 'vplens_search_sources';
+	private const SECTION_ANALYTICS               = 'vplens_analytics';
 	private const DEFAULT_PLACEHOLDER             = 'Search posts and pages...';
 	private const DEFAULT_BUTTON_TEXT             = 'Search';
 	private const DEFAULT_NO_RESULTS_MESSAGE      = 'No results found.';
@@ -53,7 +53,6 @@ final class Settings {
 	 * @return void
 	 */
 	public function register_hooks(): void {
-		add_action( 'admin_init', array( $this, 'maybe_migrate_legacy_settings' ), 5 );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 
@@ -487,14 +486,14 @@ final class Settings {
 			return;
 		}
 
-		echo '<fieldset class="searchlens-post-types-fieldset">';
+		echo '<fieldset class="vplens-post-types-fieldset">';
 
 		foreach ( $post_types as $post_type ) {
 			$checked = in_array( $post_type->name, $enabled_post_types, true );
 			?>
-			<label class="searchlens-post-type-option" for="searchlens-post-type-<?php echo esc_attr( $post_type->name ); ?>">
+			<label class="vplens-post-type-option" for="vplens-post-type-<?php echo esc_attr( $post_type->name ); ?>">
 				<input
-					id="searchlens-post-type-<?php echo esc_attr( $post_type->name ); ?>"
+					id="vplens-post-type-<?php echo esc_attr( $post_type->name ); ?>"
 					type="checkbox"
 					name="<?php echo esc_attr( Constants::OPTION_SETTINGS ); ?>[search_sources][searchable_post_types][]"
 					value="<?php echo esc_attr( $post_type->name ); ?>"
@@ -565,20 +564,7 @@ final class Settings {
 		$stored = get_option( Constants::OPTION_SETTINGS, array() );
 		$stored = is_array( $stored ) ? $stored : array();
 
-		return $this->sanitize_settings( array_replace_recursive( $this->get_default_settings(), $this->get_legacy_settings(), $stored ) );
-	}
-
-	/**
-	 * Migrate legacy options into the consolidated settings option.
-	 *
-	 * @return void
-	 */
-	public function maybe_migrate_legacy_settings(): void {
-		if ( false !== get_option( Constants::OPTION_SETTINGS, false ) ) {
-			return;
-		}
-
-		add_option( Constants::OPTION_SETTINGS, $this->sanitize_settings( array_replace_recursive( $this->get_default_settings(), $this->get_legacy_settings() ) ) );
+		return $this->sanitize_settings( array_replace_recursive( $this->get_default_settings(), $stored ) );
 	}
 
 	/**
@@ -909,38 +895,7 @@ final class Settings {
 		return array_values( array_intersect( $defaults, $allowed ) );
 	}
 
-	/**
-	 * Get legacy values from the old option keys.
-	 *
-	 * @return array<string, array<string, mixed>>
-	 */
-	private function get_legacy_settings(): array {
-		$legacy               = array();
-		$legacy_post_types    = get_option( 'search_analytics_insights_post_types', null );
-		$legacy_ajax_settings = get_option( 'search_analytics_insights_ajax_search_settings', null );
 
-		if ( is_array( $legacy_post_types ) && ! empty( $legacy_post_types ) ) {
-			$legacy['search_sources'] = array(
-				'load_all_public_post_types' => false,
-				'searchable_post_types'      => $this->sanitize_enabled_post_types( $legacy_post_types ),
-			);
-		}
-
-		if ( is_array( $legacy_ajax_settings ) ) {
-			$legacy['ajax_search'] = array(
-				'enabled'            => true,
-				'minimum_characters' => isset( $legacy_ajax_settings['minimum_characters'] ) ? absint( $legacy_ajax_settings['minimum_characters'] ) : self::DEFAULT_MINIMUM_CHARACTERS,
-				'maximum_results'    => isset( $legacy_ajax_settings['max_results'] ) ? absint( $legacy_ajax_settings['max_results'] ) : self::DEFAULT_MAX_RESULTS,
-				'debounce_time'      => self::DEFAULT_DEBOUNCE_TIME,
-			);
-
-			$legacy['search_results'] = array(
-				'show_featured_images' => ! empty( $legacy_ajax_settings['show_featured_images'] ),
-			);
-		}
-
-		return $legacy;
-	}
 
 	/**
 	 * Get the default consolidated settings.
@@ -1174,7 +1129,7 @@ final class Settings {
 	 */
 	private function render_checkbox_field( string $id, string $name, bool $checked, string $description ): void {
 		?>
-		<label class="searchlens-toggle" for="<?php echo esc_attr( $id ); ?>">
+		<label class="vplens-toggle" for="<?php echo esc_attr( $id ); ?>">
 			<input id="<?php echo esc_attr( $id ); ?>" type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php checked( $checked ); ?> />
 			<span><?php echo esc_html( $description ); ?></span>
 		</label>
@@ -1224,7 +1179,7 @@ final class Settings {
 	 * @return string
 	 */
 	private function field_id( string $section, string $key ): string {
-		return 'searchlens-' . $section . '-' . $key;
+		return 'vplens-' . $section . '-' . $key;
 	}
 
 	/**

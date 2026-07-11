@@ -2,12 +2,12 @@
 /**
  * AJAX search controller.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Ajax;
+namespace VPLens\Ajax;
 
-use SearchLens\Core\Constants;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,13 +2,13 @@
 /**
  * Popular searches shortcode.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Shortcodes;
+namespace VPLens\Shortcodes;
 
-use SearchLens\Analytics\Service\AnalyticsService;
-use SearchLens\Core\Constants;
+use VPLens\Analytics\Service\AnalyticsService;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -42,7 +42,7 @@ final class PopularSearches {
 				'show_count' => 'false',
 			),
 			$attributes,
-			'searchlens_popular'
+			'vplens_popular'
 		);
 
 		$limit      = max( 1, min( 50, absint( $attributes['limit'] ) ) );
@@ -52,25 +52,25 @@ final class PopularSearches {
 
 		ob_start();
 		?>
-		<div class="searchlens-shortcode searchlens-popular-searches">
+		<div class="vplens-shortcode vplens-popular-searches">
 			<?php if ( '' !== $title ) : ?>
-				<h2 class="searchlens-shortcode-title"><?php echo esc_html( $title ); ?></h2>
+				<h2 class="vplens-shortcode-title"><?php echo esc_html( $title ); ?></h2>
 			<?php endif; ?>
 
 			<?php if ( empty( $searches ) ) : ?>
 				<p><?php esc_html_e( 'No popular searches found yet.', 'search-analytics-insights' ); ?></p>
 			<?php else : ?>
-				<ul class="searchlens-popular-searches-list">
+				<ul class="vplens-popular-searches-list">
 					<?php foreach ( $searches as $row ) : ?>
 						<?php
 						$term   = isset( $row['search_term'] ) ? (string) $row['search_term'] : '';
 						$count  = isset( $row['search_count'] ) ? absint( $row['search_count'] ) : 0;
 						$search = add_query_arg( 's', rawurlencode( $term ), home_url( '/' ) );
 						?>
-						<li class="searchlens-popular-searches-item">
+						<li class="vplens-popular-searches-item">
 							<a href="<?php echo esc_url( $search ); ?>"><?php echo esc_html( $term ); ?></a>
 							<?php if ( $show_count ) : ?>
-								<span class="searchlens-search-count">
+								<span class="vplens-search-count">
 									<?php
 									echo esc_html(
 										sprintf(

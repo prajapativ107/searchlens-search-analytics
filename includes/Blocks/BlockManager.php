@@ -2,10 +2,10 @@
 /**
  * Block manager.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Blocks;
+namespace VPLens\Blocks;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,7 +29,7 @@ final class BlockManager {
 	 */
 	public function register_blocks(): void {
 		register_block_type(
-			SEARCHLENS_PATH . 'blocks/search-widget'
+			VPLENS_PATH . 'blocks/search-widget'
 		);
 	}
 }

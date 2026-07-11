@@ -2,12 +2,12 @@
 /**
  * Database schema.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Database;
+namespace VPLens\Database;
 
-use SearchLens\Core\Constants;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 

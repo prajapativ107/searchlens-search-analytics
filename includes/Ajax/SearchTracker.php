@@ -2,13 +2,13 @@
 /**
  * AJAX search tracker.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Ajax;
+namespace VPLens\Ajax;
 
-use SearchLens\Core\Constants;
-use SearchLens\Database\Repository\SearchRepository;
+use VPLens\Core\Constants;
+use VPLens\Database\Repository\SearchRepository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -57,7 +57,7 @@ final class SearchTracker {
 
 		$raw_title  = $page_data['page_title'] ?? '';
 		$page_url   = $page_data['page_url'] ?? '';
-		$page_title = \SearchLens\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
+		$page_title = \VPLens\Helpers\PageHelper::resolve_page_title( $page_url, $raw_title );
 
 		return $this->repository->insert(
 			array(
@@ -83,8 +83,8 @@ final class SearchTracker {
 	 * @return string|null
 	 */
 	private function get_session_id(): ?string {
-		if ( ! empty( $_COOKIE['searchlens_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			return sanitize_text_field( wp_unslash( (string) $_COOKIE['searchlens_session'] ) );
+		if ( ! empty( $_COOKIE['vplens_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return sanitize_text_field( wp_unslash( (string) $_COOKIE['vplens_session'] ) );
 		}
 
 		if ( ! empty( $_COOKIE['search_analytics_insights_session'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

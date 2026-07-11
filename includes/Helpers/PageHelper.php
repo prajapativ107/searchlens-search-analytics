@@ -2,10 +2,10 @@
 /**
  * Page helper.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Helpers;
+namespace VPLens\Helpers;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -19,7 +19,7 @@
 		var setAttributes = props.setAttributes;
 		var blockProps    = useBlockProps(
 			{
-				className: 'searchlens-search-widget searchlens-search-widget--editor',
+				className: 'vplens-search-widget vplens-search-widget--editor',
 			}
 		);
 
@@ -62,27 +62,27 @@
 			blockProps,
 			el(
 				'button',
-				{ type: 'button', className: 'searchlens-search-toggle', 'aria-expanded': 'true' },
+				{ type: 'button', className: 'vplens-search-toggle', 'aria-expanded': 'true' },
 				el(
 					'span',
 					{
-						className: 'searchlens-search-toggle-icon',
+						className: 'vplens-search-toggle-icon',
 						'aria-hidden': 'true',
 						dangerouslySetInnerHTML: { __html: iconMarkup },
 					}
 				),
-				attributes.showLabel ? el( 'span', { className : 'searchlens-search-toggle-label' }, __( 'Search', 'search-analytics-insights' ) ) : null
+				attributes.showLabel ? el( 'span', { className : 'vplens-search-toggle-label' }, __( 'Search', 'search-analytics-insights' ) ) : null
 			),
 			el(
 				'div',
-				{ className: 'searchlens-search-popup' },
+				{ className: 'vplens-search-popup' },
 				el(
 					'div',
-					{ className: 'searchlens-search-panel' },
+					{ className: 'vplens-search-panel' },
 					el(
 						'div',
-						{ className: 'searchlens-search-preview' },
-						__( 'SearchLens Search Form Preview', 'search-analytics-insights' )
+						{ className: 'vplens-search-preview' },
+						__( 'VPLens Search Form Preview', 'search-analytics-insights' )
 					)
 				)
 			)
@@ -92,7 +92,7 @@
 	}
 
 	wp.blocks.registerBlockType(
-		'searchlens/search-widget',
+		'vplens/search-widget',
 		{
 			edit: Edit,
 			save: function () {

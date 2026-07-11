@@ -2,12 +2,12 @@
 /**
  * Admin assets loader.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Admin;
+namespace VPLens\Admin;
 
-use SearchLens\Core\Constants;
+use VPLens\Core\Constants;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * Enqueues admin-side assets for the plugin screens only.
  */
 final class Assets {
-	private const SCREEN_ID = 'toplevel_page_searchlens';
+	private const SCREEN_ID = 'toplevel_page_vplens';
 
 	/**
 	 * Register hooks.
@@ -34,20 +34,20 @@ final class Assets {
 	public function enqueue_assets(): void {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		if ( ! $screen || false === strpos( $screen->id, 'searchlens' ) ) {
+		if ( ! $screen || false === strpos( $screen->id, 'vplens' ) ) {
 			return;
 		}
 
 		wp_enqueue_style(
-			'searchlens-admin',
-			SEARCHLENS_URL . 'assets/css/admin.css',
+			'vplens-admin',
+			VPLENS_URL . 'assets/css/admin.css',
 			array(),
 			Constants::VERSION
 		);
 
 		wp_enqueue_script(
-			'searchlens-admin',
-			SEARCHLENS_URL . 'assets/js/admin.js',
+			'vplens-admin',
+			VPLENS_URL . 'assets/js/admin.js',
 			array( 'wp-element' ),
 			Constants::VERSION,
 			true

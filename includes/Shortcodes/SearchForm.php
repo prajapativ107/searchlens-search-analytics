@@ -2,14 +2,14 @@
 /**
  * Search form shortcode.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Shortcodes;
+namespace VPLens\Shortcodes;
 
-use SearchLens\Admin\Settings;
-use SearchLens\Core\Constants;
-use SearchLens\Widgets\SearchWidget;
+use VPLens\Admin\Settings;
+use VPLens\Core\Constants;
+use VPLens\Widgets\SearchWidget;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,7 +44,7 @@ final class SearchForm {
 				'form_style'  => '',
 			),
 			$attributes,
-			'searchlens_form'
+			'vplens_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );
@@ -56,17 +56,17 @@ final class SearchForm {
 		}
 		$form_style   = sanitize_key( (string) ( '' !== (string) $attributes['form_style'] ? $attributes['form_style'] : $this->settings->get_form_style() ) );
 		$form_style   = in_array( $form_style, array( 'rounded', 'rectangle', 'underlined' ), true ) ? $form_style : $this->settings->get_form_style();
-		$field_id     = wp_unique_id( 'searchlens-search-field-' );
+		$field_id     = wp_unique_id( 'vplens-search-field-' );
 		$action_url   = home_url( '/' );
 		$current_term = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		ob_start();
 		?>
-		<form role="search" method="get" class="search-form searchlens-form searchlens-form--<?php echo esc_attr( $form_style ); ?>" action="<?php echo esc_url( $action_url ); ?>">
+		<form role="search" method="get" class="search-form vplens-form vplens-form--<?php echo esc_attr( $form_style ); ?>" action="<?php echo esc_url( $action_url ); ?>">
 			<label for="<?php echo esc_attr( $field_id ); ?>" class="screen-reader-text">
 				<?php esc_html_e( 'Search for:', 'search-analytics-insights' ); ?>
 			</label>
-			<div class="searchlens-form-fields searchlens-form-fields--<?php echo esc_attr( $show_button ? 'with-button' : 'no-button' ); ?><?php echo $is_ajax_enabled ? ' searchlens-form-fields--has-icon' : ''; ?>">
+			<div class="vplens-form-fields vplens-form-fields--<?php echo esc_attr( $show_button ? 'with-button' : 'no-button' ); ?><?php echo $is_ajax_enabled ? ' vplens-form-fields--has-icon' : ''; ?>">
 				<input
 					id="<?php echo esc_attr( $field_id ); ?>"
 					type="search"
@@ -81,7 +81,7 @@ final class SearchForm {
 						<?php echo esc_html( $button_text ); ?>
 					</button>
 				<?php elseif ( $is_ajax_enabled ) : ?>
-					<span class="searchlens-input-icon">
+					<span class="vplens-input-icon">
 						<?php
 						$allowed_tags = array(
 							'svg'  => array(

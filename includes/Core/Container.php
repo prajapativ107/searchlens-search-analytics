@@ -2,10 +2,10 @@
 /**
  * Service container.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Core;
+namespace VPLens\Core;
 
 defined( 'ABSPATH' ) || exit;
 

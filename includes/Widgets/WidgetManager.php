@@ -2,12 +2,12 @@
 /**
  * Widget manager.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Widgets;
+namespace VPLens\Widgets;
 
-use SearchLens\Admin\Settings;
+use VPLens\Admin\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

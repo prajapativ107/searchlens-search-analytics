@@ -2,13 +2,13 @@
 /**
  * Admin dashboard renderer.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\Admin;
+namespace VPLens\Admin;
 
-use SearchLens\Analytics\Service\AnalyticsService;
-use SearchLens\Core\Constants;
+use VPLens\Analytics\Service\AnalyticsService;
+use VPLens\Core\Constants;
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -50,34 +50,34 @@ final class Dashboard {
 			'dashboard',
 			function () use ( $summary, $top_terms, $recent_activity ) {
 				?>
-			<div class="searchlens-dashboard-grid">
-				<div class="searchlens-card-column">
-				<div class="searchlens-panel">
+			<div class="vplens-dashboard-grid">
+				<div class="vplens-card-column">
+				<div class="vplens-panel">
 					<h3><?php esc_html_e( 'Overview Summary', 'search-analytics-insights' ); ?></h3>
-					<div class="searchlens-summary">
+					<div class="vplens-summary">
 						<?php $this->render_summary_card( __( 'Total Searches', 'search-analytics-insights' ), (int) $summary['total_searches'] ); ?>
 						<?php $this->render_summary_card( __( 'Unique Searches', 'search-analytics-insights' ), (int) $summary['unique_searches'] ); ?>
 						<?php $this->render_summary_card( __( 'No Results', 'search-analytics-insights' ), (int) $summary['no_result_searches'] ); ?>
 					</div>
 				</div>
 				
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h3><?php esc_html_e( 'Quick Actions', 'search-analytics-insights' ); ?></h3>
-					<div class="searchlens-quick-actions">
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-analytics' ) ); ?>" class="button button-primary"><?php esc_html_e( 'View Analytics', 'search-analytics-insights' ); ?></a>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-settings' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Manage Settings', 'search-analytics-insights' ); ?></a>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-help' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Read Help Docs', 'search-analytics-insights' ); ?></a>
-						<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-tools' ) ); ?>">
-							<?php wp_nonce_field( 'searchlens_tools_action', 'searchlens_tools_nonce' ); ?>
-							<input type="hidden" name="searchlens_action" value="export" />
+					<div class="vplens-quick-actions">
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-analytics' ) ); ?>" class="button button-primary"><?php esc_html_e( 'View Analytics', 'search-analytics-insights' ); ?></a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-settings' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Manage Settings', 'search-analytics-insights' ); ?></a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-help' ) ); ?>" class="button button-secondary"><?php esc_html_e( 'Read Help Docs', 'search-analytics-insights' ); ?></a>
+						<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=vplens-tools' ) ); ?>">
+							<?php wp_nonce_field( 'vplens_tools_action', 'vplens_tools_nonce' ); ?>
+							<input type="hidden" name="vplens_action" value="export" />
 							<button type="submit" class="button button-secondary"><?php esc_html_e( 'Export to CSV', 'search-analytics-insights' ); ?></button>
 						</form>
 					</div>
 				</div>
 			</div>
 
-				<div class="searchlens-card-column">
-					<div class="searchlens-panel">
+				<div class="vplens-card-column">
+					<div class="vplens-panel">
 						<h3><?php esc_html_e( 'Top Searches (Overall)', 'search-analytics-insights' ); ?></h3>
 						<table class="widefat striped">
 							<thead>
@@ -101,7 +101,7 @@ final class Dashboard {
 						</table>
 					</div>
 
-					<div class="searchlens-panel">
+					<div class="vplens-panel">
 						<h3><?php esc_html_e( 'Recent Search Activity', 'search-analytics-insights' ); ?></h3>
 						<table class="widefat striped">
 							<thead>
@@ -127,7 +127,7 @@ final class Dashboard {
 												<?php
 												$record_id = ! empty( $record['id'] ) ? (string) $record['id'] : md5( (string) $record['search_term'] . '-' . (string) $record['searched_at'] );
 												?>
-												<button type="button" class="button button-small searchlens-toggle-details" data-target="searchlens-details-<?php echo esc_attr( $record_id ); ?>" data-show-label="<?php echo esc_attr__( 'Details', 'search-analytics-insights' ); ?>" data-hide-label="<?php echo esc_attr__( 'Hide', 'search-analytics-insights' ); ?>">
+												<button type="button" class="button button-small vplens-toggle-details" data-target="vplens-details-<?php echo esc_attr( $record_id ); ?>" data-show-label="<?php echo esc_attr__( 'Details', 'search-analytics-insights' ); ?>" data-hide-label="<?php echo esc_attr__( 'Hide', 'search-analytics-insights' ); ?>">
 													<?php esc_html_e( 'Details', 'search-analytics-insights' ); ?>
 												</button>
 											</td>
@@ -175,56 +175,56 @@ final class Dashboard {
 			'analytics',
 			function () use ( $filters, $summary, $aggregated_activity, $recent_activity, $top_terms, $no_result_terms, $daily_counts, $total_pages, $page, $top_pages_by_title, $top_pages_by_url, $searches_by_page_type ) {
 				?>
-			<div class="searchlens-filters-card" aria-labelledby="searchlens-filters-card-title">
-				<div class="searchlens-filters-header">
-					<div class="searchlens-filters-header-title">
-						<span class="dashicons dashicons-filter searchlens-filter-icon" aria-hidden="true"></span>
+			<div class="vplens-filters-card" aria-labelledby="vplens-filters-card-title">
+				<div class="vplens-filters-header">
+					<div class="vplens-filters-header-title">
+						<span class="dashicons dashicons-filter vplens-filter-icon" aria-hidden="true"></span>
 						<div>
-							<h3 id="searchlens-filters-card-title"><?php esc_html_e( 'Search Filters', 'search-analytics-insights' ); ?></h3>
+							<h3 id="vplens-filters-card-title"><?php esc_html_e( 'Search Filters', 'search-analytics-insights' ); ?></h3>
 							<p class="description"><?php esc_html_e( 'Refine your search analytics results', 'search-analytics-insights' ); ?></p>
 						</div>
 					</div>
-					<button type="button" class="searchlens-filters-toggle-btn" aria-expanded="true" aria-controls="searchlens-filters-form" data-show-text="<?php echo esc_attr__( 'Show Filters', 'search-analytics-insights' ); ?>" data-hide-text="<?php echo esc_attr__( 'Hide Filters', 'search-analytics-insights' ); ?>">
+					<button type="button" class="vplens-filters-toggle-btn" aria-expanded="true" aria-controls="vplens-filters-form" data-show-text="<?php echo esc_attr__( 'Show Filters', 'search-analytics-insights' ); ?>" data-hide-text="<?php echo esc_attr__( 'Hide Filters', 'search-analytics-insights' ); ?>">
 						<span class="dashicons dashicons-arrow-up-alt2" aria-hidden="true"></span>
-						<span class="searchlens-toggle-text"><?php esc_html_e( 'Hide Filters', 'search-analytics-insights' ); ?></span>
+						<span class="vplens-toggle-text"><?php esc_html_e( 'Hide Filters', 'search-analytics-insights' ); ?></span>
 					</button>
 				</div>
 
-				<form id="searchlens-filters-form" method="get" class="searchlens-filters-form">
-					<input type="hidden" name="page" value="searchlens-analytics" />
-					<div class="searchlens-filters-form-inner">
-						<div class="searchlens-filters-grid">
+				<form id="vplens-filters-form" method="get" class="vplens-filters-form">
+					<input type="hidden" name="page" value="vplens-analytics" />
+					<div class="vplens-filters-form-inner">
+						<div class="vplens-filters-grid">
 							<!-- From Date -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-date-from"><?php esc_html_e( 'From', 'search-analytics-insights' ); ?></label>
-								<div class="searchlens-input-icon-wrapper">
+							<div class="vplens-filter-field">
+								<label for="vplens-date-from"><?php esc_html_e( 'From', 'search-analytics-insights' ); ?></label>
+								<div class="vplens-input-icon-wrapper">
 									<span class="dashicons dashicons-calendar-alt" aria-hidden="true"></span>
-									<input id="searchlens-date-from" type="date" name="date_from" value="<?php echo esc_attr( $filters['date_from'] ); ?>" aria-label="<?php esc_attr_e( 'From Date', 'search-analytics-insights' ); ?>" />
+									<input id="vplens-date-from" type="date" name="date_from" value="<?php echo esc_attr( $filters['date_from'] ); ?>" aria-label="<?php esc_attr_e( 'From Date', 'search-analytics-insights' ); ?>" />
 								</div>
 							</div>
 
 							<!-- To Date -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-date-to"><?php esc_html_e( 'To', 'search-analytics-insights' ); ?></label>
-								<div class="searchlens-input-icon-wrapper">
+							<div class="vplens-filter-field">
+								<label for="vplens-date-to"><?php esc_html_e( 'To', 'search-analytics-insights' ); ?></label>
+								<div class="vplens-input-icon-wrapper">
 									<span class="dashicons dashicons-calendar-alt" aria-hidden="true"></span>
-									<input id="searchlens-date-to" type="date" name="date_to" value="<?php echo esc_attr( $filters['date_to'] ); ?>" aria-label="<?php esc_attr_e( 'To Date', 'search-analytics-insights' ); ?>" />
+									<input id="vplens-date-to" type="date" name="date_to" value="<?php echo esc_attr( $filters['date_to'] ); ?>" aria-label="<?php esc_attr_e( 'To Date', 'search-analytics-insights' ); ?>" />
 								</div>
 							</div>
 
 							<!-- Search Term -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-term"><?php esc_html_e( 'Search Term', 'search-analytics-insights' ); ?></label>
-								<div class="searchlens-input-icon-wrapper">
+							<div class="vplens-filter-field">
+								<label for="vplens-term"><?php esc_html_e( 'Search Term', 'search-analytics-insights' ); ?></label>
+								<div class="vplens-input-icon-wrapper">
 									<span class="dashicons dashicons-search" aria-hidden="true"></span>
-									<input id="searchlens-term" type="search" name="search_term" value="<?php echo esc_attr( $filters['search_term'] ); ?>" placeholder="<?php esc_attr_e( 'Search term...', 'search-analytics-insights' ); ?>" />
+									<input id="vplens-term" type="search" name="search_term" value="<?php echo esc_attr( $filters['search_term'] ); ?>" placeholder="<?php esc_attr_e( 'Search term...', 'search-analytics-insights' ); ?>" />
 								</div>
 							</div>
 
 							<!-- Post Type -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-page-type"><?php esc_html_e( 'Post Type', 'search-analytics-insights' ); ?></label>
-								<select id="searchlens-page-type" name="page_type">
+							<div class="vplens-filter-field">
+								<label for="vplens-page-type"><?php esc_html_e( 'Post Type', 'search-analytics-insights' ); ?></label>
+								<select id="vplens-page-type" name="page_type">
 									<option value=""><?php esc_html_e( 'All Post Types', 'search-analytics-insights' ); ?></option>
 									<?php
 									$post_types = get_post_types( array( 'public' => true ), 'objects' );
@@ -253,42 +253,42 @@ final class Dashboard {
 							</div>
 
 							<!-- Page Title -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-page-title"><?php esc_html_e( 'Page Title', 'search-analytics-insights' ); ?></label>
-								<input id="searchlens-page-title" type="text" name="page_title" value="<?php echo esc_attr( $filters['page_title'] ); ?>" placeholder="<?php esc_attr_e( 'Search page title...', 'search-analytics-insights' ); ?>" />
+							<div class="vplens-filter-field">
+								<label for="vplens-page-title"><?php esc_html_e( 'Page Title', 'search-analytics-insights' ); ?></label>
+								<input id="vplens-page-title" type="text" name="page_title" value="<?php echo esc_attr( $filters['page_title'] ); ?>" placeholder="<?php esc_attr_e( 'Search page title...', 'search-analytics-insights' ); ?>" />
 							</div>
 
 							<!-- Page URL -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-page-url"><?php esc_html_e( 'Page URL', 'search-analytics-insights' ); ?></label>
-								<div class="searchlens-input-icon-wrapper">
+							<div class="vplens-filter-field">
+								<label for="vplens-page-url"><?php esc_html_e( 'Page URL', 'search-analytics-insights' ); ?></label>
+								<div class="vplens-input-icon-wrapper">
 									<span class="dashicons dashicons-admin-links" aria-hidden="true"></span>
-									<input id="searchlens-page-url" type="text" name="page_url" value="<?php echo esc_attr( $filters['page_url'] ); ?>" placeholder="<?php esc_attr_e( 'Search page URL...', 'search-analytics-insights' ); ?>" />
+									<input id="vplens-page-url" type="text" name="page_url" value="<?php echo esc_attr( $filters['page_url'] ); ?>" placeholder="<?php esc_attr_e( 'Search page URL...', 'search-analytics-insights' ); ?>" />
 								</div>
 							</div>
 
 							<!-- Username -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-username"><?php esc_html_e( 'Username', 'search-analytics-insights' ); ?></label>
-								<div class="searchlens-input-icon-wrapper">
+							<div class="vplens-filter-field">
+								<label for="vplens-username"><?php esc_html_e( 'Username', 'search-analytics-insights' ); ?></label>
+								<div class="vplens-input-icon-wrapper">
 									<span class="dashicons dashicons-admin-users" aria-hidden="true"></span>
-									<input id="searchlens-username" type="text" name="username" value="<?php echo esc_attr( $filters['username'] ); ?>" placeholder="<?php esc_attr_e( 'Search username...', 'search-analytics-insights' ); ?>" />
+									<input id="vplens-username" type="text" name="username" value="<?php echo esc_attr( $filters['username'] ); ?>" placeholder="<?php esc_attr_e( 'Search username...', 'search-analytics-insights' ); ?>" />
 								</div>
 							</div>
 
 							<!-- No Results Only Checkbox -->
-							<div class="searchlens-filter-field searchlens-filter-field-checkbox">
-								<label for="searchlens-no-results">
-									<input id="searchlens-no-results" type="checkbox" name="no_results" value="1" <?php checked( 1, (int) $filters['no_results'] ); ?> />
+							<div class="vplens-filter-field vplens-filter-field-checkbox">
+								<label for="vplens-no-results">
+									<input id="vplens-no-results" type="checkbox" name="no_results" value="1" <?php checked( 1, (int) $filters['no_results'] ); ?> />
 									<span><?php esc_html_e( 'No Results Only', 'search-analytics-insights' ); ?></span>
 								</label>
 								<p class="description"><?php esc_html_e( 'Show only searches that returned zero results.', 'search-analytics-insights' ); ?></p>
 							</div>
 
 							<!-- Per Page Select -->
-							<div class="searchlens-filter-field">
-								<label for="searchlens-per-page"><?php esc_html_e( 'Per Page', 'search-analytics-insights' ); ?></label>
-								<select id="searchlens-per-page" name="per_page">
+							<div class="vplens-filter-field">
+								<label for="vplens-per-page"><?php esc_html_e( 'Per Page', 'search-analytics-insights' ); ?></label>
+								<select id="vplens-per-page" name="per_page">
 									<?php foreach ( array( 10, 20, 50, 100 ) as $option ) : ?>
 										<option value="<?php echo esc_attr( (string) $option ); ?>" <?php selected( $filters['per_page'], $option ); ?>><?php echo esc_html( (string) $option ); ?></option>
 									<?php endforeach; ?>
@@ -297,18 +297,18 @@ final class Dashboard {
 						</div>
 
 						<!-- Actions Buttons -->
-						<div class="searchlens-filters-actions">
-							<div class="searchlens-filters-actions-left">
-								<button type="submit" class="button button-primary searchlens-filter-submit-btn">
+						<div class="vplens-filters-actions">
+							<div class="vplens-filters-actions-left">
+								<button type="submit" class="button button-primary vplens-filter-submit-btn">
 									<span class="dashicons dashicons-filter" aria-hidden="true"></span>
 									<?php esc_html_e( 'Filter', 'search-analytics-insights' ); ?>
 								</button>
 							</div>
-							<div class="searchlens-filters-actions-right">
+							<div class="vplens-filters-actions-right">
 								<?php
-								$reset_url = admin_url( 'admin.php?page=searchlens-analytics' );
+								$reset_url = admin_url( 'admin.php?page=vplens-analytics' );
 								?>
-								<a href="<?php echo esc_url( $reset_url ); ?>" class="button button-secondary searchlens-filter-reset-btn">
+								<a href="<?php echo esc_url( $reset_url ); ?>" class="button button-secondary vplens-filter-reset-btn">
 									<span class="dashicons dashicons-undo" aria-hidden="true"></span>
 									<?php esc_html_e( 'Reset Filters', 'search-analytics-insights' ); ?>
 								</a>
@@ -316,7 +316,7 @@ final class Dashboard {
 						</div>
 
 						<!-- Tip / Information Box -->
-						<div class="searchlens-filters-tip-box">
+						<div class="vplens-filters-tip-box">
 							<span class="dashicons dashicons-info-outline" aria-hidden="true"></span>
 							<p><?php esc_html_e( 'Tip: You can filter results by date range, page information, and search terms to find exactly what you need.', 'search-analytics-insights' ); ?></p>
 						</div>
@@ -324,10 +324,10 @@ final class Dashboard {
 				</form>
 
 				<!-- Summary Bar -->
-				<div class="searchlens-filters-summary-bar">
-					<div class="searchlens-filters-summary-left">
+				<div class="vplens-filters-summary-bar">
+					<div class="vplens-filters-summary-left">
 						<strong><?php esc_html_e( 'Active Filters:', 'search-analytics-insights' ); ?></strong>
-						<span class="searchlens-active-filters-list">
+						<span class="vplens-active-filters-list">
 							<?php
 							$active_filters_output = array();
 							if ( ! empty( $filters['date_from'] ) ) {
@@ -370,21 +370,21 @@ final class Dashboard {
 							?>
 						</span>
 					</div>
-					<div class="searchlens-filters-summary-right">
-						<span class="searchlens-summary-total-label"><?php esc_html_e( 'Total Searches:', 'search-analytics-insights' ); ?></span>
-						<strong class="searchlens-summary-total-value"><?php echo esc_html( number_format_i18n( (int) $aggregated_activity['total'] ) ); ?></strong>
+					<div class="vplens-filters-summary-right">
+						<span class="vplens-summary-total-label"><?php esc_html_e( 'Total Searches:', 'search-analytics-insights' ); ?></span>
+						<strong class="vplens-summary-total-value"><?php echo esc_html( number_format_i18n( (int) $aggregated_activity['total'] ) ); ?></strong>
 					</div>
 				</div>
 			</div>
 
-			<div class="searchlens-summary">
+			<div class="vplens-summary">
 				<?php $this->render_summary_card( __( 'Total Searches', 'search-analytics-insights' ), (int) $summary['total_searches'] ); ?>
 				<?php $this->render_summary_card( __( 'Unique Searches', 'search-analytics-insights' ), (int) $summary['unique_searches'] ); ?>
 				<?php $this->render_summary_card( __( 'No Result Searches', 'search-analytics-insights' ), (int) $summary['no_result_searches'] ); ?>
 			</div>
 
-			<div class="searchlens-summary">
-				<div class="searchlens-panel">
+			<div class="vplens-summary">
+				<div class="vplens-panel">
 					<h2><?php esc_html_e( 'Searches per day', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
 						<thead>
@@ -408,7 +408,7 @@ final class Dashboard {
 					</table>
 				</div>
 
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h2><?php esc_html_e( 'Top Search Terms', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
 						<thead>
@@ -432,7 +432,7 @@ final class Dashboard {
 					</table>
 				</div>
 
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h2><?php esc_html_e( 'No Result Searches', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
 						<thead>
@@ -457,8 +457,8 @@ final class Dashboard {
 				</div>
 			</div>
 
-			<div class="searchlens-summary">
-				<div class="searchlens-panel">
+			<div class="vplens-summary">
+				<div class="vplens-panel">
 					<h2><?php esc_html_e( 'Top Pages Where Users Search', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
 						<thead>
@@ -477,7 +477,7 @@ final class Dashboard {
 											<strong><?php echo esc_html( ! empty( $row['page_title'] ) ? $row['page_title'] : __( 'Untitled Page', 'search-analytics-insights' ) ); ?></strong>
 											<?php if ( ! empty( $row['page_url'] ) ) : ?>
 												<br />
-												<a href="<?php echo esc_url( $row['page_url'] ); ?>" target="_blank" class="description" style="font-size: 0.85em; word-break: break-all; color: var(--searchlens-muted);">
+												<a href="<?php echo esc_url( $row['page_url'] ); ?>" target="_blank" class="description" style="font-size: 0.85em; word-break: break-all; color: var(--vplens-muted);">
 													<?php echo esc_html( wp_parse_url( $row['page_url'], PHP_URL_PATH ) ); ?>
 												</a>
 											<?php endif; ?>
@@ -490,7 +490,7 @@ final class Dashboard {
 					</table>
 				</div>
 
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h2><?php esc_html_e( 'Most Active Search Pages', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
 						<thead>
@@ -518,7 +518,7 @@ final class Dashboard {
 					</table>
 				</div>
 
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h2><?php esc_html_e( 'Searches by Post Type', 'search-analytics-insights' ); ?></h2>
 					<table class="widefat striped">
 						<thead>
@@ -534,7 +534,7 @@ final class Dashboard {
 								<?php foreach ( $searches_by_page_type as $row ) : ?>
 									<tr>
 										<td>
-											<span class="searchlens-page-type-badge" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; background-color: var(--searchlens-accent-soft); color: var(--searchlens-accent);">
+											<span class="vplens-page-type-badge" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; background-color: var(--vplens-accent-soft); color: var(--vplens-accent);">
 												<?php echo esc_html( ! empty( $row['page_type'] ) ? $row['page_type'] : __( 'Other / Unknown', 'search-analytics-insights' ) ); ?>
 											</span>
 										</td>
@@ -547,7 +547,7 @@ final class Dashboard {
 				</div>
 			</div>
 
-			<div class="searchlens-panel searchlens-table-panel">
+			<div class="vplens-panel vplens-table-panel">
 				<h2><?php esc_html_e( 'Aggregated Search Activity', 'search-analytics-insights' ); ?></h2>
 				<p><?php esc_html_e( 'Repeated searches are grouped by search term and user.', 'search-analytics-insights' ); ?></p>
 				<table class="widefat striped">
@@ -578,7 +578,7 @@ final class Dashboard {
 										<?php
 										$record_id = md5( (string) $record['search_term'] . '-' . $this->get_user_label( $record ) );
 										?>
-										<button type="button" class="button button-small searchlens-toggle-details" data-target="searchlens-details-<?php echo esc_attr( $record_id ); ?>" data-show-label="<?php echo esc_attr__( 'Details', 'search-analytics-insights' ); ?>" data-hide-label="<?php echo esc_attr__( 'Hide', 'search-analytics-insights' ); ?>">
+										<button type="button" class="button button-small vplens-toggle-details" data-target="vplens-details-<?php echo esc_attr( $record_id ); ?>" data-show-label="<?php echo esc_attr__( 'Details', 'search-analytics-insights' ); ?>" data-hide-label="<?php echo esc_attr__( 'Hide', 'search-analytics-insights' ); ?>">
 											<?php esc_html_e( 'Details', 'search-analytics-insights' ); ?>
 										</button>
 									</td>
@@ -596,7 +596,7 @@ final class Dashboard {
 							$pagination_base = add_query_arg(
 								array_filter(
 									array(
-										'page'        => 'searchlens-analytics',
+										'page'        => 'vplens-analytics',
 										'date_from'   => $filters['date_from'],
 										'date_to'     => $filters['date_to'],
 										'search_term' => $filters['search_term'],
@@ -634,7 +634,7 @@ final class Dashboard {
 				<?php endif; ?>
 			</div>
 
-			<div class="searchlens-panel searchlens-table-panel">
+			<div class="vplens-panel vplens-table-panel">
 				<h2><?php esc_html_e( 'Recent Search Activity', 'search-analytics-insights' ); ?></h2>
 				<p><?php esc_html_e( 'The latest 20 raw search records.', 'search-analytics-insights' ); ?></p>
 				<table class="widefat striped">
@@ -663,7 +663,7 @@ final class Dashboard {
 										<?php
 										$record_id = ! empty( $record['id'] ) ? (string) $record['id'] : md5( (string) $record['search_term'] . '-' . (string) $record['searched_at'] );
 										?>
-										<button type="button" class="button button-small searchlens-toggle-details" data-target="searchlens-details-<?php echo esc_attr( $record_id ); ?>" data-show-label="<?php echo esc_attr__( 'Details', 'search-analytics-insights' ); ?>" data-hide-label="<?php echo esc_attr__( 'Hide', 'search-analytics-insights' ); ?>">
+										<button type="button" class="button button-small vplens-toggle-details" data-target="vplens-details-<?php echo esc_attr( $record_id ); ?>" data-show-label="<?php echo esc_attr__( 'Details', 'search-analytics-insights' ); ?>" data-hide-label="<?php echo esc_attr__( 'Hide', 'search-analytics-insights' ); ?>">
 											<?php esc_html_e( 'Details', 'search-analytics-insights' ); ?>
 										</button>
 									</td>
@@ -689,12 +689,12 @@ final class Dashboard {
 			'settings',
 			function () {
 				?>
-			<div class="searchlens-panel">
+			<div class="vplens-panel">
 				<h3><?php esc_html_e( 'Search Settings', 'search-analytics-insights' ); ?></h3>
-				<p class="searchlens-settings-description"><?php esc_html_e( 'Configure the search form, live results, sources, and analytics in one place.', 'search-analytics-insights' ); ?></p>
+				<p class="vplens-settings-description"><?php esc_html_e( 'Configure the search form, live results, sources, and analytics in one place.', 'search-analytics-insights' ); ?></p>
 				<form method="post" action="options.php">
-					<?php settings_fields( 'searchlens_settings' ); ?>
-					<?php do_settings_sections( 'searchlens' ); ?>
+					<?php settings_fields( 'vplens_settings' ); ?>
+					<?php do_settings_sections( 'vplens' ); ?>
 					<?php submit_button( __( 'Save Settings', 'search-analytics-insights' ) ); ?>
 				</form>
 			</div>
@@ -713,9 +713,9 @@ final class Dashboard {
 			'tools',
 			function () {
 				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$message = isset( $_GET['searchlens_message'] ) ? sanitize_key( $_GET['searchlens_message'] ) : '';
+				$message = isset( $_GET['vplens_message'] ) ? sanitize_key( $_GET['vplens_message'] ) : '';
 				?>
-			<div class="searchlens-tools-wrapper">
+			<div class="vplens-tools-wrapper">
 				<?php if ( 'clear_success' === $message ) : ?>
 					<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'All search analytics data has been successfully cleared.', 'search-analytics-insights' ); ?></p></div>
 				<?php elseif ( 'reset_success' === $message ) : ?>
@@ -723,34 +723,34 @@ final class Dashboard {
 				<?php endif; ?>
 
 				<!-- Export Card -->
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h3><?php esc_html_e( 'Export Analytics Data', 'search-analytics-insights' ); ?></h3>
 					<p><?php esc_html_e( 'Download the complete search logs database in CSV format for offline reporting or backups.', 'search-analytics-insights' ); ?></p>
 					<form method="post" action="">
-						<?php wp_nonce_field( 'searchlens_tools_action', 'searchlens_tools_nonce' ); ?>
-						<input type="hidden" name="searchlens_action" value="export" />
+						<?php wp_nonce_field( 'vplens_tools_action', 'vplens_tools_nonce' ); ?>
+						<input type="hidden" name="vplens_action" value="export" />
 						<?php submit_button( __( 'Download CSV Export', 'search-analytics-insights' ), 'primary', 'submit_export', false ); ?>
 					</form>
 				</div>
 
 				<!-- Clear Database Card -->
-				<div class="searchlens-panel card-destructive">
+				<div class="vplens-panel card-destructive">
 					<h3 class="destructive"><?php esc_html_e( 'Clear Search Logs', 'search-analytics-insights' ); ?></h3>
 					<p><?php esc_html_e( 'Warning: This action is permanent and will completely empty the search tracking database table. This cannot be undone.', 'search-analytics-insights' ); ?></p>
 					<form method="post" action="" onsubmit="return confirm('<?php echo esc_attr__( 'Are you absolutely sure you want to permanently delete all search analytics logs?', 'search-analytics-insights' ); ?>');">
-						<?php wp_nonce_field( 'searchlens_tools_action', 'searchlens_tools_nonce' ); ?>
-						<input type="hidden" name="searchlens_action" value="clear" />
+						<?php wp_nonce_field( 'vplens_tools_action', 'vplens_tools_nonce' ); ?>
+						<input type="hidden" name="vplens_action" value="clear" />
 						<?php submit_button( __( 'Permanently Delete Logs', 'search-analytics-insights' ), 'destructive', 'submit_clear', false ); ?>
 					</form>
 				</div>
 
 				<!-- Reset Settings Card -->
-				<div class="searchlens-panel card-destructive">
+				<div class="vplens-panel card-destructive">
 					<h3 class="destructive"><?php esc_html_e( 'Reset Plugin Settings', 'search-analytics-insights' ); ?></h3>
 					<p><?php esc_html_e( 'Restore all settings on this plugin back to their factory defaults. This does not delete search logs.', 'search-analytics-insights' ); ?></p>
 					<form method="post" action="" onsubmit="return confirm('<?php echo esc_attr__( 'Are you sure you want to reset all plugin settings back to defaults?', 'search-analytics-insights' ); ?>');">
-						<?php wp_nonce_field( 'searchlens_tools_action', 'searchlens_tools_nonce' ); ?>
-						<input type="hidden" name="searchlens_action" value="reset" />
+						<?php wp_nonce_field( 'vplens_tools_action', 'vplens_tools_nonce' ); ?>
+						<input type="hidden" name="vplens_action" value="reset" />
 						<?php submit_button( __( 'Reset Settings to Defaults', 'search-analytics-insights' ), 'destructive', 'submit_reset', false ); ?>
 					</form>
 				</div>
@@ -770,11 +770,11 @@ final class Dashboard {
 			'help',
 			function () {
 				?>
-			<div class="searchlens-help-wrapper">
-				<div class="searchlens-panel">
+			<div class="vplens-help-wrapper">
+				<div class="vplens-panel">
 					<h3><?php esc_html_e( 'Available Shortcodes', 'search-analytics-insights' ); ?></h3>
 					<p><?php esc_html_e( 'Use the following shortcodes to add search form and search insights blocks to your pages or posts.', 'search-analytics-insights' ); ?></p>
-					<table class="widefat striped searchlens-shortcodes-table">
+					<table class="widefat striped vplens-shortcodes-table">
 						<thead>
 							<tr>
 								<th><?php esc_html_e( 'Shortcode', 'search-analytics-insights' ); ?></th>
@@ -792,7 +792,7 @@ final class Dashboard {
 									<td>
 										<button
 											type="button"
-											class="button button-small searchlens-copy-shortcode"
+											class="button button-small vplens-copy-shortcode"
 											data-copy-shortcode="<?php echo esc_attr( $shortcode['example'] ); ?>"
 										>
 											<?php esc_html_e( 'Copy', 'search-analytics-insights' ); ?>
@@ -804,9 +804,9 @@ final class Dashboard {
 					</table>
 				</div>
 
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h3><?php esc_html_e( 'Widget & Block Usage', 'search-analytics-insights' ); ?></h3>
-					<div class="searchlens-usage-grid">
+					<div class="vplens-usage-grid">
 						<div>
 							<h4><?php esc_html_e( 'Gutenberg Block', 'search-analytics-insights' ); ?></h4>
 							<p><?php esc_html_e( 'Open any post or page editor. Search for the "SearchLens Search" block in the block library and insert it. You can adjust Open Mode (Dropdown/Modal/Slide Down) and Show Label under the block sidebar panel.', 'search-analytics-insights' ); ?></p>
@@ -818,9 +818,9 @@ final class Dashboard {
 					</div>
 				</div>
 
-				<div class="searchlens-panel">
+				<div class="vplens-panel">
 					<h3><?php esc_html_e( 'Frequently Asked Questions', 'search-analytics-insights' ); ?></h3>
-					<div class="searchlens-faq-list">
+					<div class="vplens-faq-list">
 						<div>
 							<h4><?php esc_html_e( 'Does this track personal user data?', 'search-analytics-insights' ); ?></h4>
 							<p><?php esc_html_e( 'The plugin is designed to be privacy-friendly. It does not collect raw IP addresses, relying on optional logged-in user IDs and anonymous session IDs to compile search counts.', 'search-analytics-insights' ); ?></p>
@@ -850,31 +850,31 @@ final class Dashboard {
 			wp_die( esc_html__( 'You do not have permission to access this page.', 'search-analytics-insights' ) );
 		}
 		?>
-		<div class="wrap searchlens-wrap searchlens-admin-wrap" data-copied-label="<?php echo esc_attr__( 'Copied', 'search-analytics-insights' ); ?>">
-			<div class="searchlens-admin-header">
+		<div class="wrap vplens-wrap vplens-admin-wrap" data-copied-label="<?php echo esc_attr__( 'Copied', 'search-analytics-insights' ); ?>">
+			<div class="vplens-admin-header">
 				<h1><?php esc_html_e( 'SearchLens – Search Analytics & Insights', 'search-analytics-insights' ); ?></h1>
-				<p class="searchlens-admin-header-subtitle"><?php esc_html_e( 'Privacy-first search activity tracking and reporting.', 'search-analytics-insights' ); ?></p>
+				<p class="vplens-admin-header-subtitle"><?php esc_html_e( 'Privacy-first search activity tracking and reporting.', 'search-analytics-insights' ); ?></p>
 			</div>
 			
 			<h2 class="nav-tab-wrapper">
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens' ) ); ?>" class="nav-tab <?php echo 'dashboard' === $active_tab ? 'nav-tab-active' : ''; ?>">
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens' ) ); ?>" class="nav-tab <?php echo 'dashboard' === $active_tab ? 'nav-tab-active' : ''; ?>">
 					<span class="dashicons dashicons-dashboard"></span> <?php esc_html_e( 'Dashboard', 'search-analytics-insights' ); ?>
 				</a>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-analytics' ) ); ?>" class="nav-tab <?php echo 'analytics' === $active_tab ? 'nav-tab-active' : ''; ?>">
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-analytics' ) ); ?>" class="nav-tab <?php echo 'analytics' === $active_tab ? 'nav-tab-active' : ''; ?>">
 					<span class="dashicons dashicons-chart-bar"></span> <?php esc_html_e( 'Analytics & Insights', 'search-analytics-insights' ); ?>
 				</a>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-settings' ) ); ?>" class="nav-tab <?php echo 'settings' === $active_tab ? 'nav-tab-active' : ''; ?>">
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-settings' ) ); ?>" class="nav-tab <?php echo 'settings' === $active_tab ? 'nav-tab-active' : ''; ?>">
 					<span class="dashicons dashicons-admin-settings"></span> <?php esc_html_e( 'Search Settings', 'search-analytics-insights' ); ?>
 				</a>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-tools' ) ); ?>" class="nav-tab <?php echo 'tools' === $active_tab ? 'nav-tab-active' : ''; ?>">
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-tools' ) ); ?>" class="nav-tab <?php echo 'tools' === $active_tab ? 'nav-tab-active' : ''; ?>">
 					<span class="dashicons dashicons-admin-tools"></span> <?php esc_html_e( 'Tools', 'search-analytics-insights' ); ?>
 				</a>
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=searchlens-help' ) ); ?>" class="nav-tab <?php echo 'help' === $active_tab ? 'nav-tab-active' : ''; ?>">
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=vplens-help' ) ); ?>" class="nav-tab <?php echo 'help' === $active_tab ? 'nav-tab-active' : ''; ?>">
 					<span class="dashicons dashicons-editor-help"></span> <?php esc_html_e( 'Help & Docs', 'search-analytics-insights' ); ?>
 				</a>
 			</h2>
 			
-			<div class="searchlens-admin-content-area">
+			<div class="vplens-admin-content-area">
 				<?php call_user_func( $content_renderer ); ?>
 			</div>
 		</div>
@@ -928,24 +928,24 @@ final class Dashboard {
 	private function get_shortcode_docs(): array {
 		return array(
 			array(
-				'tag'         => '[searchlens_form]',
+				'tag'         => '[vplens_form]',
 				'description' => __( 'Displays a search form that automatically uses live AJAX search or native search depending on plugin settings.', 'search-analytics-insights' ),
-				'example'     => '[searchlens_form placeholder="Search..." button_text="Search"]',
+				'example'     => '[vplens_form placeholder="Search..." button_text="Search"]',
 			),
 			array(
-				'tag'         => '[searchlens_ajax_form]',
+				'tag'         => '[vplens_ajax_form]',
 				'description' => __( 'Displays a live AJAX search form directly on the page.', 'search-analytics-insights' ),
-				'example'     => '[searchlens_ajax_form placeholder="Search..." limit="10"]',
+				'example'     => '[vplens_ajax_form placeholder="Search..." limit="10"]',
 			),
 			array(
-				'tag'         => '[searchlens_popular]',
+				'tag'         => '[vplens_popular]',
 				'description' => __( 'Displays the most searched terms from the analytics database.', 'search-analytics-insights' ),
-				'example'     => '[searchlens_popular limit="5" show_count="true"]',
+				'example'     => '[vplens_popular limit="5" show_count="true"]',
 			),
 			array(
-				'tag'         => '[searchlens_trending]',
+				'tag'         => '[vplens_trending]',
 				'description' => __( 'Displays trending searches from the last 7 days.', 'search-analytics-insights' ),
-				'example'     => '[searchlens_trending limit="5" title="Trending Searches"]',
+				'example'     => '[vplens_trending limit="5" title="Trending Searches"]',
 			),
 		);
 	}
@@ -960,9 +960,9 @@ final class Dashboard {
 	 */
 	private function render_summary_card( string $label, int $value ): void {
 		?>
-		<div class="searchlens-card">
-			<span class="searchlens-card-label"><?php echo esc_html( $label ); ?></span>
-			<span class="searchlens-card-value"><?php echo esc_html( (string) $value ); ?></span>
+		<div class="vplens-card">
+			<span class="vplens-card-label"><?php echo esc_html( $label ); ?></span>
+			<span class="vplens-card-value"><?php echo esc_html( (string) $value ); ?></span>
 		</div>
 		<?php
 	}
@@ -996,20 +996,20 @@ final class Dashboard {
 		}
 
 		?>
-		<div class="searchlens-page-column-cell" style="display: flex; flex-direction: column; gap: 2px;">
-			<div class="searchlens-page-title-row" style="display: flex; align-items: center; gap: 6px;">
-				<span class="dashicons dashicons-admin-page" style="font-size: 16px; width: 16px; height: 16px; color: var(--searchlens-muted);" title="<?php echo esc_attr( $page_type ); ?>"></span>
-				<strong class="searchlens-page-title" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<?php echo esc_attr( $display_title ); ?>">
+		<div class="vplens-page-column-cell" style="display: flex; flex-direction: column; gap: 2px;">
+			<div class="vplens-page-title-row" style="display: flex; align-items: center; gap: 6px;">
+				<span class="dashicons dashicons-admin-page" style="font-size: 16px; width: 16px; height: 16px; color: var(--vplens-muted);" title="<?php echo esc_attr( $page_type ); ?>"></span>
+				<strong class="vplens-page-title" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<?php echo esc_attr( $display_title ); ?>">
 					<?php echo esc_html( $display_title ); ?>
 				</strong>
 			</div>
 			<?php if ( ! empty( $page_url ) ) : ?>
-				<a class="searchlens-page-url-link" href="<?php echo esc_url( $page_url ); ?>" target="_blank" style="font-size: 0.85em; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--searchlens-muted);" title="<?php echo esc_attr( $page_url ); ?>">
+				<a class="vplens-page-url-link" href="<?php echo esc_url( $page_url ); ?>" target="_blank" style="font-size: 0.85em; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--vplens-muted);" title="<?php echo esc_attr( $page_url ); ?>">
 					<?php echo esc_html( $display_path ); ?>
 				</a>
 			<?php endif; ?>
 			<?php if ( ! empty( $referrer ) ) : ?>
-				<div class="searchlens-referrer-row" style="display: flex; align-items: center; gap: 4px; font-size: 0.8em; color: var(--searchlens-muted);">
+				<div class="vplens-referrer-row" style="display: flex; align-items: center; gap: 4px; font-size: 0.8em; color: var(--vplens-muted);">
 					<span class="dashicons dashicons-share-alt2" style="font-size: 14px; width: 14px; height: 14px;" title="<?php echo esc_attr__( 'Referrer: ', 'search-analytics-insights' ) . esc_attr( $referrer ); ?>"></span>
 					<span style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<?php echo esc_attr( $referrer ); ?>">
 						<?php echo esc_html( $referrer ); ?>
@@ -1043,10 +1043,10 @@ final class Dashboard {
 			$record_id = md5( (string) $record['search_term'] . '-' . (string) ( isset( $record['searched_at'] ) ? $record['searched_at'] : $this->get_user_label( $record ) ) );
 		}
 		?>
-		<tr id="searchlens-details-<?php echo esc_attr( $record_id ); ?>" class="searchlens-details-row" style="display: none;">
+		<tr id="vplens-details-<?php echo esc_attr( $record_id ); ?>" class="vplens-details-row" style="display: none;">
 			<td colspan="<?php echo esc_attr( (string) $colspan ); ?>">
-				<div class="searchlens-details-content" style="padding: 12px 16px; background-color: var(--searchlens-surface-alt); border-top: 1px solid var(--searchlens-border); border-bottom: 1px solid var(--searchlens-border);">
-					<div class="searchlens-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+				<div class="vplens-details-content" style="padding: 12px 16px; background-color: var(--vplens-surface-alt); border-top: 1px solid var(--vplens-border); border-bottom: 1px solid var(--vplens-border);">
+					<div class="vplens-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
 						<div>
 							<strong><?php esc_html_e( 'Page Title:', 'search-analytics-insights' ); ?></strong>
 							<div><?php echo esc_html( $page_title ); ?></div>
@@ -1064,7 +1064,7 @@ final class Dashboard {
 						<div>
 							<strong><?php esc_html_e( 'Post Type:', 'search-analytics-insights' ); ?></strong>
 							<div>
-								<span class="searchlens-page-type-badge" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; background-color: var(--searchlens-accent-soft); color: var(--searchlens-accent);">
+								<span class="vplens-page-type-badge" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; background-color: var(--vplens-accent-soft); color: var(--vplens-accent);">
 									<?php echo esc_html( $page_type ); ?>
 								</span>
 							</div>

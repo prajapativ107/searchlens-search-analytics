@@ -2,13 +2,13 @@
 /**
  * REST controller.
  *
- * @package SearchLens
+ * @package VPLens
  */
 
-namespace SearchLens\API;
+namespace VPLens\API;
 
-use SearchLens\Analytics\Service\AnalyticsService;
-use SearchLens\Core\Constants;
+use VPLens\Analytics\Service\AnalyticsService;
+use VPLens\Core\Constants;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -46,7 +46,7 @@ final class RestController {
 	 */
 	public function register_routes(): void {
 		register_rest_route(
-			'searchlens/v1',
+			'vplens/v1',
 			'/analytics',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
@@ -57,7 +57,7 @@ final class RestController {
 		);
 
 		register_rest_route(
-			'searchlens/v1',
+			'vplens/v1',
 			'/searches',
 			array(
 				'methods'             => WP_REST_Server::READABLE,
