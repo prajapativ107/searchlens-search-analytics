@@ -66,7 +66,7 @@ final class PageHelper {
 		if ( is_search() ) {
 			return sprintf(
 			/* translators: %s: search query */
-				__( 'Search Results for "%s"', 'searchlens-search-analytics' ),
+				__( 'Search Results for "%s"', 'search-analytics-insights' ),
 				get_search_query()
 			);
 		}

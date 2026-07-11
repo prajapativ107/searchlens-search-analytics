@@ -5,7 +5,7 @@
 	"category": "widgets",
 	"icon": "search",
 	"description": "Display a search icon that opens the SearchLens search form.",
-	"textdomain": "searchlens-search-analytics",
+	"textdomain": "search-analytics-insights",
 	"attributes": {
 		"openMode": {
 			"type": "string",

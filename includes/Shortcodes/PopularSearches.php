@@ -38,7 +38,7 @@ final class PopularSearches {
 		$attributes = shortcode_atts(
 			array(
 				'limit'      => 5,
-				'title'      => __( 'Popular Searches', 'searchlens-search-analytics' ),
+				'title'      => __( 'Popular Searches', 'search-analytics-insights' ),
 				'show_count' => 'false',
 			),
 			$attributes,
@@ -58,7 +58,7 @@ final class PopularSearches {
 			<?php endif; ?>
 
 			<?php if ( empty( $searches ) ) : ?>
-				<p><?php esc_html_e( 'No popular searches found yet.', 'searchlens-search-analytics' ); ?></p>
+				<p><?php esc_html_e( 'No popular searches found yet.', 'search-analytics-insights' ); ?></p>
 			<?php else : ?>
 				<ul class="searchlens-popular-searches-list">
 					<?php foreach ( $searches as $row ) : ?>
@@ -75,7 +75,7 @@ final class PopularSearches {
 									echo esc_html(
 										sprintf(
 										/* translators: %d: search count */
-											_n( '%d search', '%d searches', $count, 'searchlens-search-analytics' ),
+											_n( '%d search', '%d searches', $count, 'search-analytics-insights' ),
 											$count
 										)
 									);

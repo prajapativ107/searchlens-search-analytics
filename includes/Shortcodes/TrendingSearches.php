@@ -38,7 +38,7 @@ final class TrendingSearches {
 		$attributes = shortcode_atts(
 			array(
 				'limit' => 5,
-				'title' => __( 'Trending Searches', 'searchlens-search-analytics' ),
+				'title' => __( 'Trending Searches', 'search-analytics-insights' ),
 			),
 			$attributes,
 			'searchlens_trending'
@@ -59,7 +59,7 @@ final class TrendingSearches {
 			<?php endif; ?>
 
 			<?php if ( empty( $searches ) ) : ?>
-				<p><?php esc_html_e( 'No trending searches found for the last 7 days.', 'searchlens-search-analytics' ); ?></p>
+				<p><?php esc_html_e( 'No trending searches found for the last 7 days.', 'search-analytics-insights' ); ?></p>
 			<?php else : ?>
 				<ul class="searchlens-trending-searches-list">
 					<?php foreach ( $searches as $row ) : ?>

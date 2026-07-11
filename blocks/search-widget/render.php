@@ -95,14 +95,14 @@ defined( 'ABSPATH' ) || exit;
 		data-limit="<?php echo esc_attr( (string) $settings->get_max_results() ); ?>"
 		data-show-featured-images="<?php echo esc_attr( $show_featured_images ? '1' : '0' ); ?>"
 		data-show-post-type-label="<?php echo esc_attr( $settings->get_show_post_type_label() ? '1' : '0' ); ?>"
-		data-loading-text="<?php echo esc_attr__( 'Searching...', 'searchlens-search-analytics' ); ?>"
-		data-empty-text="<?php echo esc_attr__( 'No results found.', 'searchlens-search-analytics' ); ?>"
-		data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'searchlens-search-analytics' ); ?>"
+		data-loading-text="<?php echo esc_attr__( 'Searching...', 'search-analytics-insights' ); ?>"
+		data-empty-text="<?php echo esc_attr__( 'No results found.', 'search-analytics-insights' ); ?>"
+		data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
 	>
 		<button
 			type="button"
 			class="searchlens-search-toggle"
-			aria-label="<?php echo esc_attr( $show_label ? __( 'Open search', 'searchlens-search-analytics' ) : __( 'Search', 'searchlens-search-analytics' ) ); ?>"
+			aria-label="<?php echo esc_attr( $show_label ? __( 'Open search', 'search-analytics-insights' ) : __( 'Search', 'search-analytics-insights' ) ); ?>"
 			aria-expanded="false"
 			aria-controls="<?php echo esc_attr( $popup_id ); ?>"
 		>
@@ -110,14 +110,14 @@ defined( 'ABSPATH' ) || exit;
 				<?php echo wp_kses( SearchWidget::get_icon_markup(), $allowed_tags ); ?>
 			</span>
 			<?php if ( $show_label ) : ?>
-				<span class="searchlens-search-toggle-label"><?php esc_html_e( 'Search', 'searchlens-search-analytics' ); ?></span>
+				<span class="searchlens-search-toggle-label"><?php esc_html_e( 'Search', 'search-analytics-insights' ); ?></span>
 			<?php endif; ?>
 		</button>
 
 		<div id="<?php echo esc_attr( $popup_id ); ?>" class="searchlens-search-popup" hidden aria-hidden="true" inert>
 			<div class="searchlens-search-panel">
 				<?php if ( 'modal' === $open_mode ) : ?>
-					<button type="button" class="searchlens-search-close" aria-label="<?php echo esc_attr__( 'Close search', 'searchlens-search-analytics' ); ?>">
+					<button type="button" class="searchlens-search-close" aria-label="<?php echo esc_attr__( 'Close search', 'search-analytics-insights' ); ?>">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				<?php endif; ?>

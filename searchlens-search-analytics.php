@@ -9,7 +9,7 @@
  * Author: Vivek Prajapati
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: searchlens-search-analytics
+ * Text Domain: search-analytics-insights
  * Domain Path: /languages
  *
  * @package SearchLens

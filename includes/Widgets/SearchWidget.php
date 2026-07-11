@@ -41,9 +41,9 @@ final class SearchWidget extends \WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'searchlens_search_widget',
-			__( 'SearchLens Search Widget', 'searchlens-search-analytics' ),
+			__( 'SearchLens Search Widget', 'search-analytics-insights' ),
 			array(
-				'description'                 => __( 'Displays a search icon that opens a search form.', 'searchlens-search-analytics' ),
+				'description'                 => __( 'Displays a search icon that opens a search form.', 'search-analytics-insights' ),
 				'customize_selective_refresh' => true,
 			)
 		);
@@ -95,9 +95,9 @@ final class SearchWidget extends \WP_Widget {
 			data-limit="<?php echo esc_attr( (string) $settings->get_max_results() ); ?>"
 			data-show-featured-images="<?php echo esc_attr( $settings->get_show_featured_images() ? '1' : '0' ); ?>"
 			data-show-post-type-label="<?php echo esc_attr( $settings->get_show_post_type_label() ? '1' : '0' ); ?>"
-			data-loading-text="<?php echo esc_attr__( 'Searching...', 'searchlens-search-analytics' ); ?>"
+			data-loading-text="<?php echo esc_attr__( 'Searching...', 'search-analytics-insights' ); ?>"
 			data-empty-text="<?php echo esc_attr( $settings->get_no_results_message() ); ?>"
-			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'searchlens-search-analytics' ); ?>"
+			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
 		>
 			<button
 				type="button"
@@ -126,9 +126,9 @@ final class SearchWidget extends \WP_Widget {
 					?>
 				</span>
 				<?php if ( $show_label ) : ?>
-					<span class="searchlens-search-toggle-label"><?php echo esc_html__( 'Search', 'searchlens-search-analytics' ); ?></span>
+					<span class="searchlens-search-toggle-label"><?php echo esc_html__( 'Search', 'search-analytics-insights' ); ?></span>
 				<?php else : ?>
-					<span class="screen-reader-text"><?php echo esc_html__( 'Search', 'searchlens-search-analytics' ); ?></span>
+					<span class="screen-reader-text"><?php echo esc_html__( 'Search', 'search-analytics-insights' ); ?></span>
 				<?php endif; ?>
 			</button>
 
@@ -171,24 +171,24 @@ final class SearchWidget extends \WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $this->get_default_instance() );
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Widget Title', 'searchlens-search-analytics' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Widget Title', 'search-analytics-insights' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( (string) $instance['title'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'icon_size' ) ); ?>"><?php esc_html_e( 'Icon Size', 'searchlens-search-analytics' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'icon_size' ) ); ?>"><?php esc_html_e( 'Icon Size', 'search-analytics-insights' ); ?></label>
 			<input class="tiny-text" id="<?php echo esc_attr( $this->get_field_id( 'icon_size' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'icon_size' ) ); ?>" type="number" min="16" max="72" step="1" value="<?php echo esc_attr( (string) $instance['icon_size'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'open_mode' ) ); ?>"><?php esc_html_e( 'Open Mode', 'searchlens-search-analytics' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'open_mode' ) ); ?>"><?php esc_html_e( 'Open Mode', 'search-analytics-insights' ); ?></label>
 			<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'open_mode' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'open_mode' ) ); ?>">
-				<option value="dropdown" <?php selected( 'dropdown', $instance['open_mode'] ); ?>><?php esc_html_e( 'Dropdown', 'searchlens-search-analytics' ); ?></option>
-				<option value="modal" <?php selected( 'modal', $instance['open_mode'] ); ?>><?php esc_html_e( 'Modal Popup', 'searchlens-search-analytics' ); ?></option>
-				<option value="slide-down" <?php selected( 'slide-down', $instance['open_mode'] ); ?>><?php esc_html_e( 'Slide Down', 'searchlens-search-analytics' ); ?></option>
+				<option value="dropdown" <?php selected( 'dropdown', $instance['open_mode'] ); ?>><?php esc_html_e( 'Dropdown', 'search-analytics-insights' ); ?></option>
+				<option value="modal" <?php selected( 'modal', $instance['open_mode'] ); ?>><?php esc_html_e( 'Modal Popup', 'search-analytics-insights' ); ?></option>
+				<option value="slide-down" <?php selected( 'slide-down', $instance['open_mode'] ); ?>><?php esc_html_e( 'Slide Down', 'search-analytics-insights' ); ?></option>
 			</select>
 		</p>
 		<p>
 			<input class="checkbox" type="checkbox" <?php checked( ! empty( $instance['show_label'] ) ); ?> id="<?php echo esc_attr( $this->get_field_id( 'show_label' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_label' ) ); ?>" value="1" />
-			<label for="<?php echo esc_attr( $this->get_field_id( 'show_label' ) ); ?>"><?php esc_html_e( 'Show Label', 'searchlens-search-analytics' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_label' ) ); ?>"><?php esc_html_e( 'Show Label', 'search-analytics-insights' ); ?></label>
 		</p>
 		<?php
 	}
@@ -293,18 +293,18 @@ final class SearchWidget extends \WP_Widget {
 	 */
 	private function get_toggle_label( string $title, bool $show_label ): string {
 		if ( ! $show_label ) {
-			return __( 'Open search', 'searchlens-search-analytics' );
+			return __( 'Open search', 'search-analytics-insights' );
 		}
 
 		if ( '' !== trim( $title ) ) {
 			return sprintf(
 				/* translators: %s: widget title */
-				__( 'Open %s', 'searchlens-search-analytics' ),
+				__( 'Open %s', 'search-analytics-insights' ),
 				$title
 			);
 		}
 
-		return __( 'Open search', 'searchlens-search-analytics' );
+		return __( 'Open search', 'search-analytics-insights' );
 	}
 
 	/**

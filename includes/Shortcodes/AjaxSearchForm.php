@@ -86,14 +86,14 @@ final class AjaxSearchForm {
 			data-limit="<?php echo esc_attr( (string) $limit ); ?>"
 			data-show-featured-images="<?php echo esc_attr( $show_images ? '1' : '0' ); ?>"
 			data-show-post-type-label="<?php echo esc_attr( $this->settings->get_show_post_type_label() ? '1' : '0' ); ?>"
-			data-loading-text="<?php echo esc_attr__( 'Searching...', 'searchlens-search-analytics' ); ?>"
+			data-loading-text="<?php echo esc_attr__( 'Searching...', 'search-analytics-insights' ); ?>"
 			data-empty-text="<?php echo esc_attr( $this->settings->get_no_results_message() ); ?>"
-			data-min-chars-text="<?php echo esc_attr( sprintf( /* translators: %d: minimum characters count */ __( 'Type at least %d characters to search.', 'searchlens-search-analytics' ), (int) $settings['minimum_characters'] ) ); ?>"
-			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'searchlens-search-analytics' ); ?>"
+			data-min-chars-text="<?php echo esc_attr( sprintf( /* translators: %d: minimum characters count */ __( 'Type at least %d characters to search.', 'search-analytics-insights' ), (int) $settings['minimum_characters'] ) ); ?>"
+			data-error-text="<?php echo esc_attr__( 'Unable to search right now.', 'search-analytics-insights' ); ?>"
 		>
 			<form class="searchlens-ajax-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" novalidate>
 				<label class="screen-reader-text" for="searchlens-ajax-search-input">
-					<?php esc_html_e( 'Search for:', 'searchlens-search-analytics' ); ?>
+					<?php esc_html_e( 'Search for:', 'search-analytics-insights' ); ?>
 				</label>
 				<div class="searchlens-ajax-search-fields<?php echo $is_ajax_enabled ? ' searchlens-ajax-search-fields--no-button searchlens-ajax-search-fields--has-icon' : ''; ?>">
 					<input

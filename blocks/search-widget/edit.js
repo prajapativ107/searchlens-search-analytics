@@ -28,16 +28,16 @@
 			null,
 			el(
 				PanelBody,
-				{ title: __( 'Search Settings', 'searchlens-search-analytics' ) },
+				{ title: __( 'Search Settings', 'search-analytics-insights' ) },
 				el(
 					SelectControl,
 					{
-						label: __( 'Open Mode', 'searchlens-search-analytics' ),
+						label: __( 'Open Mode', 'search-analytics-insights' ),
 						value: attributes.openMode,
 						options: [
-						{ label: __( 'Dropdown', 'searchlens-search-analytics' ), value: 'dropdown' },
-						{ label: __( 'Modal', 'searchlens-search-analytics' ), value: 'modal' },
-						{ label: __( 'Slide Down', 'searchlens-search-analytics' ), value: 'slide-down' },
+						{ label: __( 'Dropdown', 'search-analytics-insights' ), value: 'dropdown' },
+						{ label: __( 'Modal', 'search-analytics-insights' ), value: 'modal' },
+						{ label: __( 'Slide Down', 'search-analytics-insights' ), value: 'slide-down' },
 						],
 						onChange: function ( value ) {
 							setAttributes( { openMode: value } );
@@ -47,7 +47,7 @@
 				el(
 					ToggleControl,
 					{
-						label: __( 'Show Label', 'searchlens-search-analytics' ),
+						label: __( 'Show Label', 'search-analytics-insights' ),
 						checked: attributes.showLabel,
 						onChange: function ( value ) {
 							setAttributes( { showLabel: value } );
@@ -71,7 +71,7 @@
 						dangerouslySetInnerHTML: { __html: iconMarkup },
 					}
 				),
-				attributes.showLabel ? el( 'span', { className : 'searchlens-search-toggle-label' }, __( 'Search', 'searchlens-search-analytics' ) ) : null
+				attributes.showLabel ? el( 'span', { className : 'searchlens-search-toggle-label' }, __( 'Search', 'search-analytics-insights' ) ) : null
 			),
 			el(
 				'div',
@@ -82,7 +82,7 @@
 					el(
 						'div',
 						{ className: 'searchlens-search-preview' },
-						__( 'SearchLens Search Form Preview', 'searchlens-search-analytics' )
+						__( 'SearchLens Search Form Preview', 'search-analytics-insights' )
 					)
 				)
 			)

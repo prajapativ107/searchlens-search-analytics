@@ -53,7 +53,7 @@ Display your search form anywhere using a shortcode, widget, or Gutenberg block.
 
 == Installation ==
 
-1. Upload the `searchlens-search-analytics` folder to the `/wp-content/plugins/` directory.
+1. Upload the `search-analytics-insights` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the **Plugins** menu in WordPress.
 3. Open **SearchLens** from the WordPress admin menu.
 4. Configure your preferred search settings.

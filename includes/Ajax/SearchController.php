@@ -50,7 +50,7 @@ final class SearchController {
 		if ( ! $this->search_service->is_enabled() ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'AJAX search is disabled.', 'searchlens-search-analytics' ),
+					'message' => __( 'AJAX search is disabled.', 'search-analytics-insights' ),
 				),
 				403
 			);
@@ -65,7 +65,7 @@ final class SearchController {
 				array(
 					'message' => sprintf(
 						/* translators: %d: minimum character count */
-						__( 'Please enter at least %d characters.', 'searchlens-search-analytics' ),
+						__( 'Please enter at least %d characters.', 'search-analytics-insights' ),
 						$minimum_characters
 					),
 				),

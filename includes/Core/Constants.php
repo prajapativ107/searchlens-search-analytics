@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Constants {
 	public const VERSION                      = '1.0.0';
-	public const TEXT_DOMAIN                  = 'searchlens-search-analytics';
+	public const TEXT_DOMAIN                  = 'search-analytics-insights';
 	public const OPTION_SCHEMA_VERSION        = 'searchlens_schema_version';
 	public const OPTION_PLUGIN_VERSION        = 'searchlens_plugin_version';
 	public const OPTION_SETTINGS              = 'searchlens_settings';
