@@ -928,24 +928,24 @@ final class Dashboard {
 	private function get_shortcode_docs(): array {
 		return array(
 			array(
-				'tag'         => '[vplens_form]',
+				'tag'         => '[searsean_form]',
 				'description' => __( 'Displays a search form that automatically uses live AJAX search or native search depending on plugin settings.', 'search-analytics-insights' ),
-				'example'     => '[vplens_form placeholder="Search..." button_text="Search"]',
+				'example'     => '[searsean_form placeholder="Search..." button_text="Search"]',
 			),
 			array(
-				'tag'         => '[vplens_ajax_form]',
+				'tag'         => '[searsean_ajax_form]',
 				'description' => __( 'Displays a live AJAX search form directly on the page.', 'search-analytics-insights' ),
-				'example'     => '[vplens_ajax_form placeholder="Search..." limit="10"]',
+				'example'     => '[searsean_ajax_form placeholder="Search..." limit="10"]',
 			),
 			array(
-				'tag'         => '[vplens_popular]',
+				'tag'         => '[searsean_popular]',
 				'description' => __( 'Displays the most searched terms from the analytics database.', 'search-analytics-insights' ),
-				'example'     => '[vplens_popular limit="5" show_count="true"]',
+				'example'     => '[searsean_popular limit="5" show_count="true"]',
 			),
 			array(
-				'tag'         => '[vplens_trending]',
+				'tag'         => '[searsean_trending]',
 				'description' => __( 'Displays trending searches from the last 7 days.', 'search-analytics-insights' ),
-				'example'     => '[vplens_trending limit="5" title="Trending Searches"]',
+				'example'     => '[searsean_trending limit="5" title="Trending Searches"]',
 			),
 		);
 	}

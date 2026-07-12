@@ -41,7 +41,7 @@ final class TrendingSearches {
 				'title' => __( 'Trending Searches', 'search-analytics-insights' ),
 			),
 			$attributes,
-			'vplens_trending'
+			'searsean_trending'
 		);
 
 		$limit    = max( 1, min( 50, absint( $attributes['limit'] ) ) );

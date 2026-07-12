@@ -45,7 +45,7 @@ final class AjaxSearchForm {
 				'form_style'           => '',
 			),
 			$attributes,
-			'vplens_ajax_form'
+			'searsean_ajax_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );

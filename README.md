@@ -25,6 +25,15 @@ Everything is stored locally in your WordPress database. No external analytics s
 
 Display your search form anywhere using a shortcode, widget, or Gutenberg block.
 
+### Shortcode Examples
+
+Use the following shortcodes on your site:
+
+- `[searsean_form placeholder="Search..." button_text="Search"]`
+- `[searsean_ajax_form placeholder="Search..." limit="10"]`
+- `[searsean_popular limit="5" show_count="true"]`
+- `[searsean_trending limit="5" title="Trending Searches"]`
+
 ### Key Features
 
 * **Track native WordPress searches** - Monitor standard search form queries.

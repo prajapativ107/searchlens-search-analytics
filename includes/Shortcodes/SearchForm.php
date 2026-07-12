@@ -44,7 +44,7 @@ final class SearchForm {
 				'form_style'  => '',
 			),
 			$attributes,
-			'vplens_form'
+			'searsean_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );
