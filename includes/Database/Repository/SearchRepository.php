@@ -68,10 +68,9 @@ final class SearchRepository {
 
 		$where = $this->build_where_clause( $filters );
 		$table = esc_sql( Constants::table_name() );
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- The table name is plugin-owned and escaped; all user-supplied values are bound via prepare().
-		$sql = "SELECT COUNT(*) AS total_searches, COUNT(DISTINCT search_term_hash) AS unique_searches, SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) AS no_result_searches FROM `{$table}` {$where['sql']}";
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$row = $wpdb->get_row( $wpdb->prepare( $sql, ...$where['params'] ), ARRAY_A );
+		$sql   = "SELECT COUNT(*) AS total_searches, COUNT(DISTINCT search_term_hash) AS unique_searches, SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) AS no_result_searches FROM `{$table}` {$where['sql']}";
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		$row   = $wpdb->get_row( $wpdb->prepare( $sql, ...$where['params'] ), ARRAY_A );
 
 		return array(
 			'total_searches'     => isset( $row['total_searches'] ) ? (int) $row['total_searches'] : 0,
@@ -99,20 +98,18 @@ final class SearchRepository {
 		$table       = esc_sql( Constants::table_name() );
 		$users_table = esc_sql( $wpdb->users );
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- The table name is plugin-owned and escaped; the WHERE clause parameters are bound via prepare().
 		$grouped_sql = "SELECT search_term, user_id, COUNT(*) AS search_count, MAX(searched_at) AS last_searched, MAX(id) AS latest_id FROM `{$table}` {$where['sql']} GROUP BY search_term, user_id";
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- The table name is plugin-owned and escaped; the WHERE clause parameters are bound via prepare().
-		$list_sql = "SELECT grouped.search_term, grouped.search_count, grouped.last_searched, latest.result_count, latest.page_title, latest.page_url, latest.referrer, latest.page_type, u.display_name, u.user_login FROM ( {$grouped_sql} ) AS grouped INNER JOIN `{$table}` AS latest ON latest.id = grouped.latest_id LEFT JOIN `{$users_table}` AS u ON latest.user_id = u.ID ORDER BY grouped.last_searched DESC, grouped.search_term ASC, u.display_name ASC, u.user_login ASC LIMIT %d OFFSET %d";
+		$list_sql    = "SELECT grouped.search_term, grouped.search_count, grouped.last_searched, latest.result_count, latest.page_title, latest.page_url, latest.referrer, latest.page_type, u.display_name, u.user_login FROM ( {$grouped_sql} ) AS grouped INNER JOIN `{$table}` AS latest ON latest.id = grouped.latest_id LEFT JOIN `{$users_table}` AS u ON latest.user_id = u.ID ORDER BY grouped.last_searched DESC, grouped.search_term ASC, u.display_name ASC, u.user_login ASC LIMIT %d OFFSET %d";
 
 		$params   = $where['params'];
 		$params[] = absint( $per_page );
 		$params[] = absint( $offset );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $wpdb->prepare( $list_sql, ...$params ), ARRAY_A );
 
 		$count_sql = "SELECT COUNT(*) FROM ( {$grouped_sql} ) AS grouped_count";
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		$total = (int) $wpdb->get_var( $wpdb->prepare( $count_sql, ...$where['params'] ) );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
+		$total     = (int) $wpdb->get_var( $wpdb->prepare( $count_sql, ...$where['params'] ) );
 
 		return array(
 			'items' => is_array( $results ) ? $results : array(),

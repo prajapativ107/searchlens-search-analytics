@@ -85,12 +85,6 @@ final class Plugin {
 	 * @return void
 	 */
 	public function boot_modules(): void {
-		load_plugin_textdomain(
-			Constants::TEXT_DOMAIN,
-			false,
-			dirname( Constants::plugin_basename() ) . '/languages'
-		);
-
 		$this->maybe_upgrade_schema();
 
 		$this->container->set(
