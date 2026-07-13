@@ -20,10 +20,12 @@
 	}
 
 	function getStrings(wrapper) {
+		const i18n = window.vplensSearchWidgetI18n || {};
+
 		return {
-			loading: wrapper.getAttribute('data-loading-text') || 'Searching...',
-			empty: wrapper.getAttribute('data-empty-text') || 'No results found.',
-			error: wrapper.getAttribute('data-error-text') || 'Unable to search right now.',
+			loading: wrapper.getAttribute('data-loading-text') || i18n.loading || 'Searching...',
+			empty: wrapper.getAttribute('data-empty-text') || i18n.empty || 'No results found.',
+			error: wrapper.getAttribute('data-error-text') || i18n.error || 'Unable to search right now.',
 		};
 	}
 

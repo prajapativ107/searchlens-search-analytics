@@ -82,6 +82,16 @@ final class SearchWidget extends \WP_Widget {
 			true
 		);
 
+		wp_localize_script(
+			'vplens-search-widget',
+			'vplensSearchWidgetI18n',
+			array(
+				'loading' => __( 'Searching...', 'search-analytics-insights' ),
+				'empty'   => __( 'No results found.', 'search-analytics-insights' ),
+				'error'   => __( 'Unable to search right now.', 'search-analytics-insights' ),
+			)
+		);
+
 		echo isset( $args['before_widget'] ) ? wp_kses_post( (string) $args['before_widget'] ) : '';
 		?>
 		<div

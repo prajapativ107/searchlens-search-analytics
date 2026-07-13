@@ -74,6 +74,17 @@ final class AjaxSearchForm {
 			true
 		);
 
+		wp_localize_script(
+			'vplens-ajax-search',
+			'vplensAjaxSearchI18n',
+			array(
+				'loading' => __( 'Searching...', 'search-analytics-insights' ),
+				'empty'   => __( 'No results found.', 'search-analytics-insights' ),
+				'minimum' => __( 'Type at least 2 characters to search.', 'search-analytics-insights' ),
+				'error'   => __( 'Unable to search right now.', 'search-analytics-insights' ),
+			)
+		);
+
 		ob_start();
 		?>
 		<div

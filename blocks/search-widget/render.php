@@ -58,6 +58,16 @@ defined( 'ABSPATH' ) || exit;
 		true
 	);
 
+	wp_localize_script(
+		'vplens-block-search-widget',
+		'vplensSearchWidgetI18n',
+		array(
+			'loading' => __( 'Searching...', 'search-analytics-insights' ),
+			'empty'   => __( 'No results found.', 'search-analytics-insights' ),
+			'error'   => __( 'Unable to search right now.', 'search-analytics-insights' ),
+		)
+	);
+
 	$allowed_tags = array(
 		'svg'  => array(
 			'class'       => true,

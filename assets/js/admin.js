@@ -11,7 +11,7 @@
 			}
 
 			const buttons                   = wrapper.querySelectorAll( '.vplens-copy-shortcode' );
-			const copiedLabel               = wrapper.getAttribute( 'data-copied-label' ) || 'Copied';
+			const copiedLabel               = wrapper.getAttribute( 'data-copied-label' ) || ( window.vplensAdminI18n && window.vplensAdminI18n.copied ? window.vplensAdminI18n.copied : 'Copied' );
 			const loadAllPublicPostTypes    = wrapper.querySelector( '#vplens-search_sources-load_all_public_post_types' );
 			const searchablePostTypeOptions = wrapper.querySelectorAll( '.vplens-post-type-option input[type="checkbox"]' );
 
@@ -73,7 +73,7 @@
 						filterToggleBtn.classList.add( 'collapsed' );
 						filterToggleBtn.setAttribute( 'aria-expanded', 'false' );
 						if (toggleText) {
-							toggleText.textContent = filterToggleBtn.getAttribute( 'data-show-text' ) || 'Show Filters';
+							toggleText.textContent = filterToggleBtn.getAttribute( 'data-show-text' ) || ( window.vplensAdminI18n && window.vplensAdminI18n.show_filters ? window.vplensAdminI18n.show_filters : 'Show Filters' );
 						}
 						if (toggleIcon) {
 							toggleIcon.className = 'dashicons dashicons-arrow-down-alt2';
@@ -83,7 +83,7 @@
 						filterToggleBtn.classList.remove( 'collapsed' );
 						filterToggleBtn.setAttribute( 'aria-expanded', 'true' );
 						if (toggleText) {
-							toggleText.textContent = filterToggleBtn.getAttribute( 'data-hide-text' ) || 'Hide Filters';
+							toggleText.textContent = filterToggleBtn.getAttribute( 'data-hide-text' ) || ( window.vplensAdminI18n && window.vplensAdminI18n.hide_filters ? window.vplensAdminI18n.hide_filters : 'Hide Filters' );
 						}
 						if (toggleIcon) {
 							toggleIcon.className = 'dashicons dashicons-arrow-up-alt2';

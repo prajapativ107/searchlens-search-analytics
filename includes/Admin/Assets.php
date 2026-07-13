@@ -52,5 +52,17 @@ final class Assets {
 			Constants::VERSION,
 			true
 		);
+
+		wp_localize_script(
+			'vplens-admin',
+			'vplensAdminI18n',
+			array(
+				'copied'       => __( 'Copied', 'search-analytics-insights' ),
+				'details'      => __( 'Details', 'search-analytics-insights' ),
+				'hide'         => __( 'Hide', 'search-analytics-insights' ),
+				'show_filters' => __( 'Show Filters', 'search-analytics-insights' ),
+				'hide_filters' => __( 'Hide Filters', 'search-analytics-insights' ),
+			)
+		);
 	}
 }
