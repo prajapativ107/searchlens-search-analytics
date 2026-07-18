@@ -187,9 +187,8 @@ final class Menu {
 		$offset      = 0;
 
 		while ( true ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- The table name is plugin-owned and escaped; the LIMIT/OFFSET values are bound via prepare().
-			$query  = "SELECT `{$table}`.id, `{$table}`.search_term, `{$table}`.searched_at, `{$table}`.source, `{$table}`.matched_post_types, `{$table}`.result_count, `{$table}`.page_title, `{$table}`.page_url, `{$table}`.referrer, `{$table}`.page_type, u.display_name, u.user_login FROM `{$table}` LEFT JOIN `{$users_table}` AS u ON `{$table}`.user_id = u.ID ORDER BY `{$table}`.id ASC LIMIT %d OFFSET %d";
-			$params = array( $limit, $offset );
+			$query  = 'SELECT v.id, v.search_term, v.searched_at, v.source, v.matched_post_types, v.result_count, v.page_title, v.page_url, v.referrer, v.page_type, u.display_name, u.user_login FROM %i AS v LEFT JOIN %i AS u ON v.user_id = u.ID ORDER BY v.id ASC LIMIT %d OFFSET %d';
+			$params = array( $table, $users_table, $limit, $offset );
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			$rows = $wpdb->get_results( $wpdb->prepare( $query, ...$params ), ARRAY_A );
 
