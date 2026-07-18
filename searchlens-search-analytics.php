@@ -4,7 +4,7 @@
  * Plugin URI: https://wordpress.org/plugins/
  * Description: Track WordPress site searches and provide analytics for administrators.
  * Version: 1.0.0
- * Requires at least: 6.0
+ * Requires at least: 6.2
  * Requires PHP: 8.0
  * Author: Vivek Prajapati
  * License: GPLv2 or later

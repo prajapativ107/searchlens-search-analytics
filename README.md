@@ -6,7 +6,7 @@ Track WordPress searches with powerful analytics, AJAX search support, widgets, 
 | :--- | :--- |
 | **Contributors** | vivek34 |
 | **Tags** | search, analytics, ajax search, search tracking, dashboard |
-| **Requires at least** | WordPress 6.0 |
+| **Requires at least** | WordPress 6.2 |
 | **Tested up to** | WordPress 7.0 |
 | **Requires PHP** | 8.0 or higher |
 | **Stable tag** | 1.0.0 |
