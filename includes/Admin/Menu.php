@@ -181,16 +181,23 @@ final class Menu {
 		fputcsv( $output, array_map( array( $this, 'escape_csv_value' ), $headers ) );
 
 		// Batch fetch search logs.
-		$table       = esc_sql( Constants::table_name() );
-		$users_table = esc_sql( $wpdb->users );
+		$table       = Constants::table_name();
+		$users_table = $wpdb->users;
 		$limit       = 1000;
 		$offset      = 0;
 
 		while ( true ) {
-			$query  = 'SELECT v.id, v.search_term, v.searched_at, v.source, v.matched_post_types, v.result_count, v.page_title, v.page_url, v.referrer, v.page_type, u.display_name, u.user_login FROM %i AS v LEFT JOIN %i AS u ON v.user_id = u.ID ORDER BY v.id ASC LIMIT %d OFFSET %d';
-			$params = array( $table, $users_table, $limit, $offset );
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-			$rows = $wpdb->get_results( $wpdb->prepare( $query, ...$params ), ARRAY_A );
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$rows = $wpdb->get_results(
+				$wpdb->prepare(
+					'SELECT v.id, v.search_term, v.searched_at, v.source, v.matched_post_types, v.result_count, v.page_title, v.page_url, v.referrer, v.page_type, u.display_name, u.user_login FROM %i AS v LEFT JOIN %i AS u ON v.user_id = u.ID ORDER BY v.id ASC LIMIT %d OFFSET %d',
+					$table,
+					$users_table,
+					$limit,
+					$offset
+				),
+				ARRAY_A
+			);
 
 			if ( empty( $rows ) ) {
 				break;

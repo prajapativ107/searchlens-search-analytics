@@ -77,7 +77,7 @@ final class SearchRepository {
 			$params = array_merge( $params, $where_data['params'] );
 		}
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$row = $wpdb->get_row( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return array(
@@ -120,7 +120,7 @@ final class SearchRepository {
 		$params[] = $per_page;
 		$params[] = $offset;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $query, ...$params ), ARRAY_A );
 
 		$count_query  = 'SELECT COUNT(*) FROM ( SELECT v.search_term, v.user_id FROM %i AS v';
@@ -131,7 +131,7 @@ final class SearchRepository {
 		}
 		$count_query .= ' GROUP BY v.search_term, v.user_id ) AS grouped_count';
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$total = (int) $wpdb->get_var( $wpdb->prepare( $count_query, ...$count_params ) );
 
 		return array(
@@ -184,7 +184,7 @@ final class SearchRepository {
 
 		$params[] = $limit;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure uses dynamic orderby/direction fields mapped to whitelist values, and all parameters are prepared.
 		$rows = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return is_array( $rows ) ? $rows : array();
@@ -214,7 +214,7 @@ final class SearchRepository {
 
 		$sql .= ' GROUP BY DATE(v.searched_at) ORDER BY search_date ASC';
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
@@ -248,7 +248,7 @@ final class SearchRepository {
 
 		$params[] = $limit;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
@@ -302,7 +302,7 @@ final class SearchRepository {
 		$params[] = $per_page;
 		$params[] = $offset;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure uses dynamic orderby/direction fields mapped to whitelist values, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return array(
@@ -333,7 +333,7 @@ final class SearchRepository {
 			$params = array_merge( $params, $where_data['params'] );
 		}
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		return (int) $wpdb->get_var( $wpdb->prepare( $sql, ...$params ) );
 	}
 
@@ -453,7 +453,7 @@ final class SearchRepository {
 
 		$params[] = $limit;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
@@ -487,7 +487,7 @@ final class SearchRepository {
 
 		$params[] = $limit;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
@@ -521,7 +521,7 @@ final class SearchRepository {
 
 		$params[] = $limit;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Query is safe because SQL structure is constructed dynamically using safe placeholders, and all parameters are prepared.
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, ...$params ), ARRAY_A );
 
 		return is_array( $results ) ? $results : array();
