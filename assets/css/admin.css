@@ -28,7 +28,6 @@
 
 	color: var(--vplens-text);
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-	max-width: 1200px;
 	margin: 20px 20px 20px 0;
 }
 
@@ -316,7 +315,6 @@
 	background: var(--vplens-danger) !important;
 	border-color: var(--vplens-danger) !important;
 	color: #ffffff !important;
-	padding: 8px 20px !important;
 	height: auto !important;
 	font-size: 0.9rem !important;
 	font-weight: 600 !important;
