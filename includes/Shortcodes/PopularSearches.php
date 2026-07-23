@@ -42,7 +42,7 @@ final class PopularSearches {
 				'show_count' => 'false',
 			),
 			$attributes,
-			'searsean_popular'
+			'searchlens_popular'
 		);
 
 		$limit      = max( 1, min( 50, absint( $attributes['limit'] ) ) );

@@ -59,10 +59,10 @@ final class Registrar {
 	 * @return void
 	 */
 	public function register_shortcodes(): void {
-		add_shortcode( 'searsean_form', array( $this, 'render_search_form' ) );
-		add_shortcode( 'searsean_ajax_form', array( $this, 'render_ajax_search_form' ) );
-		add_shortcode( 'searsean_popular', array( $this->popular_searches, 'render' ) );
-		add_shortcode( 'searsean_trending', array( $this->trending_searches, 'render' ) );
+		add_shortcode( 'searchlens_form', array( $this, 'render_search_form' ) );
+		add_shortcode( 'searchlens_ajax_form', array( $this, 'render_ajax_search_form' ) );
+		add_shortcode( 'searchlens_popular', array( $this->popular_searches, 'render' ) );
+		add_shortcode( 'searchlens_trending', array( $this->trending_searches, 'render' ) );
 	}
 
 	/**

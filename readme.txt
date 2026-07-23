@@ -1,6 +1,6 @@
 === SearchLens – Search Analytics & Insights ===
 Contributors: vivek34
-Tags: search, analytics, ajax search, search tracking, dashboard
+Tags: search, analytics, ajax search, search tracking, search insights
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.0
@@ -8,75 +8,104 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Track WordPress searches with powerful analytics, AJAX search support, widgets, Gutenberg blocks, and exportable reports.
+Track WordPress search activity with powerful analytics, AJAX search support, Gutenberg blocks, widgets, CSV export, and privacy-friendly reporting—all inside your WordPress dashboard.
 
 == Description ==
 
-SearchLens – Search Analytics & Insights is a lightweight and privacy-friendly WordPress plugin that helps website owners understand what visitors are searching for.
+SearchLens – Search Analytics & Insights helps you understand exactly what your visitors are searching for on your WordPress website.
 
-Track search activity across your website, identify popular searches, discover searches with no results, and gain valuable insights through an intuitive analytics dashboard.
+Monitor search activity, discover popular search terms, identify searches with no results, and improve your website's content using actionable analytics.
 
-Everything is stored locally in your WordPress database. No external analytics services or third-party tracking platforms are required.
+Unlike third-party analytics services, SearchLens stores all search data locally inside your WordPress database, making it lightweight, privacy-friendly, and easy to use.
 
-Display your search form anywhere using a shortcode, widget, or Gutenberg block.
+Whether you use the default WordPress search or AJAX-powered search, SearchLens records every search and presents meaningful insights through a clean analytics dashboard.
 
-= Shortcode Examples =
+= Why SearchLens? =
 
-Use the following shortcodes on your site:
+Search analytics help you understand visitor intent and improve your website experience.
 
-* [searsean_form placeholder="Search..." button_text="Search"]
-* [searsean_ajax_form placeholder="Search..." limit="10"]
-* [searsean_popular limit="5" show_count="true"]
-* [searsean_trending limit="5" title="Trending Searches"]
+With SearchLens you can:
+
+* Discover what users are searching for.
+* Identify missing or unavailable content.
+* Find searches returning no results.
+* Improve navigation and search experience.
+* Optimize your content strategy.
+* Make data-driven decisions.
+* Keep all analytics inside WordPress.
+* No external analytics service required.
 
 = Key Features =
 
-* Track native WordPress searches.
-* Track AJAX searches.
+* Native WordPress search tracking.
+* AJAX search tracking.
 * Powerful analytics dashboard.
 * Total searches overview.
 * Unique searches overview.
 * No-result search tracking.
 * Recent search activity.
 * Top searched keywords.
-* Track search result count.
-* Track page title where the search was performed.
+* Trending searches.
+* Search result count tracking.
+* Track page title.
 * Track page URL.
 * Track page type.
 * Track referrer.
-* Advanced search filters.
+* Advanced analytics filters.
 * Filter by search term.
 * Filter by page title.
 * Filter by page type.
 * Filter by date range.
-* Export analytics as CSV.
+* CSV export.
+* Search widget.
+* Gutenberg Search Widget block.
+* Search shortcodes.
 * Configurable searchable post types.
 * Configurable AJAX search settings.
-* AJAX Search Widget.
-* Gutenberg Search Widget Block.
-* Search shortcode support.
 * Responsive admin interface.
-* Lightweight and privacy-friendly.
-* No external APIs.
-* WordPress Coding Standards compliant.
+* Lightweight and fast.
+* Privacy-friendly.
+* Stores data locally.
+* No third-party services.
+* Built following WordPress Coding Standards.
+
+= Included Shortcodes =
+
+Display search forms and analytics anywhere using shortcodes.
+
+Search Form
+
+`[searchlens_form placeholder="Search..." button_text="Search"]`
+
+AJAX Search Form
+
+`[searchlens_ajax_form placeholder="Search..." limit="10"]`
+
+Popular Searches
+
+`[searchlens_popular limit="5" show_count="true"]`
+
+Trending Searches
+
+`[searchlens_trending limit="5" title="Trending Searches"]`
 
 == Installation ==
 
-1. Upload the `searchlens-search-analytics` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the **Plugins** menu in WordPress.
+1. Upload the plugin files to the `/wp-content/plugins/` directory, or install the plugin directly through the WordPress Plugins screen.
+2. Activate the plugin through the **Plugins** screen in WordPress.
 3. Open **SearchLens** from the WordPress admin menu.
 4. Configure your preferred search settings.
 5. Add the search widget, Gutenberg block, or shortcode wherever required.
 
 == Frequently Asked Questions ==
 
-= Does the plugin support AJAX search? =
+= Does SearchLens support AJAX search? =
 
-Yes. The plugin supports AJAX search tracking and analytics.
+Yes. SearchLens supports AJAX search tracking and analytics.
 
 = Does it work with Custom Post Types? =
 
-Yes. You can choose which public post types should be searchable.
+Yes. You can select which public post types should be searchable.
 
 = Does it support Gutenberg? =
 
@@ -84,42 +113,42 @@ Yes. A dedicated Gutenberg Search Widget block is included.
 
 = Does it support classic widgets? =
 
-Yes. The plugin includes a WordPress widget.
+Yes. SearchLens includes a classic WordPress widget.
 
 = Can I export analytics? =
 
-Yes. Analytics can be exported as CSV.
+Yes. Search analytics can be exported as CSV.
 
 = Can I filter search logs? =
 
-Yes. Filter by search term, page title, page type, and date range.
+Yes. Filter analytics by search term, page title, page type, and date range.
 
-= Does it store IP addresses? =
+= Does SearchLens store IP addresses? =
 
 No. Raw IP addresses are never stored.
 
+= Is SearchLens GDPR friendly? =
+
+Yes. All analytics are stored locally inside your WordPress website. No external analytics services are required.
+
 = Does it require any third-party service? =
 
-No. Everything runs completely inside WordPress.
+No. Everything runs entirely inside WordPress.
 
 = Is it lightweight? =
 
-Yes. The plugin is designed to be fast and efficient.
+Yes. SearchLens is optimized for performance and minimal overhead.
 
-= Does it work with most themes? =
+= Will it work with my theme? =
 
-Yes. The plugin works with most WordPress themes.
+Yes. SearchLens works with most modern WordPress themes.
 
 == Screenshots ==
 
-1. Analytics Dashboard.
-2. Search Analytics Overview.
-3. Recent Search Logs.
-4. Search Filters.
-5. Search Settings.
-6. AJAX Search Widget.
-7. Gutenberg Search Widget Block.
-8. CSV Export.
+1. Search analytics dashboard overview.
+2. Advanced search filters and analytics.
+3. Search activity and top search terms.
+4. Search settings and AJAX configuration.
 
 == Changelog ==
 
@@ -131,10 +160,11 @@ Yes. The plugin works with most WordPress themes.
 * Analytics dashboard.
 * Search statistics overview.
 * Top searched keywords.
-* Recent searches.
+* Trending searches.
+* Recent search activity.
 * No-result search tracking.
 * Page tracking (title, URL, type, and referrer).
-* Advanced search filters.
+* Advanced analytics filters.
 * CSV export.
 * Search widget.
 * Gutenberg Search Widget block.
@@ -144,6 +174,7 @@ Yes. The plugin works with most WordPress themes.
 * Responsive admin interface.
 * Performance improvements.
 * Security improvements.
+* WordPress Coding Standards compliant.
 
 == Upgrade Notice ==
 

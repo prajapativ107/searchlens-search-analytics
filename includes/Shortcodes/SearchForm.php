@@ -44,7 +44,7 @@ final class SearchForm {
 				'form_style'  => '',
 			),
 			$attributes,
-			'searsean_form'
+			'searchlens_form'
 		);
 
 		$placeholder     = sanitize_text_field( (string) $attributes['placeholder'] );
